@@ -1,0 +1,180 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ultraenv CI/CD GitHub Actions Example
+# ─────────────────────────────────────────────────────────────────────────────
+# This workflow demonstrates comprehensive environment variable validation
+# and secret scanning in a CI/CD pipeline using ultraenv.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: CI with Ultraenv
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  NODE_ENV: test
+  ULTRAENV_STRICT: "true"
+
+jobs:
+  # ── Job 1: Validate environment variables ──────────────────────────────────
+  validate-env:
+    name: Validate Environment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Set up test environment variables
+      - name: Create test .env file
+        run: |
+          cat > .env.test << 'EOF'
+          DATABASE_URL=postgres://testuser:testpass@localhost:5432/testdb
+          REDIS_URL=redis://localhost:6379
+          JWT_SECRET=test-secret-key-with-at-least-32-characters-for-testing
+          NODE_ENV=test
+          PORT=3000
+          EOF
+      # Validate env schema against actual env
+      - name: Validate environment schema
+        run: npx ultraenv ci-validate --env test --strict
+
+      # Check that .env.example is up to date
+      - name: Check env documentation
+        run: npx ultraenv envs-diff --source .env.test --target .env.example --fail-on-missing
+
+  # ── Job 2: Scan for secrets ───────────────────────────────────────────────
+  secret-scan:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for thorough scanning
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Scan codebase for hardcoded secrets
+      - name: Scan for secrets
+        run: npx ultraenv ci-scan --report sarif --output results.sarif
+        continue-on-error: true
+      # Upload SARIF results for GitHub Security tab
+      - name: Upload SARIF results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: results.sarif
+        continue-on-error: true
+
+  # ── Job 3: Run tests ─────────────────────────────────────────────────────
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    needs: [validate-env]
+    strategy:
+      matrix:
+        node-version: [18, 20, 22]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+      - run: npm ci
+      # Generate type-safe env before tests
+      - run: npx ultraenv typegen --env test
+      - run: npm test -- --coverage
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-node-${{ matrix.node-version }}
+          path: coverage/
+
+  # ── Job 4: Build ─────────────────────────────────────────────────────────
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: [validate-env, secret-scan]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  # ── Job 5: Lint & Typecheck ──────────────────────────────────────────────
+  lint:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+
+  # ── Job 6: Vault operations (production only) ─────────────────────────────
+  vault-decrypt:
+    name: Vault Operations
+    runs-on: ubuntu-latest
+    needs: [test, build, lint]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # Decrypt production secrets from vault
+      - name: Decrypt vault secrets
+        run: npx ultraenv vault decrypt --env production
+        env:
+          ULTRAENV_VAULT_KEY: ${{ secrets.VAULT_KEY }}
+      # Verify vault integrity
+      - name: Verify vault integrity
+        run: npx ultraenv vault verify --env production
+      # Compare staging vs production configs
+      - name: Compare environments
+        run: npx ultraenv envs-compare staging production --fail-on-different-keys
+
+  # ── Job 7: Deploy (production only, after all checks pass) ────────────────
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [vault-decrypt]
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Final validation before deploy
+      - name: Pre-deploy validation
+        run: npx ultraenv ci-validate --env production --strict
+      # Deploy step (replace with your actual deployment)
+      - name: Deploy
+        run: echo "Deploying to production..."
+        env:
+          ULTRAENV_VAULT_KEY: ${{ secrets.VAULT_KEY }}

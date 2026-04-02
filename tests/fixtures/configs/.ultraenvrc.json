@@ -1,0 +1,7 @@
+{
+  "envDir": ".",
+  "schema": "./env.schema.ts",
+  "validation": { "strict": false, "warnUnknown": true },
+  "sync": { "exampleFile": ".env.example" },
+  "typegen": { "output": "env.d.ts" }
+}

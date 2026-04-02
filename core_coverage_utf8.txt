@@ -1,0 +1,71 @@
+﻿
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/Avinash/Downloads/ultraenv[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32mΓ£ô[39m tests/unit/typegen/json-schema.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/secure-memory.test.ts [2m([22m[2m58 tests[22m[2m)[22m[90m 35[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/integrity.test.ts [2m([22m[2m41 tests[22m[2m)[22m[90m 36[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/vault-file.test.ts [2m([22m[2m31 tests[22m[2m)[22m[90m 35[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/number.test.ts [2m([22m[2m50 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/string.test.ts [2m([22m[2m61 tests[22m[2m)[22m[90m 32[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/parser.test.ts [2m([22m[2m73 tests[22m[2m)[22m[90m 55[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/key-manager.test.ts [2m([22m[2m51 tests[22m[2m)[22m[90m 33[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/encryption.test.ts [2m([22m[2m61 tests[22m[2m)[22m[90m 47[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/interpolation.test.ts [2m([22m[2m41 tests[22m[2m)[22m[90m 30[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/patterns.test.ts [2m([22m[2m28 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/vault-workflow.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 46[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/cascade-loading.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 198[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/cli-commands.test.ts [2m([22m[2m31 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/engine.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/sync/generator.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/cascade.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 90[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/duration.test.ts [2m([22m[2m38 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/errors.test.ts [2m([22m[2m50 tests[22m[2m)[22m[90m 28[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/crypto.test.ts [2m([22m[2m39 tests[22m[2m)[22m[90m 47[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/boolean.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/environments/manager.test.ts [2m([22m[2m16 tests[22m[2m)[22m[90m 28[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/fs.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 135[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/environments/comparator.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/entropy.test.ts [2m([22m[2m25 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/loader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 114[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/schema-validation.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 37[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/sync/comparator.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/full-load.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 144[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/enum.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/format.test.ts [2m([22m[2m46 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/bytes.test.ts [2m([22m[2m22 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/file-scanner.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 63[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/mask.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/entropy.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/scan-codebase.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 1031[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m36 passed[39m[22m[90m (36)[39m
+[2m      Tests [22m [1m[32m1134 passed[39m[22m[90m (1134)[39m
+[2m   Start at [22m 08:30:35
+[2m   Duration [22m 4.64s[2m (transform 5.70s, setup 0ms, collect 12.40s, tests 2.65s, environment 21ms, prepare 11.90s)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|---------------------------------------------------------------------------------------------------------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                                                                                                   
+-------------------|---------|----------|---------|---------|---------------------------------------------------------------------------------------------------------------------
+All files          |   90.06 |    87.54 |   91.37 |   90.06 |                                                                                                                     
+ core              |   90.11 |    87.88 |   85.45 |   90.11 |                                                                                                                     
+  cascade.ts       |   93.93 |     90.9 |     100 |   93.93 | 230-239                                                                                                             
+  errors.ts        |   91.47 |    96.77 |   79.16 |   91.47 | 379-380,386-387,393-394,400-401,408-418                                                                             
+  interpolation.ts |   95.09 |     86.6 |     100 |   95.09 | 371-373,417-420,460-461,494-496,499,509-510                                                                         
+  loader.ts        |   82.83 |       80 |      70 |   82.83 | 93-94,119-120,153-162,230-238                                                                                       
+  parser.ts        |   86.87 |    84.82 |     100 |   86.87 | 54-55,69,71,103-107,121-122,156-159,163-169,237-241,284-288,324-330,357-362,370-374,438-440,451-453,575-576,605-606 
+ vault             |   89.98 |    87.04 |   96.72 |   89.98 |                                                                                                                     
+  encryption.ts    |   87.17 |    83.92 |     100 |   87.17 | 116-120,223-227,289-293,315-319,329-333                                                                             
+  integrity.ts     |   87.14 |    84.78 |     100 |   87.14 | 157-161,264-268,395-397,437-448,453-454                                                                             
+  key-manager.ts   |   88.82 |    87.23 |     100 |   88.82 | 104-110,178-185,214-215,246-247                                                                                     
+  secure-memory.ts |   90.47 |    94.91 |   93.33 |   90.47 | 42,239-240,333-334,368-375,417,472-473,479-480                                                                      
+  vault-file.ts    |   98.62 |    82.05 |     100 |   98.62 | 335-336                                                                                                             
+-------------------|---------|----------|---------|---------|---------------------------------------------------------------------------------------------------------------------
+
+=============================== Coverage summary ===============================
+Statements   : 90.06% ( 1976/2194 )
+Branches     : 87.54% ( 527/602 )
+Functions    : 91.37% ( 106/116 )
+Lines        : 90.06% ( 1976/2194 )
+================================================================================

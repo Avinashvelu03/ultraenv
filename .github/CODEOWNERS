@@ -1,0 +1,56 @@
+# Code Owners
+
+# Default owner for everything
+* @ultraenv/core-team
+
+# Source code
+/src/ @ultraenv/core-team @ultraenv/maintainers
+
+# Specific modules
+/src/schema/ @ultraenv/schema-team
+/src/vault/ @ultraenv/security-team
+/src/cli/ @ultraenv/cli-team
+/src/scanner/ @ultraenv/security-team
+/src/middleware/ @ultraenv/middleware-team
+/src/presets/ @ultraenv/presets-team
+/src/typegen/ @ultraenv/types-team
+/src/sync/ @ultraenv/sync-team
+
+# Framework presets
+/src/presets/nextjs.ts @ultraenv/nextjs-maintainer
+/src/presets/express.ts @ultraenv/express-maintainer
+/src/presets/fastify.ts @ultraenv/fastify-maintainer
+/src/presets/nuxt.ts @ultraenv/nuxt-maintainer
+/src/presets/remix.ts @ultraenv/remix-maintainer
+/src/presets/sveltekit.ts @ultraenv/sveltekit-maintainer
+/src/presets/vite.ts @ultraenv/vite-maintainer
+/src/presets/docker.ts @ultraenv/docker-maintainer
+/src/presets/aws-lambda.ts @ultraenv/aws-maintainer
+
+# Security
+/src/vault/ @ultraenv/security-team
+/src/scanner/ @ultraenv/security-team
+SECURITY.md @ultraenv/security-team
+docs/SECURITY.md @ultraenv/security-team
+docs/SECRET_SCANNING.md @ultraenv/security-team
+
+# Documentation
+/docs/ @ultraenv/docs-team
+/README.md @ultraenv/docs-team
+/CONTRIBUTING.md @ultraenv/docs-team
+
+# CI/CD
+/.github/ @ultraenv/ci-team
+/.github/workflows/ @ultraenv/ci-team
+
+# Tests
+/tests/ @ultraenv/core-team
+
+# Examples
+/examples/ @ultraenv/docs-team
+
+# Build & config
+/package.json @ultraenv/core-team
+/tsconfig.json @ultraenv/core-team
+/tsconfig.build.json @ultraenv/core-team
+/vitest.config.ts @ultraenv/core-team

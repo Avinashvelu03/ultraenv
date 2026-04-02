@@ -1,0 +1,473 @@
+﻿
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/Avinash/Downloads/ultraenv[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32mΓ£ô[39m tests/unit/core/parser.test.ts [2m([22m[2m73 tests[22m[2m)[22m[90m 81[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/string.test.ts [2m([22m[2m61 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/encryption.test.ts [2m([22m[2m61 tests[22m[2m)[22m[90m 57[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/interpolation.test.ts [2m([22m[2m41 tests[22m[2m)[22m[90m 38[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/integrity.test.ts [2m([22m[2m41 tests[22m[2m)[22m[90m 34[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/secure-memory.test.ts [2m([22m[2m58 tests[22m[2m)[22m[90m 25[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/key-manager.test.ts [2m([22m[2m51 tests[22m[2m)[22m[90m 37[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/number.test.ts [2m([22m[2m50 tests[22m[2m)[22m[90m 31[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/typegen/json-schema.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 41[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/vault-file.test.ts [2m([22m[2m31 tests[22m[2m)[22m[90m 39[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/cli-commands.test.ts [2m([22m[2m31 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/vault-workflow.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 40[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/patterns.test.ts [2m([22m[2m28 tests[22m[2m)[22m[90m 68[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/sync/generator.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 26[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/duration.test.ts [2m([22m[2m38 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/errors.test.ts [2m([22m[2m50 tests[22m[2m)[22m[90m 30[2mms[22m[39m
+ [31mΓ¥»[39m tests/integration/cascade-loading.test.ts [2m([22m[2m14 tests[22m[2m | [22m[31m10 failed[39m[2m)[22m[90m 94[2mms[22m[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mfixture setup[2m > [22mall cascade fixture files exist[90m 21[2mms[22m[31m[39m
+[31m     ΓåÆ expected false to be true // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mcascade resolution[2m > [22mresolves all four files for development environment[90m 3[2mms[22m[31m[39m
+[31m     ΓåÆ expected 1 to be 4 // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mpriority order: .env.development.local > .env.local > .env.development > .env[2m > [22mhighest priority file (.env.development.local) wins for DATABASE_URL[90m 8[2mms[22m[31m[39m
+[31m     ΓåÆ expected 'postgres://localhost/development' to be 'postgres://localhost/dev_local' // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mpriority order: .env.development.local > .env.local > .env.development > .env[2m > [22mmid-priority files contribute their unique keys[90m 3[2mms[22m[31m[39m
+[31m     ΓåÆ expected undefined to be 'ultraenv' // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mpriority order: .env.development.local > .env.local > .env.development > .env[2m > [22mDATABASE_URL chain: each file overrides the previous[90m 6[2mms[22m[31m[39m
+[31m     ΓåÆ expected undefined to be 'postgres://localhost/base' // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mfirst-wins merge strategy[2m > [22m.env wins with first-wins strategy for SHARED key[90m 8[2mms[22m[31m[39m
+[31m     ΓåÆ expected 'from_development' to be 'from_base' // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mfirst-wins merge strategy[2m > [22m.env wins with first-wins strategy for DATABASE_URL[90m 11[2mms[22m[31m[39m
+[31m     ΓåÆ expected 'postgres://localhost/development' to be 'postgres://localhost/base' // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mfirst-wins merge strategy[2m > [22mstill merges all unique keys with first-wins[90m 7[2mms[22m[31m[39m
+[31m     ΓåÆ expected undefined to be 'ultraenv' // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mloadWithResult with cascade metadata[2m > [22mreports correct files parsed and total vars[90m 6[2mms[22m[31m[39m
+[31m     ΓåÆ expected 1 to be 4 // Object.is equality[39m
+[31m   [31m├ù[31m integration: cascade loading[2m > [22mloadWithResult with cascade metadata[2m > [22msource tracking shows which file each key came from[90m 5[2mms[22m[31m[39m
+[31m     ΓåÆ expected 'C:\Users\Avinash\Downloads\ultraenv\tΓÇª' to contain '.env.development.local'[39m
+ [32mΓ£ô[39m tests/unit/schema/engine.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+node.exe : (node:21808) MaxListenersExceededWarning: Possible 
+EventEmitter memory leak detected. 11 exit listeners added to 
+[process]. MaxListeners is 10. Use emitter.setMaxListeners() to 
+increase limit
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~
+    + CategoryInfo          : NotSpecified: ((node:21808) Ma... i 
+   ncrease limit:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+(Use `node --trace-warnings ...` to show where the warning was 
+created)
+ [32mΓ£ô[39m tests/unit/core/cascade.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 70[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/crypto.test.ts [2m([22m[2m39 tests[22m[2m)[22m[90m 27[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/boolean.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 21[2mms[22m[39m
+ [31mΓ¥»[39m tests/unit/environments/manager.test.ts [2m([22m[2m16 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[90m 42[2mms[22m[39m
+[31m   [31m├ù[31m environments manager[2m > [22mlistEnvironments[2m > [22mincludes absolute paths[90m 15[2mms[22m[31m[39m
+[31m     ΓåÆ expected 'C:\my-project\.env' to contain '/my-project/.env'[39m
+ [32mΓ£ô[39m tests/unit/scanner/entropy.test.ts [2m([22m[2m25 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/environments/comparator.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 43[2mms[22m[39m
+(node:15308) MaxListenersExceededWarning: Possible EventEmitter 
+memory leak detected. 11 exit listeners added to [process]. 
+MaxListeners is 10. Use emitter.setMaxListeners() to increase 
+limit
+(Use `node --trace-warnings ...` to show where the warning was 
+created)
+ [31mΓ¥»[39m tests/unit/utils/fs.test.ts [2m([22m[2m26 tests[22m[2m | [22m[31m2 failed[39m[2m)[22m[90m 190[2mms[22m[39m
+[31m   [31m├ù[31m fs utilities[2m > [22mlistFiles[2m > [22mlists files recursively[90m 22[2mms[22m[31m[39m
+[31m     ΓåÆ expected [ 'a.txt', 'sub\c.txt' ] to include 'sub/c.txt'[39m
+[31m   [31m├ù[31m fs utilities[2m > [22mlistFiles[2m > [22mreturns empty array for empty directory[90m 27[2mms[22m[31m[39m
+[31m     ΓåÆ ENOENT: no such file or directory, rmdir 'C:\Users\Avinash\AppData\Local\Temp\ultraenv-test-SaoBeZ\empty\file.txt'[39m
+(node:12276) MaxListenersExceededWarning: Possible EventEmitter 
+memory leak detected. 11 exit listeners added to [process]. 
+MaxListeners is 10. Use emitter.setMaxListeners() to increase 
+limit
+(Use `node --trace-warnings ...` to show where the warning was 
+created)
+ [32mΓ£ô[39m tests/integration/schema-validation.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 36[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/loader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 112[2mms[22m[39m
+(node:2344) MaxListenersExceededWarning: Possible EventEmitter 
+memory leak detected. 11 exit listeners added to [process]. 
+MaxListeners is 10. Use emitter.setMaxListeners() to increase 
+limit
+(Use `node --trace-warnings ...` to show where the warning was 
+created)
+ [32mΓ£ô[39m tests/integration/full-load.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 113[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/sync/comparator.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/enum.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 16[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/file-scanner.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 55[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/bytes.test.ts [2m([22m[2m22 tests[22m[2m)[22m[90m 11[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/format.test.ts [2m([22m[2m46 tests[22m[2m)[22m[90m 19[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/entropy.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 14[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/mask.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 17[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/scan-codebase.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 943[2mms[22m[39m
+
+[31mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1m[7m Failed Tests 13 
+[27m[22mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mfixture setup[2m > [22mall cascade 
+fixture files exist
+[31m[1mAssertionError[22m: expected false to be true // 
+Object.is equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- true[39m
+[31m+ false[39m
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m42:41[22m[39m
+    [90m 40| [39m      [35mfor[39m ([35mconst[39m file 
+[35mof[39m expectedFiles) {
+    [90m 41| [39m        [35mconst[39m filePath [33m=[39m 
+path[33m.[39m[34mjoin[39m(cascadeDir[33m,[39m 
+file)[33m;[39m
+    [90m 42| [39m        [34mexpect[39m(fs[33m.[39m[34mexis
+tsSync[39m(filePath))[33m.[39m[34mtoBe[39m([35mtrue[39m)[3
+3m;[39m
+    [90m   | [39m                                        
+[31m^[39m
+    [90m 43| [39m      }
+    [90m 44| [39m    })[33m;[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mcascade resolution[2m > [22mresolves 
+all four files for development environment
+[31m[1mAssertionError[22m: expected 1 to be 4 // Object.is 
+equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 4[39m
+[31m+ 1[39m
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m61:44[22m[39m
+    [90m 59| [39m
+    [90m 60| [39m      [90m// All files should exist[39m
+    [90m 61| [39m      [34mexpect[39m(cascade[33m.[39mexisti
+ngFiles[33m.[39mlength)[33m.[39m[34mtoBe[39m([34m4[39m)[3
+3m;[39m
+    [90m   | [39m                                           
+[31m^[39m
+    [90m 62| [39m
+    [90m 63| [39m      [90m// Check file names in order 
+(lowest priority first)[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[2/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mpriority order: .env.development.local 
+> .env.local > .env.development > .env[2m > [22mhighest 
+priority file (.env.development.local) wins for DATABASE_URL
+[31m[1mAssertionError[22m: expected 
+'postgres://localhost/development' to be 
+'postgres://localhost/dev_local' // Object.is equality[39m
+
+Expected: 
+[32m"postgres://localhost/dev[7m_[27mlo[7mcal[27m"[39m
+Received: 
+[31m"postgres://localhost/dev[7me[27mlo[7mpment[27m"[39m
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m109:32[22m[39m
+    [90m107| [39m
+    [90m108| [39m      [35mconst[39m env [33m=[39m 
+[34mload[39m({ envDir[33m:[39m cascadeDir })[33m;[39m
+    [90m109| [39m      [34mexpect[39m(env[33m.[39m[33mDATAB
+ASE_URL[39m)[33m.[39m[34mtoBe[39m([32m'postgres://localhost/
+dev_local'[39m)[33m;[39m
+    [90m   | [39m                               [31m^[39m
+    [90m110| [39m    })[33m;[39m
+    [90m111| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[3/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mpriority order: .env.development.local 
+> .env.local > .env.development > .env[2m > [22mmid-priority 
+files contribute their unique keys
+[31m[1mAssertionError[22m: expected undefined to be 'ultraenv' 
+// Object.is equality[39m
+
+[32m- Expected:[39m 
+"ultraenv"
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m116:28[22m[39m
+    [90m114| [39m
+    [90m115| [39m      [90m// From .env (lowest)[39m
+    [90m116| [39m      [34mexpect[39m(env[33m.[39m[33mAPP_N
+AME[39m)[33m.[39m[34mtoBe[39m([32m'ultraenv'[39m)[33m;[39
+m
+    [90m   | [39m                           [31m^[39m
+    [90m117| [39m      [34mexpect[39m(env[33m.[39m[33mBASE_
+VAR[39m)[33m.[39m[34mtoBe[39m([32m'base_value'[39m)[33m;[
+39m
+    [90m118| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[4/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mpriority order: .env.development.local 
+> .env.local > .env.development > .env[2m > [22mDATABASE_URL 
+chain: each file overrides the previous
+[31m[1mAssertionError[22m: expected undefined to be 
+'postgres://localhost/base' // Object.is equality[39m
+
+[32m- Expected:[39m 
+"postgres://localhost/base"
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m164:73[22m[39m
+    [90m162| [39m      )[33m;[39m
+    [90m163| [39m
+    [90m164| [39m      [34mexpect[39m(baseFile[33m?.[39mvars
+[33m.[39m[34mfind[39m(v [33m=>[39m v[33m.[39mkey 
+[33m===[39m [32m'DATABASE_URL'[39m)[33m?.[39mvalueΓÇª
+    [90m   | [39m                                               
+                         [31m^[39m
+    [90m165| [39m        
+[32m'postgres://localhost/base'[39m[33m,[39m
+    [90m166| [39m      )[33m;[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[5/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mfirst-wins merge strategy[2m > 
+[22m.env wins with first-wins strategy for SHARED key
+[31m[1mAssertionError[22m: expected 'from_development' to be 
+'from_base' // Object.is equality[39m
+
+Expected: [32m"from_[7mbase[27m"[39m
+Received: [31m"from_[7mdevelopment[27m"[39m
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m191:26[22m[39m
+    [90m189| [39m      })[33m;[39m
+    [90m190| [39m
+    [90m191| [39m      [34mexpect[39m(env[33m.[39m[33mSHARE
+D[39m)[33m.[39m[34mtoBe[39m([32m'from_base'[39m)[33m;[39m
+    [90m   | [39m                         [31m^[39m
+    [90m192| [39m    })[33m;[39m
+    [90m193| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[6/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mfirst-wins merge strategy[2m > 
+[22m.env wins with first-wins strategy for DATABASE_URL
+[31m[1mAssertionError[22m: expected 
+'postgres://localhost/development' to be 
+'postgres://localhost/base' // Object.is equality[39m
+
+Expected: [32m"postgres://localhost/[7mbase[27m"[39m
+Received: [31m"postgres://localhost/[7mdevelopment[27m"[39m
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m200:32[22m[39m
+    [90m198| [39m      })[33m;[39m
+    [90m199| [39m
+    [90m200| [39m      [34mexpect[39m(env[33m.[39m[33mDATAB
+ASE_URL[39m)[33m.[39m[34mtoBe[39m([32m'postgres://localhost/
+base'[39m)[33m;[39m
+    [90m   | [39m                               [31m^[39m
+    [90m201| [39m    })[33m;[39m
+    [90m202| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[7/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mfirst-wins merge strategy[2m > 
+[22mstill merges all unique keys with first-wins
+[31m[1mAssertionError[22m: expected undefined to be 'ultraenv' 
+// Object.is equality[39m
+
+[32m- Expected:[39m 
+"ultraenv"
+
+[31m+ Received:[39m 
+undefined
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m210:28[22m[39m
+    [90m208| [39m
+    [90m209| [39m      [90m// Keys unique to their files 
+should still be present[39m
+    [90m210| [39m      [34mexpect[39m(env[33m.[39m[33mAPP_N
+AME[39m)[33m.[39m[34mtoBe[39m([32m'ultraenv'[39m)[33m;[39
+m
+    [90m   | [39m                           [31m^[39m
+    [90m211| [39m      [34mexpect[39m(env[33m.[39m[33mLOCAL
+_ONLY[39m)[33m.[39m[34mtoBe[39m([32m'true'[39m)[33m;[39m
+    [90m212| [39m      [34mexpect[39m(env[33m.[39m[33mDEV_O
+NLY[39m)[33m.[39m[34mtoBe[39m([32m'yes'[39m)[33m;[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[8/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mloadWithResult with cascade 
+metadata[2m > [22mreports correct files parsed and total vars
+[31m[1mAssertionError[22m: expected 1 to be 4 // Object.is 
+equality[39m
+
+[32m- Expected[39m
+[31m+ Received[39m
+
+[32m- 4[39m
+[31m+ 1[39m
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m225:43[22m[39m
+    [90m223| [39m
+    [90m224| [39m      [90m// Should have parsed all 4 
+files[39m
+    [90m225| [39m      [34mexpect[39m(result[33m.[39mmetadat
+a[33m.[39mfilesParsed)[33m.[39m[34mtoBe[39m([34m4[39m)[33
+m;[39m
+    [90m   | [39m                                          
+[31m^[39m
+    [90m226| [39m      [34mexpect[39m(result[33m.[39mmetadat
+a[33m.[39mfilesFound)[33m.[39m[34mtoBe[39m([34m4[39m)[33m
+;[39m
+    [90m227| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»[9/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/integration/cascade-loading.test.ts[2m > [22mintegration: 
+cascade loading[2m > [22mloadWithResult with cascade 
+metadata[2m > [22msource tracking shows which file each key 
+came from
+[31m[1mAssertionError[22m: expected 
+'C:\Users\Avinash\Downloads\ultraenv\tΓÇª' to contain 
+'.env.development.local'[39m
+
+Expected: [32m".env.development[7m.local[27m"[39m
+Received: [31m"[7mC:\Users\Avinash\Downloads\ultraenv\tests\fixt
+ures\cascades\development\[27m.env.development"[39m
+
+[36m [2mΓ¥»[22m 
+tests/integration/cascade-loading.test.ts:[2m248:47[22m[39m
+    [90m246| [39m
+    [90m247| [39m      [90m// DATABASE_URL should come from 
+.env.development.local (last-wi[39mΓÇª
+    [90m248| [39m      [34mexpect[39m(cascade[33m.[39msource
+s[[32m'DATABASE_URL'[39m])[33m.[39m[34mtoContain[39m([32m'.
+env.developm[39mΓÇª
+    [90m   | [39m                                              
+[31m^[39m
+    [90m249| [39m      [90m// APP_NAME only exists in .env[39m
+    [90m250| [39m      [34mexpect[39m(cascade[33m.[39msource
+s[[32m'APP_NAME'[39m])[33m.[39m[34mtoContain[39m([32m'.env'
+[39m)[33m;[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»[10/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/unit/environments/manager.test.ts[2m > [22menvironments 
+manager[2m > [22mlistEnvironments[2m > [22mincludes absolute 
+paths
+[31m[1mAssertionError[22m: expected 'C:\my-project\.env' to 
+contain '/my-project/.env'[39m
+
+Expected: [32m"[7m/[27mmy-project[7m/[27m.env"[39m
+Received: [31m"[7mC:\[27mmy-project[7m\[27m.env"[39m
+
+[36m [2mΓ¥»[22m 
+tests/unit/environments/manager.test.ts:[2m107:34[22m[39m
+    [90m105| [39m      [35mconst[39m envs [33m=[39m 
+[35mawait[39m 
+[34mlistEnvironments[39m([32m'/my-project'[39m)[33m;[39m
+    [90m106| [39m      [35mconst[39m base [33m=[39m 
+envs[33m.[39m[34mfind[39m((e) [33m=>[39m e[33m.[39mname 
+[33m===[39m [32m'base'[39m)[33m;[39m
+    [90m107| [39m      [34mexpect[39m(base[33m?.[39mabsolute
+Path)[33m.[39m[34mtoContain[39m([32m'/my-project/.env'[39m)
+[33m;[39m
+    [90m   | [39m                                 [31m^[39m
+    [90m108| [39m    })[33m;[39m
+    [90m109| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»[11/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/unit/utils/fs.test.ts[2m > [22mfs utilities[2m > 
+[22mlistFiles[2m > [22mlists files recursively
+[31m[1mAssertionError[22m: expected [ 'a.txt', 'sub\c.txt' ] 
+to include 'sub/c.txt'[39m
+[36m [2mΓ¥»[22m 
+tests/unit/utils/fs.test.ts:[2m169:21[22m[39m
+    [90m167| [39m      [35mconst[39m files [33m=[39m 
+[35mawait[39m 
+[34mlistFiles[39m(tempDir[33m.[39mpath[33m,[39m 
+[35mtrue[39m)[33m;[39m
+    [90m168| [39m      [34mexpect[39m(files)[33m.[39m[34mto
+Contain[39m([32m'a.txt'[39m)[33m;[39m
+    [90m169| [39m      [34mexpect[39m(files)[33m.[39m[34mto
+Contain[39m([32m'sub/c.txt'[39m)[33m;[39m
+    [90m   | [39m                    [31m^[39m
+    [90m170| [39m    })[33m;[39m
+    [90m171| [39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»[12/13]ΓÄ»[22m[39m
+
+[31m[1m[7m FAIL [27m[22m[39m 
+tests/unit/utils/fs.test.ts[2m > [22mfs utilities[2m > 
+[22mlistFiles[2m > [22mreturns empty array for empty directory
+[31m[1mError[22m: ENOENT: no such file or directory, rmdir 'C:\
+Users\Avinash\AppData\Local\Temp\ultraenv-test-SaoBeZ\empty\file.t
+xt'[39m
+[36m [2mΓ¥»[22m tests/unit/utils/fs.test.ts:[2m176:7[22m[39m
+    [90m174| [39m      [35mconst[39m fs [33m=[39m 
+[35mawait[39m 
+[35mimport[39m([32m'node:fs/promises'[39m)[33m;[39m
+    [90m175| [39m      [35mawait[39m 
+fs[33m.[39m[34munlink[39m(emptyDir)[33m;[39m
+    [90m176| [39m      [35mawait[39m fs[33m.[39m[34mrmdir[
+39m(emptyDir[33m.[39m[34mreplace[39m([32m'/file.txt'[39m[33
+m,[39m [32m''[39m))[33m;[39m
+    [90m   | [39m      [31m^[39m
+    [90m177| [39m      [35mawait[39m fs[33m.[39m[34mmkdir[
+39m(emptyDir[33m.[39m[34mreplace[39m([32m'/file.txt'[39m[33
+m,[39m [32m''[39m))[33m;[39m
+    [90m178| [39m      [35mconst[39m files [33m=[39m 
+[35mawait[39m [34mlistFiles[39m(emptyDir[33m.[39m[34mreplac
+e[39m([32m'/file.txt'[39m[33m,[39m [32m''[39m))[33m;[39m
+
+[31m[2mΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+ΓÄ»ΓÄ»ΓÄ»[13/13]ΓÄ»[22m[39m
+
+[2m Test Files [22m [1m[31m3 failed[39m[22m[2m | [22m[1m[32m33 passed[39m[22m[90m (36)[39m
+[2m      Tests [22m [1m[31m13 failed[39m[22m[2m | [22m[1m[32m1121 passed[39m[22m[90m (1134)[39m
+[2m   Start at [22m 08:22:36
+[2m   Duration [22m 5.20s[2m (transform 4.45s, setup 0ms, collect 9.86s, tests 2.49s, environment 22ms, prepare 11.25s)[22m
+

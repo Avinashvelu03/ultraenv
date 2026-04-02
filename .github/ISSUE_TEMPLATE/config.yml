@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Discussions
+    url: https://github.com/ultraenv/ultraenv/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📖 Documentation
+    url: https://github.com/ultraenv/ultraenv/tree/main/docs
+    about: Browse the full documentation before opening an issue
+  - name: 🔒 Security Vulnerability
+    url: https://github.com/ultraenv/ultraenv/security/advisories/new
+    about: Report a security vulnerability privately

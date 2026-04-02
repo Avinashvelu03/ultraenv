@@ -1,0 +1,228 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Ultraenv CI/CD GitLab CI Example
+# ─────────────────────────────────────────────────────────────────────────────
+# This pipeline demonstrates comprehensive environment variable validation
+# and secret scanning in GitLab CI/CD using ultraenv.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Define stages
+stages:
+  - validate
+  - scan
+  - test
+  - build
+  - deploy
+
+# Global variables
+variables:
+  NODE_ENV: test
+  ULTRAENV_STRICT: "true"
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+
+# Cache npm dependencies
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
+# ── Template: Base setup ─────────────────────────────────────────────────────
+.setup_base: &setup_base
+  image: node:22-alpine
+  before_script:
+    - npm ci --cache .npm --prefer-offline
+
+# ── Stage 1: Validate ────────────────────────────────────────────────────────
+
+validate:env:
+  <<: *setup_base
+  stage: validate
+  script:
+    - |
+      cat > .env.test << EOF
+      DATABASE_URL=${TEST_DATABASE_URL}
+      REDIS_URL=${TEST_REDIS_URL}
+      JWT_SECRET=${TEST_JWT_SECRET}
+      NODE_ENV=test
+      PORT=3000
+      EOF
+    - npx ultraenv ci-validate --env test --strict
+    - npx ultraenv envs-diff --source .env.test --target .env.example --fail-on-missing
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# ── Stage 2: Secret Scanning ─────────────────────────────────────────────────
+
+scan:secrets:
+  <<: *setup_base
+  stage: scan
+  script:
+    - npx ultraenv ci-scan --report sarif --output results.sarif
+  artifacts:
+    reports:
+      secret_scanning: results.sarif
+    paths:
+      - results.sarif
+    when: always
+  allow_failure: true
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+scan:secrets:full:
+  <<: *setup_base
+  stage: scan
+  script:
+    - npx ultraenv scan --full-history --report sarif --output full-results.sarif
+  artifacts:
+    reports:
+      secret_scanning: full-results.sarif
+    paths:
+      - full-results.sarif
+    when: always
+  allow_failure: true
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+
+# ── Stage 3: Test ────────────────────────────────────────────────────────────
+
+test:node18:
+  <<: *setup_base
+  image: node:18-alpine
+  stage: test
+  script:
+    - npx ultraenv typegen --env test
+    - npm test -- --coverage
+  coverage: '/All files[^|]*\|[^|]*\s+([\d.]+)/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+    paths:
+      - coverage/
+    when: always
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+test:node20:
+  <<: *setup_base
+  image: node:20-alpine
+  stage: test
+  script:
+    - npx ultraenv typegen --env test
+    - npm test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+test:node22:
+  <<: *setup_base
+  image: node:22-alpine
+  stage: test
+  script:
+    - npx ultraenv typegen --env test
+    - npm test
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# ── Stage 4: Build ───────────────────────────────────────────────────────────
+
+build:
+  <<: *setup_base
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+
+# ── Stage 5: Deploy ──────────────────────────────────────────────────────────
+
+# Deploy to staging
+deploy:staging:
+  <<: *setup_base
+  stage: deploy
+  environment:
+    name: staging
+    url: https://staging.example.com
+  script:
+    - npx ultraenv vault decrypt --env staging
+    - npx ultraenv ci-validate --env staging --strict
+    - npx ultraenv envs-compare staging production --fail-on-different-keys || true
+    - echo "Deploying to staging..."
+  variables:
+    ULTRAENV_VAULT_KEY: $STAGING_VAULT_KEY
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+
+# Deploy to production
+deploy:production:
+  <<: *setup_base
+  stage: deploy
+  environment:
+    name: production
+    url: https://example.com
+  script:
+    - npx ultraenv vault decrypt --env production
+    - npx ultraenv ci-validate --env production --strict
+    - npx ultraenv envs-compare staging production --fail-on-different-keys
+    - echo "Deploying to production..."
+  variables:
+    ULTRAENV_VAULT_KEY: $PRODUCTION_VAULT_KEY
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v\d+\.\d+\.\d+$/
+  when: manual
+
+# ── Vault management jobs ────────────────────────────────────────────────────
+
+vault:status:
+  <<: *setup_base
+  stage: validate
+  script:
+    - npx ultraenv vault status --env production
+  variables:
+    ULTRAENV_VAULT_KEY: $PRODUCTION_VAULT_KEY
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
+
+vault:diff:
+  <<: *setup_base
+  stage: validate
+  script:
+    - npx ultraenv vault diff staging production
+  variables:
+    ULTRAENV_VAULT_KEY: $PRODUCTION_VAULT_KEY
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: manual
+
+# ── Pages (documentation) ────────────────────────────────────────────────────
+
+pages:
+  <<: *setup_base
+  stage: deploy
+  script:
+    - npm run docs:build
+    - mv docs/public/ public/
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      changes:
+        - docs/**/*

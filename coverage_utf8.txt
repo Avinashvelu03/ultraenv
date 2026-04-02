@@ -1,0 +1,211 @@
+﻿
+[1m[7m[36m RUN [39m[27m[22m [36mv2.1.9 [39m[90mC:/Users/Avinash/Downloads/ultraenv[39m
+      [2mCoverage enabled with [22m[33mv8[39m
+
+ [32mΓ£ô[39m tests/unit/vault/secure-memory.test.ts [2m([22m[2m58 tests[22m[2m)[22m[90m 76[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/typegen/json-schema.test.ts [2m([22m[2m32 tests[22m[2m)[22m[90m 80[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/number.test.ts [2m([22m[2m50 tests[22m[2m)[22m[90m 68[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/string.test.ts [2m([22m[2m61 tests[22m[2m)[22m[90m 97[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/vault-file.test.ts [2m([22m[2m31 tests[22m[2m)[22m[90m 87[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/integrity.test.ts [2m([22m[2m41 tests[22m[2m)[22m[90m 125[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/key-manager.test.ts [2m([22m[2m51 tests[22m[2m)[22m[90m 60[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/vault/encryption.test.ts [2m([22m[2m61 tests[22m[2m)[22m[90m 78[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/interpolation.test.ts [2m([22m[2m41 tests[22m[2m)[22m[90m 28[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/parser.test.ts [2m([22m[2m73 tests[22m[2m)[22m[90m 59[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/patterns.test.ts [2m([22m[2m28 tests[22m[2m)[22m[90m 115[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/vault-workflow.test.ts [2m([22m[2m30 tests[22m[2m)[22m[90m 42[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/cascade-loading.test.ts [2m([22m[2m14 tests[22m[2m)[22m[90m 183[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/engine.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/cli-commands.test.ts [2m([22m[2m31 tests[22m[2m)[22m[90m 24[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/cascade.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 80[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/duration.test.ts [2m([22m[2m38 tests[22m[2m)[22m[90m 20[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/sync/generator.test.ts [2m([22m[2m21 tests[22m[2m)[22m[90m 22[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/boolean.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/errors.test.ts [2m([22m[2m50 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/crypto.test.ts [2m([22m[2m39 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/environments/manager.test.ts [2m([22m[2m16 tests[22m[2m)[22m[90m 29[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/entropy.test.ts [2m([22m[2m25 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/environments/comparator.test.ts [2m([22m[2m12 tests[22m[2m)[22m[90m 44[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/fs.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 136[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/core/loader.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 115[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/enum.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/schema-validation.test.ts [2m([22m[2m35 tests[22m[2m)[22m[90m 34[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/sync/comparator.test.ts [2m([22m[2m13 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/scanner/file-scanner.test.ts [2m([22m[2m11 tests[22m[2m)[22m[90m 56[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/full-load.test.ts [2m([22m[2m15 tests[22m[2m)[22m[90m 146[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/schema/validators/bytes.test.ts [2m([22m[2m22 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/format.test.ts [2m([22m[2m46 tests[22m[2m)[22m[90m 23[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/mask.test.ts [2m([22m[2m26 tests[22m[2m)[22m[90m 18[2mms[22m[39m
+ [32mΓ£ô[39m tests/unit/utils/entropy.test.ts [2m([22m[2m19 tests[22m[2m)[22m[90m 15[2mms[22m[39m
+ [32mΓ£ô[39m tests/integration/scan-codebase.test.ts [2m([22m[2m11 tests[22m[2m)[22m[33m 1147[2mms[22m[39m
+
+[2m Test Files [22m [1m[32m36 passed[39m[22m[90m (36)[39m
+[2m      Tests [22m [1m[32m1134 passed[39m[22m[90m (1134)[39m
+[2m   Start at [22m 08:27:43
+[2m   Duration [22m 5.65s[2m (transform 6.48s, setup 0ms, collect 13.90s, tests 3.17s, environment 19ms, prepare 11.49s)[22m
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   36.13 |    82.87 |   60.23 |   36.13 |                   
+ src               |       0 |        0 |       0 |       0 |                   
+  index.ts         |       0 |        0 |       0 |       0 | 1-293             
+ src/cli           |   60.37 |    93.22 |      80 |   60.37 |                   
+  index.ts         |       0 |        0 |       0 |       0 | 1-236             
+  parser.ts        |   97.42 |    94.82 |     100 |   97.42 | 117-119,171-173   
+ src/cli/commands  |       0 |     3.57 |    3.57 |       0 |                   
+  ci-check-sync.ts |       0 |        0 |       0 |       0 | 1-49              
+  ci-scan.ts       |       0 |        0 |       0 |       0 | 1-44              
+  ci-setup.ts      |       0 |        0 |       0 |       0 | 1-134             
+  ci-validate.ts   |       0 |        0 |       0 |       0 | 1-60              
+  completion.ts    |       0 |        0 |       0 |       0 | 1-173             
+  debug.ts         |       0 |        0 |       0 |       0 | 1-125             
+  doctor.ts        |       0 |        0 |       0 |       0 | 1-157             
+  envs-compare.ts  |       0 |        0 |       0 |       0 | 1-45              
+  envs-create.ts   |       0 |        0 |       0 |       0 | 1-52              
+  envs-list.ts     |       0 |        0 |       0 |       0 | 1-58              
+  envs-switch.ts   |       0 |        0 |       0 |       0 | 1-46              
+  envs-validate.ts |       0 |        0 |       0 |       0 | 1-88              
+  help.ts          |       0 |        0 |       0 |       0 | 1-130             
+  init.ts          |       0 |        0 |       0 |       0 | 1-148             
+  install-hook.ts  |       0 |        0 |       0 |       0 | 1-111             
+  protect.ts       |       0 |        0 |       0 |       0 | 1-175             
+  scan.ts          |       0 |        0 |       0 |       0 | 1-64              
+  sync.ts          |       0 |        0 |       0 |       0 | 1-214             
+  typegen.ts       |       0 |        0 |       0 |       0 | 1-88              
+  types.ts         |       0 |        0 |       0 |       0 |                   
+  validate.ts      |       0 |        0 |       0 |       0 | 1-99              
+  vault-decrypt.ts |       0 |        0 |       0 |       0 | 1-112             
+  vault-diff.ts    |       0 |        0 |       0 |       0 | 1-138             
+  vault-encrypt.ts |       0 |        0 |       0 |       0 | 1-117             
+  vault-init.ts    |       0 |        0 |       0 |       0 | 1-105             
+  vault-rekey.ts   |       0 |        0 |       0 |       0 | 1-136             
+  vault-status.ts  |       0 |        0 |       0 |       0 | 1-91              
+  vault-verify.ts  |       0 |        0 |       0 |       0 | 1-94              
+ src/cli/ui        |       0 |    71.42 |   71.42 |       0 |                   
+  banner.ts        |       0 |        0 |       0 |       0 | 1-59              
+  box.ts           |       0 |      100 |     100 |       0 | 23-183            
+  colors.ts        |       0 |      100 |     100 |       0 | 10-165            
+  prompt.ts        |       0 |        0 |       0 |       0 | 1-279             
+  renderer.ts      |       0 |      100 |     100 |       0 | 13-146            
+  spinner.ts       |       0 |      100 |     100 |       0 | 11-119            
+  table.ts         |       0 |      100 |     100 |       0 | 19-229            
+ src/core          |   62.69 |    87.43 |   82.45 |   62.69 |                   
+  cascade.ts       |   93.93 |     90.9 |     100 |   93.93 | 230-239           
+  config.ts        |       0 |        0 |       0 |       0 | 1-589             
+  errors.ts        |   91.47 |    96.77 |   79.16 |   91.47 | ...00-401,408-418 
+  interpolation.ts |   95.09 |     86.6 |     100 |   95.09 | ...96,499,509-510 
+  loader.ts        |   82.83 |       80 |      70 |   82.83 | ...53-162,230-238 
+  parser.ts        |   86.87 |    84.95 |     100 |   86.87 | ...75-576,605-606 
+  watcher.ts       |       0 |        0 |       0 |       0 | 1-406             
+ src/environments  |   46.64 |    77.77 |   64.28 |   46.64 |                   
+  comparator.ts    |   74.44 |       75 |   83.33 |   74.44 | ...61-363,384-438 
+  creator.ts       |       0 |        0 |       0 |       0 | 1-422             
+  manager.ts       |   67.64 |     82.6 |   57.14 |   67.64 | ...08,116,247-336 
+ src/middleware    |       0 |      100 |     100 |       0 |                   
+  express.ts       |       0 |      100 |     100 |       0 | 131-272           
+  fastify.ts       |       0 |      100 |     100 |       0 | 103-242           
+  health.ts        |       0 |      100 |     100 |       0 | 85-217            
+ src/presets       |       0 |        0 |       0 |       0 |                   
+  aws-lambda.ts    |       0 |        0 |       0 |       0 | 1-294             
+  docker.ts        |       0 |        0 |       0 |       0 | 1-303             
+  express.ts       |       0 |        0 |       0 |       0 | 1-222             
+  fastify.ts       |       0 |        0 |       0 |       0 | 1-203             
+  index.ts         |       0 |        0 |       0 |       0 | 1-150             
+  nextjs.ts        |       0 |        0 |       0 |       0 | 1-258             
+  nuxt.ts          |       0 |        0 |       0 |       0 | 1-222             
+  remix.ts         |       0 |        0 |       0 |       0 | 1-188             
+  sveltekit.ts     |       0 |        0 |       0 |       0 | 1-202             
+  vite.ts          |       0 |        0 |       0 |       0 | 1-212             
+ src/reporters     |       0 |       75 |      75 |       0 |                   
+  json.ts          |       0 |      100 |     100 |       0 | 55-246            
+  sarif.ts         |       0 |      100 |     100 |       0 | 70-318            
+  silent.ts        |       0 |      100 |     100 |       0 | 24-125            
+  terminal.ts      |       0 |        0 |       0 |       0 | 1-410             
+ src/scanner       |   43.97 |    79.45 |   85.71 |   43.97 |                   
+  entropy.ts       |     100 |    76.19 |     100 |     100 | ...15-121,193,290 
+  file-scanner.ts  |   84.64 |    77.27 |     100 |   84.64 | ...63-365,374-375 
+  git-scanner.ts   |       0 |        0 |       0 |       0 | 1-349             
+  index.ts         |       0 |        0 |       0 |       0 | 1-256             
+  patterns.ts      |   93.75 |    94.28 |    90.9 |   93.75 | 180-187,222-223   
+  reporter.ts      |       0 |        0 |       0 |       0 | 1-407             
+ src/schema        |   71.77 |       85 |   51.61 |   71.77 |                   
+  builder.ts       |   77.86 |    92.59 |      64 |   77.86 | ...73-275,320-325 
+  engine.ts        |   65.53 |    84.31 |      50 |   65.53 | ...93-312,318-352 
+  index.ts         |   77.77 |    76.19 |   40.62 |   77.77 | ...49-354,365-373 
+  inference.ts     |       0 |        0 |       0 |       0 |                   
+ ...hema/modifiers |   19.07 |      100 |       0 |   19.07 |                   
+  alias.ts         |   33.33 |      100 |       0 |   33.33 | 25-26,32-33,39-40 
+  conditional.ts   |      15 |      100 |       0 |      15 | 26-32,38-39,46-56 
+  custom.ts        |   13.15 |      100 |       0 |   13.15 | ...54,60-66,72-81 
+  default.ts       |   33.33 |      100 |       0 |   33.33 | 26-27,33-34,40-41 
+  deprecated.ts    |   33.33 |      100 |       0 |   33.33 | 24-25,31-32,38-39 
+  description.ts   |   11.11 |      100 |       0 |   11.11 | 24-25,31-32,38-64 
+  optional.ts      |   33.33 |      100 |       0 |   33.33 | 22-23,29-30       
+  required.ts      |   33.33 |      100 |       0 |   33.33 | 24-25,31-32       
+  secret.ts        |   18.75 |      100 |       0 |   18.75 | 22-23,29-30,37-45 
+  transform.ts     |   16.66 |      100 |       0 |   16.66 | 25-26,33-40       
+ ...ema/validators |   49.49 |     83.8 |   54.89 |   49.49 |                   
+  array.ts         |   37.83 |       75 |      40 |   37.83 | ...43-144,146-147 
+  base64.ts        |       5 |      100 |       0 |       5 | 26-112,116-119    
+  bigint.ts        |   13.51 |      100 |       0 |   13.51 | ...57-160,165-166 
+  boolean.ts       |     100 |      100 |     100 |     100 |                   
+  bytes.ts         |   95.74 |    81.81 |     100 |   95.74 | 71-72,107-108     
+  color.ts         |   33.66 |      100 |       0 |   33.66 | 52-124,128-131    
+  country.ts       |   58.62 |      100 |       0 |   58.62 | 67-106,110-113    
+  cron.ts          |   15.05 |      100 |       0 |   15.05 | 33-125,129-132    
+  currency.ts      |      55 |      100 |       0 |      55 | 52-80,84-87       
+  date.ts          |    22.1 |       75 |   23.07 |    22.1 | ...23-130,134-148 
+  duration.ts      |   97.53 |    87.09 |     100 |   97.53 | 65-66             
+  email.ts         |   52.27 |       25 |     100 |   52.27 | ...53,57-62,66-70 
+  enum.ts          |   96.55 |       95 |     100 |   96.55 | 77-78             
+  hex.ts           |    5.45 |      100 |       0 |    5.45 | 21-82,86-89       
+  hostname.ts      |     7.4 |      100 |       0 |     7.4 | 25-84,88-91       
+  ip.ts            |   19.51 |      100 |       0 |   19.51 | ...62,66-67,71-72 
+  json.ts          |   25.84 |       75 |   27.27 |   25.84 | ...09-116,120-131 
+  locale.ts        |   31.81 |      100 |       0 |   31.81 | 41-100,104-107    
+  number.ts        |     100 |      100 |     100 |     100 |                   
+  path.ts          |       4 |      100 |       0 |       4 | 23-75,79-82       
+  port.ts          |   51.21 |       25 |     100 |   51.21 | ...53,55-56,58-59 
+  regex.ts         |   15.94 |      100 |       0 |   15.94 | ...97-108,113-114 
+  semver.ts        |   13.72 |      100 |       0 |   13.72 | 27-77,81-84       
+  string.ts        |   96.74 |     98.8 |   96.55 |   96.74 | 73-77,304-305     
+  timezone.ts      |    27.5 |      100 |       0 |    27.5 | 32-66,70-73       
+  url.ts           |      42 |    28.57 |     100 |      42 | ...64,69-73,77-78 
+  uuid.ts          |   51.11 |    27.27 |     100 |   51.11 | ...42,50-54,60-64 
+ src/sync          |   59.48 |    78.68 |   84.61 |   59.48 |                   
+  comparator.ts    |     100 |      100 |     100 |     100 |                   
+  generator.ts     |   90.86 |       75 |    87.5 |   90.86 | ...44,314-320,346 
+  watcher.ts       |       0 |        0 |       0 |       0 | 1-338             
+ src/typegen       |   26.13 |    75.92 |   57.14 |   26.13 |                   
+  declaration.ts   |       0 |        0 |       0 |       0 | 1-174             
+  json-schema.ts   |   87.15 |    80.39 |     100 |   87.15 | ...71-173,197-199 
+  module.ts        |       0 |        0 |       0 |       0 | 1-206             
+  watcher.ts       |       0 |        0 |       0 |       0 | 1-396             
+ src/utils         |   39.77 |    89.78 |   66.66 |   39.77 |                   
+  box.ts           |       0 |      100 |     100 |       0 | 31-246            
+  crypto.ts        |   74.49 |     92.1 |      85 |   74.49 | ...83-217,282-285 
+  deferred.ts      |       0 |      100 |     100 |       0 | 34-216            
+  encoding.ts      |       0 |        0 |       0 |       0 | 1-191             
+  entropy.ts       |     100 |      100 |     100 |     100 |                   
+  format.ts        |      70 |      100 |   71.42 |      70 | ...45-151,234-255 
+  fs.ts            |   69.56 |    80.85 |   85.71 |   69.56 | ...41-242,266-267 
+  git.ts           |   20.83 |       50 |   13.33 |   20.83 | ...63-110,130-200 
+  glob.ts          |       0 |        0 |       0 |       0 | 1-176             
+  mask.ts          |   78.57 |    93.54 |   83.33 |   78.57 | 170,181-208       
+  platform.ts      |       0 |        0 |       0 |       0 | 1-166             
+ src/vault         |   90.09 |    87.09 |   98.36 |   90.09 |                   
+  encryption.ts    |   87.17 |    83.92 |     100 |   87.17 | ...15-319,329-333 
+  integrity.ts     |   87.14 |    84.78 |     100 |   87.14 | ...37-448,453-454 
+  key-manager.ts   |   88.82 |    87.23 |     100 |   88.82 | ...14-215,246-247 
+  secure-memory.ts |      91 |       95 |   96.66 |      91 | ...72-473,479-480 
+  vault-file.ts    |   98.62 |    82.05 |     100 |   98.62 | 335-336           
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 36.13% ( 5283/14620 )
+Branches     : 82.87% ( 1447/1746 )
+Functions    : 60.23% ( 356/591 )
+Lines        : 36.13% ( 5283/14620 )
+================================================================================
