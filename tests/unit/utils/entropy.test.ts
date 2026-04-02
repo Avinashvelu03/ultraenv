@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { randomBytes } from 'node:crypto';
 import { shannonEntropy, isHighEntropy, normalizedEntropy, byteEntropy } from '../../../src/utils/entropy.js';
 
 describe('shannonEntropy', () => {
@@ -104,7 +105,7 @@ describe('byteEntropy', () => {
 
   it('returns at most 8.0 bits per byte', () => {
     // Random bytes should have high entropy
-    const buf = Buffer.from(crypto.getRandomValues(new Uint8Array(1000)));
+    const buf = randomBytes(1000);
     const entropy = byteEntropy(buf);
     expect(entropy).toBeLessThanOrEqual(8);
     expect(entropy).toBeGreaterThan(7);
