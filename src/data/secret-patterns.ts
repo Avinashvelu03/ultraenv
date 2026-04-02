@@ -237,7 +237,7 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
   {
     id: 'google-oauth-client-secret',
     name: 'Google OAuth Client Secret',
-    pattern: /(?:^|["'\s:=,`]GOCSPX-[A-Za-z0-9_-]{28,})(?:["'\s,`;]|$)/gm,
+    pattern: /(?:^|["'\s:=,`])(GOCSPX-[A-Za-z0-9_-]{28,})(?:["'\s,`;]|$)/gm,
     confidence: 0.9,
     severity: 'critical',
     description: 'Google OAuth Client Secret (new format). Used for OAuth authentication flows.',
