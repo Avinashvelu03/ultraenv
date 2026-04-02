@@ -167,7 +167,17 @@ export interface LoadMetadata {
 // Schema System
 // -----------------------------------------------------------------------------
 
-export type SchemaDefinition = Record<string, StringSchema | NumberSchema | BooleanSchema | EnumSchema<string[]> | ArraySchema | JsonSchema | DateSchema | BigIntSchema>;
+export type SchemaDefinition = Record<
+  string,
+  | StringSchema
+  | NumberSchema
+  | BooleanSchema
+  | EnumSchema<string[]>
+  | ArraySchema
+  | JsonSchema
+  | DateSchema
+  | BigIntSchema
+>;
 
 /** Base schema shape shared by all types */
 export interface BaseSchema<T> {
@@ -298,7 +308,15 @@ export interface EnvSchema {
 // Schema Builder Types (for ergonomic API)
 // -----------------------------------------------------------------------------
 
-export type SchemaType = StringSchema['type'] | NumberSchema['type'] | BooleanSchema['type'] | EnumSchema<string[]>['type'] | ArraySchema['type'] | JsonSchema['type'] | DateSchema['type'] | BigIntSchema['type'];
+export type SchemaType =
+  | StringSchema['type']
+  | NumberSchema['type']
+  | BooleanSchema['type']
+  | EnumSchema<string[]>['type']
+  | ArraySchema['type']
+  | JsonSchema['type']
+  | DateSchema['type']
+  | BigIntSchema['type'];
 
 export interface SchemaBuilderBase<T> {
   /** Add a description */
@@ -340,7 +358,9 @@ export interface BooleanSchemaBuilder extends SchemaBuilderBase<boolean> {
   falsy(values: readonly string[]): this;
 }
 
-export interface EnumSchemaBuilder<T extends readonly string[]> extends SchemaBuilderBase<T[number]> {
+export interface EnumSchemaBuilder<T extends readonly string[]> extends SchemaBuilderBase<
+  T[number]
+> {
   caseInsensitive(enabled?: boolean): this;
 }
 
@@ -377,22 +397,32 @@ export interface BigIntSchemaBuilder extends SchemaBuilderBase<bigint> {
 // -----------------------------------------------------------------------------
 
 /** Infer the base JS type from a schema definition entry */
-type InferTypeFromSchema<S> =
-  S extends StringSchema ? string :
-  S extends NumberSchema ? number :
-  S extends BooleanSchema ? boolean :
-  S extends EnumSchema<infer T> ? T extends readonly (infer U)[] ? U : never :
-  S extends ArraySchema ? readonly string[] :
-  S extends JsonSchema<infer T> ? T :
-  S extends DateSchema ? Date :
-  S extends BigIntSchema ? bigint :
-  never;
+type InferTypeFromSchema<S> = S extends StringSchema
+  ? string
+  : S extends NumberSchema
+    ? number
+    : S extends BooleanSchema
+      ? boolean
+      : S extends EnumSchema<infer T>
+        ? T extends readonly (infer U)[]
+          ? U
+          : never
+        : S extends ArraySchema
+          ? readonly string[]
+          : S extends JsonSchema<infer T>
+            ? T
+            : S extends DateSchema
+              ? Date
+              : S extends BigIntSchema
+                ? bigint
+                : never;
 
 /** Resolves the value type: default | inferred | undefined for optional */
-type ResolveValue<S> =
-  S extends { optional: true } ? InferTypeFromSchema<S> | undefined :
-  S extends { default: infer D } ? D :
-  InferTypeFromSchema<S>;
+type ResolveValue<S> = S extends { optional: true }
+  ? InferTypeFromSchema<S> | undefined
+  : S extends { default: infer D }
+    ? D
+    : InferTypeFromSchema<S>;
 
 /** Main type utility: infer an env object from a schema definition */
 export type InferEnv<T extends SchemaDefinition> = {

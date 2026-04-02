@@ -12,13 +12,7 @@ import { resolve, join } from 'node:path';
 import { exists, readFile } from '../../utils/fs.js';
 import { isGitRepository, isGitIgnored, getTrackedFiles } from '../../utils/git.js';
 
-const PROTECTED_PATTERNS = [
-  '.env',
-  '.env.local',
-  '.env.*.local',
-  '.env.vault',
-  '.env.keys',
-];
+const PROTECTED_PATTERNS = ['.env', '.env.local', '.env.*.local', '.env.vault', '.env.keys'];
 
 export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number> {
   try {
@@ -46,13 +40,16 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     if (!gitignoreExists) {
       writeError(red('  ✗ No .gitignore file found!'));
       writeLine('');
-      const box = drawBox([
-        'Your project has no .gitignore file.',
-        'Secrets in .env files could be committed to version control.',
-        'Create a .gitignore with ultraenv entries:',
-        '',
-        '  ultraenv init',
-      ], { title: 'DANGER', border: 'double' });
+      const box = drawBox(
+        [
+          'Your project has no .gitignore file.',
+          'Secrets in .env files could be committed to version control.',
+          'Create a .gitignore with ultraenv entries:',
+          '',
+          '  ultraenv init',
+        ],
+        { title: 'DANGER', border: 'double' },
+      );
       writeLine(box);
       writeLine('');
       return 1;
@@ -73,7 +70,9 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       }
     }
 
-    writeLine(green(`  ✓ ${protectedEntries.length}/${PROTECTED_PATTERNS.length} patterns protected`));
+    writeLine(
+      green(`  ✓ ${protectedEntries.length}/${PROTECTED_PATTERNS.length} patterns protected`),
+    );
 
     // Check if .env files are actually ignored
     const envFiles = ['.env', '.env.local', '.env.production', '.env.development'];
@@ -101,8 +100,8 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     // Check tracked .env files
     if (isGit) {
       const trackedFiles = await getTrackedFiles(baseDir);
-      const trackedEnvFiles = trackedFiles.filter(f =>
-        f.startsWith('.env') && !f.endsWith('.example'),
+      const trackedEnvFiles = trackedFiles.filter(
+        (f) => f.startsWith('.env') && !f.endsWith('.example'),
       );
 
       if (trackedEnvFiles.length > 0) {
@@ -112,13 +111,16 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
           writeError(red(`    - ${f}`));
         }
         writeLine('');
-        const warnBox = drawBox([
-          'Tracked .env files may contain secrets.',
-          'Remove them from version control immediately:',
-          '',
-          '  git rm --cached .env*',
-          '  git commit -m "Remove tracked .env files"',
-        ], { title: 'WARNING', border: 'double' });
+        const warnBox = drawBox(
+          [
+            'Tracked .env files may contain secrets.',
+            'Remove them from version control immediately:',
+            '',
+            '  git rm --cached .env*',
+            '  git commit -m "Remove tracked .env files"',
+          ],
+          { title: 'WARNING', border: 'double' },
+        );
         writeLine(warnBox);
         writeLine('');
         return 1;

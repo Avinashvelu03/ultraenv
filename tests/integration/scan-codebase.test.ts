@@ -69,7 +69,7 @@ describe('integration: scan codebase', () => {
     it('detects known secret types (AWS keys, API keys)', async () => {
       const result = await scanFiles([withSecretsDir]);
 
-      const secretTypes = result.secrets.map(s => s.type);
+      const secretTypes = result.secrets.map((s) => s.type);
       // At minimum, AWS credentials or generic secret patterns should be found
       expect(secretTypes.length).toBeGreaterThan(0);
     });
@@ -98,7 +98,7 @@ describe('integration: scan codebase', () => {
 
       // The file should appear in filesScanned (may be absolute or relative path)
       expect(result.filesScanned.length).toBeGreaterThanOrEqual(1);
-      const hasSafeCode = result.filesScanned.some(f => f.includes('safe-code'));
+      const hasSafeCode = result.filesScanned.some((f) => f.includes('safe-code'));
       expect(hasSafeCode).toBe(true);
     });
   });
@@ -113,13 +113,11 @@ describe('integration: scan codebase', () => {
       });
 
       // Should still scan but exclude the AWS file
-      const awsFileScanned = result.filesScanned.some(
-        f => f.includes('aws-credentials'),
-      );
+      const awsFileScanned = result.filesScanned.some((f) => f.includes('aws-credentials'));
       // The file might be in filesSkipped instead
-      expect(result.filesSkipped.some(
-        f => f.includes('aws-credentials'),
-      ) || !awsFileScanned).toBe(true);
+      expect(
+        result.filesSkipped.some((f) => f.includes('aws-credentials')) || !awsFileScanned,
+      ).toBe(true);
     });
 
     it('respects include patterns', async () => {

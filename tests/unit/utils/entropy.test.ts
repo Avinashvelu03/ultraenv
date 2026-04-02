@@ -1,6 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { randomBytes } from 'node:crypto';
-import { shannonEntropy, isHighEntropy, normalizedEntropy, byteEntropy } from '../../../src/utils/entropy.js';
+import {
+  shannonEntropy,
+  isHighEntropy,
+  normalizedEntropy,
+  byteEntropy,
+} from '../../../src/utils/entropy.js';
 
 describe('shannonEntropy', () => {
   it('returns 0 for empty string', () => {

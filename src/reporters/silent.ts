@@ -4,10 +4,7 @@
 // Useful when only exit codes matter (CI/CD, quiet mode).
 // =============================================================================
 
-import type {
-  ValidationResult,
-  ValidationWarning,
-} from '../core/types.js';
+import type { ValidationResult, ValidationWarning } from '../core/types.js';
 import type { ScanResult } from '../core/types.js';
 import { UltraenvError } from '../core/errors.js';
 
@@ -21,9 +18,7 @@ import { UltraenvError } from '../core/errors.js';
  * @param _result - The validation result (ignored)
  * @returns Empty string
  */
-export function reportValidation(
-  _result: ValidationResult,
-): string {
+export function reportValidation(_result: ValidationResult): string {
   return '';
 }
 
@@ -33,9 +28,7 @@ export function reportValidation(
  * @param _error - The error (ignored)
  * @returns Empty string
  */
-export function reportError(
-  _error: UltraenvError,
-): string {
+export function reportError(_error: UltraenvError): string {
   return '';
 }
 
@@ -45,9 +38,7 @@ export function reportError(
  * @param _result - The scan result (ignored)
  * @returns Empty string
  */
-export function reportScanResult(
-  _result: ScanResult,
-): string {
+export function reportScanResult(_result: ScanResult): string {
   return '';
 }
 
@@ -57,9 +48,7 @@ export function reportScanResult(
  * @param _message - The success message (ignored)
  * @returns Empty string
  */
-export function reportSuccess(
-  _message: string,
-): string {
+export function reportSuccess(_message: string): string {
   return '';
 }
 
@@ -69,9 +58,7 @@ export function reportSuccess(
  * @param _warning - The validation warning (ignored)
  * @returns Empty string
  */
-export function reportWarning(
-  _warning: ValidationWarning,
-): string {
+export function reportWarning(_warning: ValidationWarning): string {
   return '';
 }
 
@@ -81,9 +68,7 @@ export function reportWarning(
  * @param _message - The info message (ignored)
  * @returns Empty string
  */
-export function reportInfo(
-  _message: string,
-): string {
+export function reportInfo(_message: string): string {
   return '';
 }
 
@@ -111,15 +96,37 @@ export const silentReporter = {
   reportInfo,
 
   // Core Reporter interface methods (no-op implementations)
-  varLoaded(): void { /* no-op */ },
-  varError(): void { /* no-op */ },
-  varWarning(): void { /* no-op */ },
-  fileLoaded(): void { /* no-op */ },
-  fileNotFound(): void { /* no-op */ },
-  loadStart(): void { /* no-op */ },
-  loadEnd(): void { /* no-op */ },
-  secretDetected(): void { /* no-op */ },
-  syncResult(): void { /* no-op */ },
-  watchEvent(): void { /* no-op */ },
-  debug(): void { /* no-op */ },
+  varLoaded(): void {
+    /* no-op */
+  },
+  varError(): void {
+    /* no-op */
+  },
+  varWarning(): void {
+    /* no-op */
+  },
+  fileLoaded(): void {
+    /* no-op */
+  },
+  fileNotFound(): void {
+    /* no-op */
+  },
+  loadStart(): void {
+    /* no-op */
+  },
+  loadEnd(): void {
+    /* no-op */
+  },
+  secretDetected(): void {
+    /* no-op */
+  },
+  syncResult(): void {
+    /* no-op */
+  },
+  watchEvent(): void {
+    /* no-op */
+  },
+  debug(): void {
+    /* no-op */
+  },
 } as const;

@@ -83,22 +83,20 @@ export function deserializeEnvData(serialized: string): Record<string, string> {
  *   masterKey,
  * );
  */
-export function encryptEnvironment(
-  data: Record<string, string>,
-  key: Buffer,
-): EncryptionResult {
+export function encryptEnvironment(data: Record<string, string>, key: Buffer): EncryptionResult {
   if (key.length !== 32) {
     throw new EncryptionError(
       `Invalid key length: expected 32 bytes for AES-256, got ${key.length}`,
-      { hint: 'Generate a new key using generateMasterKey() or ensure you are using the correct key file.' },
+      {
+        hint: 'Generate a new key using generateMasterKey() or ensure you are using the correct key file.',
+      },
     );
   }
 
   if (Object.keys(data).length === 0) {
-    throw new EncryptionError(
-      'Cannot encrypt empty environment data',
-      { hint: 'Provide at least one environment variable to encrypt.' },
-    );
+    throw new EncryptionError('Cannot encrypt empty environment data', {
+      hint: 'Provide at least one environment variable to encrypt.',
+    });
   }
 
   try {
@@ -112,14 +110,14 @@ export function encryptEnvironment(
       ciphertext: result.ciphertext,
       algorithm: ENCRYPTION_ALGORITHM,
     };
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch (error: unknown) {
     if (error instanceof EncryptionError) throw error;
     throw new EncryptionError('Failed to encrypt environment data', {
       cause: error instanceof Error ? error : undefined,
     });
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------
@@ -138,10 +136,7 @@ export function encryptEnvironment(
  * const serialized = decryptEnvironment(encryptedResult, masterKey);
  * // serialized = "API_KEY=sk-123\nDATABASE_URL=postgres://localhost/mydb"
  */
-export function decryptEnvironment(
-  encrypted: EncryptionResult,
-  key: Buffer,
-): string {
+export function decryptEnvironment(encrypted: EncryptionResult, key: Buffer): string {
   if (key.length !== 32) {
     throw new EncryptionError(
       `Invalid key length: expected 32 bytes for AES-256, got ${key.length}`,
@@ -152,7 +147,9 @@ export function decryptEnvironment(
   if (encrypted.algorithm !== ENCRYPTION_ALGORITHM) {
     throw new EncryptionError(
       `Unsupported algorithm: "${encrypted.algorithm}". Expected "${ENCRYPTION_ALGORITHM}".`,
-      { hint: 'This vault was encrypted with a different algorithm. You may need to migrate the vault.' },
+      {
+        hint: 'This vault was encrypted with a different algorithm. You may need to migrate the vault.',
+      },
     );
   }
 
@@ -174,14 +171,14 @@ export function decryptEnvironment(
     const plaintext = aesDecrypt(key, encrypted.iv, encrypted.authTag, encrypted.ciphertext);
     return plaintext.toString('utf-8');
   } catch (error: unknown) {
-/* v8 ignore start */
+    /* v8 ignore start */
     if (error instanceof EncryptionError) throw error;
-/* v8 ignore stop */
+    /* v8 ignore stop */
     throw new EncryptionError(
       'Failed to decrypt environment data. The key may be incorrect or the ciphertext was tampered with.',
-/* v8 ignore start */
+      /* v8 ignore start */
       { cause: error instanceof Error ? error : undefined },
-/* v8 ignore stop */
+      /* v8 ignore stop */
     );
   }
 }
@@ -225,14 +222,14 @@ export function encryptValue(value: string, key: Buffer): string {
     const ciphertextB64 = bufferToBase64(result.ciphertext);
 
     return `${ENCRYPTED_PREFIX}${ivB64}:${authTagB64}:${ciphertextB64}`;
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch (error: unknown) {
     if (error instanceof EncryptionError) throw error;
     throw new EncryptionError('Failed to encrypt value', {
       cause: error instanceof Error ? error : undefined,
     });
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------
@@ -267,12 +264,9 @@ export function decryptValue(encrypted: string, key: Buffer): string {
 
   // Validate and strip the prefix
   if (!encrypted.startsWith(ENCRYPTED_PREFIX)) {
-    throw new EncryptionError(
-      'Invalid encrypted value format: missing required prefix',
-      {
-        hint: `Expected the value to start with "${ENCRYPTED_PREFIX}". This value may not have been encrypted by ultraenv.`,
-      },
-    );
+    throw new EncryptionError('Invalid encrypted value format: missing required prefix', {
+      hint: `Expected the value to start with "${ENCRYPTED_PREFIX}". This value may not have been encrypted by ultraenv.`,
+    });
   }
 
   // Strip the prefix and split remaining parts
@@ -293,20 +287,18 @@ export function decryptValue(encrypted: string, key: Buffer): string {
   const ciphertextB64 = parts[2];
 
   // Validate base64 components (safe after length check above)
-/* v8 ignore start */
+  /* v8 ignore start */
   if (ivB64 === undefined || authTagB64 === undefined || ciphertextB64 === undefined) {
-    throw new EncryptionError(
-      'Invalid encrypted value: unexpected component structure',
-      { hint: 'The encrypted data may be corrupted. Try re-encrypting the value.' },
-    );
+    throw new EncryptionError('Invalid encrypted value: unexpected component structure', {
+      hint: 'The encrypted data may be corrupted. Try re-encrypting the value.',
+    });
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   if (ivB64.length === 0 || authTagB64.length === 0 || ciphertextB64.length === 0) {
-    throw new EncryptionError(
-      'Invalid encrypted value: one or more base64 components are empty',
-      { hint: 'The encrypted data may be corrupted. Try re-encrypting the value.' },
-    );
+    throw new EncryptionError('Invalid encrypted value: one or more base64 components are empty', {
+      hint: 'The encrypted data may be corrupted. Try re-encrypting the value.',
+    });
   }
 
   try {
@@ -317,18 +309,20 @@ export function decryptValue(encrypted: string, key: Buffer): string {
     if (iv.length !== IV_LENGTH) {
       throw new EncryptionError(
         `Invalid IV length: expected ${IV_LENGTH} bytes, got ${iv.length}`,
-        { hint: 'The encrypted data may be corrupted or was produced by a different version of ultraenv.' },
+        {
+          hint: 'The encrypted data may be corrupted or was produced by a different version of ultraenv.',
+        },
       );
     }
 
-/* v8 ignore start */
+    /* v8 ignore start */
     if (authTag.length !== AUTH_TAG_LENGTH) {
       throw new EncryptionError(
         `Invalid auth tag length: expected ${AUTH_TAG_LENGTH} bytes, got ${authTag.length}`,
         { hint: 'The encrypted data may be corrupted.' },
       );
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
 
     const plaintext = aesDecrypt(key, iv, authTag, ciphertext);
     return plaintext.toString('utf-8');
@@ -336,21 +330,20 @@ export function decryptValue(encrypted: string, key: Buffer): string {
     if (error instanceof EncryptionError) throw error;
 
     // Check if the error is from base64 decoding
-/* v8 ignore start */
+    /* v8 ignore start */
     const message = error instanceof Error ? error.message : String(error);
     if (message.includes('Invalid') || message.includes('base64')) {
-      throw new EncryptionError(
-        'Invalid base64 encoding in encrypted value',
-        { hint: 'The encrypted data may be corrupted. Ensure the value was not modified.' },
-      );
+      throw new EncryptionError('Invalid base64 encoding in encrypted value', {
+        hint: 'The encrypted data may be corrupted. Ensure the value was not modified.',
+      });
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
 
     throw new EncryptionError(
       'Failed to decrypt value. The key may be incorrect or the ciphertext was tampered with.',
-/* v8 ignore start */
+      /* v8 ignore start */
       { cause: error instanceof Error ? error : undefined },
-/* v8 ignore stop */
+      /* v8 ignore stop */
     );
   }
 }

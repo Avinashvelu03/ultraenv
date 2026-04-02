@@ -98,13 +98,13 @@ function parseAndValidateBytes(raw: string, opts: BytesValidatorOptions): ParseR
       result = bytes / (isBinary ? 1024 : 1000);
       break;
     case 'mb':
-      result = bytes / ((isBinary ? 1024 : 1000) ** 2);
+      result = bytes / (isBinary ? 1024 : 1000) ** 2;
       break;
     case 'gb':
-      result = bytes / ((isBinary ? 1024 : 1000) ** 3);
+      result = bytes / (isBinary ? 1024 : 1000) ** 3;
       break;
     case 'tb':
-      result = bytes / ((isBinary ? 1024 : 1000) ** 4);
+      result = bytes / (isBinary ? 1024 : 1000) ** 4;
       break;
   }
 

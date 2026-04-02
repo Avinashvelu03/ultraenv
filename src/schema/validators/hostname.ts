@@ -22,7 +22,10 @@ const HOSTNAME_LABEL_REGEX = /^[a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?$/;
 
 const HOSTNAME_LABEL_REGEX_UNDERSCORE = /^[a-zA-Z0-9_]([a-zA-Z0-9_-]*[a-zA-Z0-9_])?$/;
 
-function parseAndValidateHostname(raw: string, opts: HostnameValidatorOptions): ParseResult<string> {
+function parseAndValidateHostname(
+  raw: string,
+  opts: HostnameValidatorOptions,
+): ParseResult<string> {
   const trimmed = raw.trim();
   const maxLen = opts.maxLength ?? 253;
   const maxLabel = opts.maxLabelLength ?? 63;
@@ -42,9 +45,7 @@ function parseAndValidateHostname(raw: string, opts: HostnameValidatorOptions): 
   }
 
   // Remove trailing dot for label validation
-  const forValidation = allowTrailingDot && trimmed.endsWith('.')
-    ? trimmed.slice(0, -1)
-    : trimmed;
+  const forValidation = allowTrailingDot && trimmed.endsWith('.') ? trimmed.slice(0, -1) : trimmed;
 
   if (forValidation.length === 0) {
     return { success: false, error: 'Hostname must not be just a dot' };

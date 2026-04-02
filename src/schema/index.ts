@@ -93,9 +93,19 @@ import { applySecret, isSecret, maskValue } from './modifiers/secret.js';
 import { applyDeprecated, isDeprecated, getDeprecationMessage } from './modifiers/deprecated.js';
 import { applyAlias, getAliases, isAlias } from './modifiers/alias.js';
 import { applyTransform, composeTransforms } from './modifiers/transform.js';
-import { applyCustom, minLength as customMinLength, maxLength as customMaxLength, check, allOf } from './modifiers/custom.js';
+import {
+  applyCustom,
+  minLength as customMinLength,
+  maxLength as customMaxLength,
+  check,
+  allOf,
+} from './modifiers/custom.js';
 import { applyConditional, hasConditional, shouldApply } from './modifiers/conditional.js';
-import { applyDescription, getDescription, formatSchemaDescription } from './modifiers/description.js';
+import {
+  applyDescription,
+  getDescription,
+  formatSchemaDescription,
+} from './modifiers/description.js';
 
 // Re-export everything
 export {
@@ -298,9 +308,11 @@ export const t = {
  * // env.DEBUG    → boolean | undefined
  * ```
  */
-export function defineEnv<
-  S extends Record<string, SchemaBuilder<unknown>>,
->(schema: S, vars?: Record<string, string>, options?: EngineOptions): InferSchema<S> {
+export function defineEnv<S extends Record<string, SchemaBuilder<unknown>>>(
+  schema: S,
+  vars?: Record<string, string>,
+  options?: EngineOptions,
+): InferSchema<S> {
   const envVars = vars ?? getProcessEnv();
   const result = validate(envVars, schema, options);
 
@@ -313,13 +325,10 @@ export function defineEnv<
       .map((e: ValidationErrorEntry) => `  - ${e.field}: ${e.message}`)
       .join('\n');
 
-    const unknownMsg = result.unknown.length > 0
-      ? `\nUnknown variables: ${result.unknown.join(', ')}`
-      : '';
+    const unknownMsg =
+      result.unknown.length > 0 ? `\nUnknown variables: ${result.unknown.join(', ')}` : '';
 
-    throw new Error(
-      `Environment validation failed:\n${messages}${unknownMsg}`,
-    );
+    throw new Error(`Environment validation failed:\n${messages}${unknownMsg}`);
   }
 
   return result.values as InferSchema<S>;
@@ -329,19 +338,23 @@ export function defineEnv<
  * Define environment variables without throwing on validation failure.
  * Returns the result object with valid/warning/error information.
  */
-export function tryDefineEnv<
-  S extends Record<string, SchemaBuilder<unknown>>,
->(schema: S, vars?: Record<string, string>, options?: EngineOptions): {
-  valid: true;
-  values: InferSchema<S>;
-  warnings: readonly ValidationWarningEntry[];
-} | {
-  valid: false;
-  values: Record<string, unknown>;
-  warnings: readonly ValidationWarningEntry[];
-  errors: readonly ValidationErrorEntry[];
-  unknown: readonly string[];
-} {
+export function tryDefineEnv<S extends Record<string, SchemaBuilder<unknown>>>(
+  schema: S,
+  vars?: Record<string, string>,
+  options?: EngineOptions,
+):
+  | {
+      valid: true;
+      values: InferSchema<S>;
+      warnings: readonly ValidationWarningEntry[];
+    }
+  | {
+      valid: false;
+      values: Record<string, unknown>;
+      warnings: readonly ValidationWarningEntry[];
+      errors: readonly ValidationErrorEntry[];
+      unknown: readonly string[];
+    } {
   const envVars = vars ?? getProcessEnv();
   const result = validate(envVars, schema, options);
 

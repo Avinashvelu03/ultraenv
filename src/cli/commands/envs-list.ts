@@ -24,7 +24,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     writeLine(bold('📋 Environments'));
     writeLine('');
 
-    const existing = environments.filter(e => e.exists);
+    const existing = environments.filter((e) => e.exists);
 
     if (existing.length === 0) {
       writeLine(yellow('  No environment files found.'));
@@ -34,13 +34,10 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     }
 
     const headers = ['Name', 'File', 'Variables', 'Size', 'Modified'];
-    const rows: string[][] = existing.map(env => {
-      const size = env.fileSize > 1024
-        ? `${(env.fileSize / 1024).toFixed(1)} KB`
-        : `${env.fileSize} B`;
-      const modified = env.lastModified
-        ? env.lastModified.slice(0, 19).replace('T', ' ')
-        : '-';
+    const rows: string[][] = existing.map((env) => {
+      const size =
+        env.fileSize > 1024 ? `${(env.fileSize / 1024).toFixed(1)} KB` : `${env.fileSize} B`;
+      const modified = env.lastModified ? env.lastModified.slice(0, 19).replace('T', ' ') : '-';
       return [env.name, env.fileName, String(env.variableCount), size, modified];
     });
 

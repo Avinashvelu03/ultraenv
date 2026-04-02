@@ -50,20 +50,9 @@ const VAULT_SUBCOMMANDS = new Set<string>([
   'verify',
 ]);
 
-const ENVS_SUBCOMMANDS = new Set<string>([
-  'list',
-  'compare',
-  'validate',
-  'create',
-  'switch',
-]);
+const ENVS_SUBCOMMANDS = new Set<string>(['list', 'compare', 'validate', 'create', 'switch']);
 
-const CI_SUBCOMMANDS = new Set<string>([
-  'validate',
-  'check-sync',
-  'scan',
-  'setup',
-]);
+const CI_SUBCOMMANDS = new Set<string>(['validate', 'check-sync', 'scan', 'setup']);
 
 // -----------------------------------------------------------------------------
 // Options that take values
@@ -220,10 +209,14 @@ export function parseArgs(args: string[]): ParsedArgs {
   }
 
   // Resolve command string
-  const command = commandParts.length > 0
-    ? commandParts.join('.')
-    : (flags['--help'] || flags['-h']) ? 'help'
-    : (flags['--version'] || flags['-v'] as string === '--version' ? 'version' : 'help');
+  const command =
+    commandParts.length > 0
+      ? commandParts.join('.')
+      : flags['--help'] || flags['-h']
+        ? 'help'
+        : flags['--version'] || (flags['-v'] as string) === '--version'
+          ? 'version'
+          : 'help';
 
   return {
     command,
@@ -252,9 +245,7 @@ export function parseBoolean(value: string): boolean {
   if (['true', 'yes', '1', 'on'].includes(lower)) return true;
   if (['false', 'no', '0', 'off'].includes(lower)) return false;
 
-  throw new Error(
-    `Cannot parse "${value}" as boolean. Use: true/false, yes/no, 1/0, on/off`,
-  );
+  throw new Error(`Cannot parse "${value}" as boolean. Use: true/false, yes/no, 1/0, on/off`);
 }
 
 // -----------------------------------------------------------------------------

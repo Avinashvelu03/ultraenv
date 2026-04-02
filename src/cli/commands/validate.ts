@@ -69,7 +69,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
         // Find source
         let source = 'unknown';
         for (const pf of result.parsed) {
-          const found = pf.vars.find(v => v.key === key);
+          const found = pf.vars.find((v) => v.key === key);
           if (found) {
             source = pf.path.replace(envDir + '/', '');
             break;

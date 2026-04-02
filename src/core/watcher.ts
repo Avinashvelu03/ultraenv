@@ -195,11 +195,15 @@ export class EnvFileWatcher implements Watcher {
     if (this.shouldIgnore(filePath)) return;
 
     try {
-      const nativeWatcher = watch(filePath, {
-        persistent: true,
-      }, (eventType, filename) => {
-        this.handleFileEvent(eventType, filePath, filename);
-      });
+      const nativeWatcher = watch(
+        filePath,
+        {
+          persistent: true,
+        },
+        (eventType, filename) => {
+          this.handleFileEvent(eventType, filePath, filename);
+        },
+      );
 
       nativeWatcher.on('error', () => {
         // Emit a change event so consumers know to re-read the file
@@ -232,32 +236,36 @@ export class EnvFileWatcher implements Watcher {
     if (this.state.nativeWatchers.has(dirWatchKey)) return;
 
     try {
-      const nativeWatcher = watch(dirPath, {
-        persistent: true,
-      }, (eventType, filename) => {
-        if (filename === null) return;
+      const nativeWatcher = watch(
+        dirPath,
+        {
+          persistent: true,
+        },
+        (eventType, filename) => {
+          if (filename === null) return;
 
-        const fullPath = resolve(join(dirPath, filename));
+          const fullPath = resolve(join(dirPath, filename));
 
-        // Check if this is an .env file we should watch
-        if (isEnvFileName(filename) && !this.shouldIgnore(fullPath)) {
-          if (eventType === 'rename') {
-            if (existsSync(fullPath) && !this.state.nativeWatchers.has(fullPath)) {
-              // New file appeared — start watching it
-              this.watchFile(fullPath);
-              this.debouncedEmit(fullPath, 'add');
-            } else if (!existsSync(fullPath) && this.state.nativeWatchers.has(fullPath)) {
-              // File was deleted — stop watching
-              const watcher = this.state.nativeWatchers.get(fullPath);
-              if (watcher !== undefined) {
-                watcher.close();
-                this.state.nativeWatchers.delete(fullPath);
+          // Check if this is an .env file we should watch
+          if (isEnvFileName(filename) && !this.shouldIgnore(fullPath)) {
+            if (eventType === 'rename') {
+              if (existsSync(fullPath) && !this.state.nativeWatchers.has(fullPath)) {
+                // New file appeared — start watching it
+                this.watchFile(fullPath);
+                this.debouncedEmit(fullPath, 'add');
+              } else if (!existsSync(fullPath) && this.state.nativeWatchers.has(fullPath)) {
+                // File was deleted — stop watching
+                const watcher = this.state.nativeWatchers.get(fullPath);
+                if (watcher !== undefined) {
+                  watcher.close();
+                  this.state.nativeWatchers.delete(fullPath);
+                }
+                this.debouncedEmit(fullPath, 'unlink');
               }
-              this.debouncedEmit(fullPath, 'unlink');
             }
           }
-        }
-      });
+        },
+      );
 
       nativeWatcher.on('error', () => {
         // Directory watch error — silently retry later

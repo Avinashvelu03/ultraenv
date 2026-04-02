@@ -218,7 +218,7 @@ export class NumberSchemaBuilder<T extends number = number> extends SchemaBuilde
   step(n: number): NumberSchemaBuilder<T> {
     this._addValidator((value: T) => {
       const v = value as number;
-      if (n !== 0 && !Number.isFinite(v / n) || v % n !== 0) {
+      if ((n !== 0 && !Number.isFinite(v / n)) || v % n !== 0) {
         return `Value must be a multiple of ${n}, got ${v}`;
       }
       return null;

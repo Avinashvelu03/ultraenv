@@ -85,10 +85,7 @@ export function formatBytes(bytes: number): string {
   if (bytes < 0) return `-${formatBytes(Math.abs(bytes))}`;
 
   const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB'];
-  const exponent = Math.min(
-    Math.floor(Math.log(bytes) / Math.log(1024)),
-    units.length - 1,
-  );
+  const exponent = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
   const value = bytes / Math.pow(1024, exponent);
 
   // Use 0 decimal places for bytes and kilobytes, 2 for larger
@@ -239,17 +236,11 @@ export function alignTable(rows: readonly (readonly string[])[]): string {
   // Calculate max width for each column
   const colWidths: number[] = [];
   for (let col = 0; col < colCount; col++) {
-    const maxW = Math.max(
-      ...rows.map((row) => (col < row.length ? row[col]!.length : 0)),
-    );
+    const maxW = Math.max(...rows.map((row) => (col < row.length ? row[col]!.length : 0)));
     colWidths.push(maxW);
   }
 
   return rows
-    .map((row) =>
-      row
-        .map((cell, col) => padRight(cell, colWidths[col] ?? 0))
-        .join('  '),
-    )
+    .map((row) => row.map((cell, col) => padRight(cell, colWidths[col] ?? 0)).join('  '))
     .join('\n');
 }

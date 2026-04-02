@@ -76,7 +76,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     const hooksDir = join(gitRoot, '.git', 'hooks');
     const hookPath = join(hooksDir, 'pre-commit');
 
-    if (await exists(hookPath) && !args.flags['--force']) {
+    if ((await exists(hookPath)) && !args.flags['--force']) {
       writeLine(yellow('  A pre-commit hook already exists.'));
       writeLine(yellow(`  Path: ${hookPath}`));
       writeLine(yellow('  Use --force to overwrite.'));

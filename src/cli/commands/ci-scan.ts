@@ -22,10 +22,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       outputFormat: outputFormat as 'terminal' | 'json' | 'sarif',
     });
 
-    const formatted = formatScanResult(
-      result,
-      outputFormat as 'terminal' | 'json' | 'sarif',
-    );
+    const formatted = formatScanResult(result, outputFormat as 'terminal' | 'json' | 'sarif');
 
     process.stdout.write(formatted + '\n');
 

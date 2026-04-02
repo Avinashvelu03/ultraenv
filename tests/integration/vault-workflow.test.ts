@@ -20,10 +20,7 @@ import {
   isValidKeyFormat,
   deriveEnvironmentKey,
 } from '../../src/vault/key-manager.js';
-import {
-  parseVaultFile,
-  serializeVaultFile,
-} from '../../src/vault/vault-file.js';
+import { parseVaultFile, serializeVaultFile } from '../../src/vault/vault-file.js';
 import { randomBytes } from 'node:crypto';
 
 describe('integration: vault workflow', () => {
@@ -113,9 +110,7 @@ describe('integration: vault workflow', () => {
       const parsed = deserializeEnvData(decrypted);
 
       // Keys should match
-      expect(Object.keys(parsed).sort()).toEqual(
-        Object.keys(originalData).sort(),
-      );
+      expect(Object.keys(parsed).sort()).toEqual(Object.keys(originalData).sort());
 
       // Values should match
       for (const [k, v] of Object.entries(originalData)) {
@@ -191,7 +186,7 @@ describe('integration: vault workflow', () => {
 
       // Keys should be in alphabetical order in the serialized format
       const lines = decrypted.split('\n');
-      const keys = lines.map(line => line.split('=')[0]);
+      const keys = lines.map((line) => line.split('=')[0]);
       expect(keys).toEqual(['ALPHA', 'MIDDLE', 'ZEBRA']);
     });
   });
@@ -318,7 +313,16 @@ describe('integration: vault workflow', () => {
       const key = generateMasterKey();
       const encryptedValue = encryptValue('vault-secret-data', key);
 
-      const vaultMap = new Map<string, { name: string; varCount: number; lastModified: string; keyIds: string[]; encrypted: string }>();
+      const vaultMap = new Map<
+        string,
+        {
+          name: string;
+          varCount: number;
+          lastModified: string;
+          keyIds: string[];
+          encrypted: string;
+        }
+      >();
       vaultMap.set('development', {
         name: 'development',
         varCount: 5,
@@ -342,7 +346,16 @@ describe('integration: vault workflow', () => {
     it('serializes and parses a vault file with multiple environments', () => {
       const key = generateMasterKey();
 
-      const vaultMap = new Map<string, { name: string; varCount: number; lastModified: string; keyIds: string[]; encrypted: string }>();
+      const vaultMap = new Map<
+        string,
+        {
+          name: string;
+          varCount: number;
+          lastModified: string;
+          keyIds: string[];
+          encrypted: string;
+        }
+      >();
       vaultMap.set('development', {
         name: 'development',
         varCount: 3,
@@ -382,7 +395,16 @@ describe('integration: vault workflow', () => {
     it('serialized vault file starts with header comment', () => {
       const key = generateMasterKey();
 
-      const vaultMap = new Map<string, { name: string; varCount: number; lastModified: string; keyIds: string[]; encrypted: string }>();
+      const vaultMap = new Map<
+        string,
+        {
+          name: string;
+          varCount: number;
+          lastModified: string;
+          keyIds: string[];
+          encrypted: string;
+        }
+      >();
       vaultMap.set('development', {
         name: 'development',
         varCount: 1,
@@ -432,7 +454,16 @@ describe('integration: vault workflow', () => {
       const encrypted = encryptEnvironment(originalEnv, envKey);
 
       // Serialize the encrypted data as a vault file value
-      const vaultMap = new Map<string, { name: string; varCount: number; lastModified: string; keyIds: string[]; encrypted: string }>();
+      const vaultMap = new Map<
+        string,
+        {
+          name: string;
+          varCount: number;
+          lastModified: string;
+          keyIds: string[];
+          encrypted: string;
+        }
+      >();
       vaultMap.set('production', {
         name: 'production',
         varCount: Object.keys(originalEnv).length,

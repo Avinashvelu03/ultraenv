@@ -115,10 +115,7 @@ function padVisible(text: string, width: number): string {
  * });
  * console.log(box);
  */
-export function drawBox(
-  lines: readonly string[],
-  options?: Partial<BoxOptions>,
-): string {
+export function drawBox(lines: readonly string[], options?: Partial<BoxOptions>): string {
   const opts: Required<BoxOptions> = { ...DEFAULT_BOX_OPTIONS, ...options };
   const chars = BORDERS[opts.border];
 

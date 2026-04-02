@@ -115,10 +115,7 @@ const BUILTIN_TEMPLATES: ReadonlyMap<string, string> = new Map<string, string>([
 // Variable Extraction
 // -----------------------------------------------------------------------------
 
-function extractVariables(
-  content: string,
-  schema?: SchemaDefinition,
-): VariableDefinition[] {
+function extractVariables(content: string, schema?: SchemaDefinition): VariableDefinition[] {
   const parsed = parseEnvFile(content);
   const variables: VariableDefinition[] = [];
   const seenKeys = new Set<string>();
@@ -134,7 +131,10 @@ function extractVariables(
         value: '',
         description: schemaEntry.description,
         isSecret: r.isSecret === true,
-        isRequired: schemaEntry.optional !== true && schemaEntry.default === undefined && r.hasDefault !== true,
+        isRequired:
+          schemaEntry.optional !== true &&
+          schemaEntry.default === undefined &&
+          r.hasDefault !== true,
         hasDefault: schemaEntry.default !== undefined || r.hasDefault === true,
         defaultValue: typeof r.rawDefaultValue === 'string' ? r.rawDefaultValue : undefined,
         type: typeof r.typeName === 'string' ? r.typeName : 'string',
@@ -243,14 +243,11 @@ function validateEnvironmentName(name: string): void {
   }
 
   if (name.length > 64) {
-    throw new FileSystemError(
-      `Environment name too long: ${name.length} characters (max 64)`,
-      {
-        path: '',
-        operation: 'validate',
-        hint: 'Use a shorter environment name.',
-      },
-    );
+    throw new FileSystemError(`Environment name too long: ${name.length} characters (max 64)`, {
+      path: '',
+      operation: 'validate',
+      hint: 'Use a shorter environment name.',
+    });
   }
 
   if (!/^[a-zA-Z0-9_-]+$/.test(name)) {
@@ -266,14 +263,11 @@ function validateEnvironmentName(name: string): void {
 
   const reserved = ['local', 'example', 'template', 'bak', 'backup', 'old', 'tmp', 'temp'];
   if (reserved.includes(name.toLowerCase())) {
-    throw new FileSystemError(
-      `Reserved environment name: "${name}"`,
-      {
-        path: '',
-        operation: 'validate',
-        hint: `The name "${name}" is reserved. Choose a different name.`,
-      },
-    );
+    throw new FileSystemError(`Reserved environment name: "${name}"`, {
+      path: '',
+      operation: 'validate',
+      hint: `The name "${name}" is reserved. Choose a different name.`,
+    });
   }
 }
 
@@ -291,14 +285,11 @@ export async function createEnvironment(
   const outputPath = join(baseDir, `.env.${name}`);
 
   if (await exists(outputPath)) {
-    throw new FileSystemError(
-      `Environment file already exists: ".env.${name}"`,
-      {
-        path: outputPath,
-        operation: 'create',
-        hint: 'Delete the existing file first, or use a different environment name.',
-      },
-    );
+    throw new FileSystemError(`Environment file already exists: ".env.${name}"`, {
+      path: outputPath,
+      operation: 'create',
+      hint: 'Delete the existing file first, or use a different environment name.',
+    });
   }
 
   let content: string;
@@ -306,15 +297,12 @@ export async function createEnvironment(
 
   if (options?.copyFrom !== undefined) {
     const sourcePath = join(baseDir, `.env.${options.copyFrom}`);
-    if (!await exists(sourcePath)) {
-      throw new FileSystemError(
-        `Source environment not found: ".env.${options.copyFrom}"`,
-        {
-          path: sourcePath,
-          operation: 'read',
-          hint: `Ensure ".env.${options.copyFrom}" exists before copying.`,
-        },
-      );
+    if (!(await exists(sourcePath))) {
+      throw new FileSystemError(`Source environment not found: ".env.${options.copyFrom}"`, {
+        path: sourcePath,
+        operation: 'read',
+        hint: `Ensure ".env.${options.copyFrom}" exists before copying.`,
+      });
     }
     content = await readFile(sourcePath);
     variables = extractVariables(content, options?.schema);
@@ -328,8 +316,7 @@ export async function createEnvironment(
       ...sourceValues,
       ...options?.values,
     });
-  }
-  else if (options?.fromTemplate !== undefined) {
+  } else if (options?.fromTemplate !== undefined) {
     const templatePath = resolve(options.fromTemplate);
     const builtinTemplate = BUILTIN_TEMPLATES.get(options.fromTemplate.toLowerCase());
     if (builtinTemplate !== undefined) {
@@ -337,20 +324,16 @@ export async function createEnvironment(
     } else if (await exists(templatePath)) {
       content = await readFile(templatePath);
     } else {
-      throw new FileSystemError(
-        `Template not found: "${options.fromTemplate}"`,
-        {
-          path: templatePath,
-          operation: 'read',
-          hint: 'Use a built-in template name (nodejs, nextjs, docker) or a valid file path.',
-        },
-      );
+      throw new FileSystemError(`Template not found: "${options.fromTemplate}"`, {
+        path: templatePath,
+        operation: 'read',
+        hint: 'Use a built-in template name (nodejs, nextjs, docker) or a valid file path.',
+      });
     }
     variables = extractVariables(content, options?.schema);
     const values = collectValues(variables, options?.values);
     content = generateEnvironmentContent(variables, values);
-  }
-  else if (options?.schema !== undefined) {
+  } else if (options?.schema !== undefined) {
     const schemaVars: VariableDefinition[] = [];
     for (const [key, schemaEntry] of Object.entries(options.schema)) {
       const r = schemaEntry as unknown as Record<string, unknown>;
@@ -359,7 +342,10 @@ export async function createEnvironment(
         value: '',
         description: schemaEntry.description,
         isSecret: r.isSecret === true,
-        isRequired: schemaEntry.optional !== true && schemaEntry.default === undefined && r.hasDefault !== true,
+        isRequired:
+          schemaEntry.optional !== true &&
+          schemaEntry.default === undefined &&
+          r.hasDefault !== true,
         hasDefault: schemaEntry.default !== undefined || r.hasDefault === true,
         defaultValue: typeof r.rawDefaultValue === 'string' ? r.rawDefaultValue : undefined,
         type: typeof r.typeName === 'string' ? r.typeName : 'string',
@@ -367,8 +353,7 @@ export async function createEnvironment(
     }
     const values = collectValues(schemaVars, options?.values);
     content = generateEnvironmentContent(schemaVars, values);
-  }
-  else {
+  } else {
     content = [
       `# Environment: ${name}`,
       `# Created by ultraenv on ${new Date().toISOString()}`,
@@ -383,28 +368,31 @@ export async function createEnvironment(
 
 export function listTemplates(): ReadonlyArray<{ name: string; description: string }> {
   return [
-    { name: 'nodejs', description: 'Node.js backend environment (PORT, DATABASE_URL, JWT, CORS, etc.)' },
-    { name: 'nextjs', description: 'Next.js frontend environment (NEXT_PUBLIC_* variables, analytics, etc.)' },
-    { name: 'docker', description: 'Docker deployment environment (container ports, Postgres, Redis, etc.)' },
+    {
+      name: 'nodejs',
+      description: 'Node.js backend environment (PORT, DATABASE_URL, JWT, CORS, etc.)',
+    },
+    {
+      name: 'nextjs',
+      description: 'Next.js frontend environment (NEXT_PUBLIC_* variables, analytics, etc.)',
+    },
+    {
+      name: 'docker',
+      description: 'Docker deployment environment (container ports, Postgres, Redis, etc.)',
+    },
   ];
 }
 
-export async function removeEnvironment(
-  name: string,
-  cwd?: string,
-): Promise<void> {
+export async function removeEnvironment(name: string, cwd?: string): Promise<void> {
   const baseDir = resolve(cwd ?? process.cwd());
   const filePath = join(baseDir, `.env.${name}`);
 
-  if (!await exists(filePath)) {
-    throw new FileSystemError(
-      `Environment file not found: ".env.${name}"`,
-      {
-        path: filePath,
-        operation: 'unlink',
-        hint: 'The environment does not exist.',
-      },
-    );
+  if (!(await exists(filePath))) {
+    throw new FileSystemError(`Environment file not found: ".env.${name}"`, {
+      path: filePath,
+      operation: 'unlink',
+      hint: 'The environment does not exist.',
+    });
   }
 
   await removeFile(filePath);

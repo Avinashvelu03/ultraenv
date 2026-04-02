@@ -25,7 +25,8 @@ export interface UuidOptions {
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}$/;
 
-const UUID_V4_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
+const UUID_V4_REGEX =
+  /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$/;
 
 const UUID_REGEX = /^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/;
 
@@ -48,7 +49,7 @@ function validateUrl(value: string, opts: UrlOptions): string | null {
   try {
     const url = new URL(value);
     const protocols = opts.protocols ?? ['http', 'https'];
-    const allowed = protocols.map(p => p.toLowerCase());
+    const allowed = protocols.map((p) => p.toLowerCase());
     if (!allowed.includes(url.protocol.replace(':', ''))) {
       return `URL protocol must be one of: ${allowed.join(', ')}. Got "${url.protocol}"`;
     }

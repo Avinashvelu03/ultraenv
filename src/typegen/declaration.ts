@@ -73,9 +73,8 @@ function generateJSDoc(key: string, schema: SchemaEntry): string {
   const hasDefault = schema.default !== undefined || r.hasDefault === true;
   if (hasDefault) {
     const rawDefault = r.rawDefaultValue as string | undefined;
-    const defaultVal = r.isSecret === true
-      ? '[REDACTED]'
-      : rawDefault ?? String(schema.default ?? '');
+    const defaultVal =
+      r.isSecret === true ? '[REDACTED]' : (rawDefault ?? String(schema.default ?? ''));
     lines.push(` * @default ${defaultVal}`);
   }
 
@@ -151,15 +150,14 @@ export function generateDeclarationContent(
       lines.push(`${indentStr}${indentStr}${generateJSDoc(key, schemaEntry)}`);
     }
 
-    const tsType = schemaEntry !== undefined
-      ? schemaTypeToTsType(schemaEntry)
-      : 'string';
+    const tsType = schemaEntry !== undefined ? schemaTypeToTsType(schemaEntry) : 'string';
 
     const r = schemaEntry as unknown as Record<string, unknown> | undefined;
-    const isOptional = schemaEntry === undefined
-      || schemaEntry.optional === true
-      || schemaEntry.default !== undefined
-      || r?.hasDefault === true;
+    const isOptional =
+      schemaEntry === undefined ||
+      schemaEntry.optional === true ||
+      schemaEntry.default !== undefined ||
+      r?.hasDefault === true;
 
     const optionalMarker = isOptional ? '?' : '';
     lines.push(`${indentStr}${indentStr}${key}${optionalMarker}: ${tsType};`);

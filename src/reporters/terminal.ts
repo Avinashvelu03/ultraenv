@@ -83,7 +83,9 @@ export function reportValidation(
 
   if (result.valid) {
     const lines: string[] = [];
-    lines.push(`${c.green}${c.bold}  ✓${c.reset}  All ${Object.keys(result.validated).length} variables passed validation`);
+    lines.push(
+      `${c.green}${c.bold}  ✓${c.reset}  All ${Object.keys(result.validated).length} variables passed validation`,
+    );
     if (result.warnings.length > 0) {
       lines.push('');
       for (const warning of result.warnings) {
@@ -99,15 +101,15 @@ export function reportValidation(
     const fieldDisplay = `${c.red}${c.bold}${error.field}${c.reset}`;
     const messageDisplay = error.message;
     const expectedDisplay = `${c.dim}expected: ${error.expected}${c.reset}`;
-    const valueDisplay = error.value !== undefined && error.value !== ''
-      ? `${c.dim}value: ${maskValue(error.value)}${c.reset}`
-      : `${c.dim}value: (empty)${c.reset}`;
-    const hintDisplay = error.hint !== undefined
-      ? `${c.cyan}hint: ${error.hint}${c.reset}`
-      : '';
-    const sourceDisplay = error.source !== undefined
-      ? `${c.gray}source: ${error.source}${error.source !== undefined && error.lineNumber !== undefined ? `:${error.lineNumber}` : ''}${c.reset}`
-      : '';
+    const valueDisplay =
+      error.value !== undefined && error.value !== ''
+        ? `${c.dim}value: ${maskValue(error.value)}${c.reset}`
+        : `${c.dim}value: (empty)${c.reset}`;
+    const hintDisplay = error.hint !== undefined ? `${c.cyan}hint: ${error.hint}${c.reset}` : '';
+    const sourceDisplay =
+      error.source !== undefined
+        ? `${c.gray}source: ${error.source}${error.source !== undefined && error.lineNumber !== undefined ? `:${error.lineNumber}` : ''}${c.reset}`
+        : '';
 
     errorLines.push(`${fieldDisplay}  ${messageDisplay}`);
     errorLines.push(`  ${expectedDisplay}`);
@@ -126,14 +128,18 @@ export function reportValidation(
     output.push('');
     const warningLines: string[] = [];
     for (const warning of result.warnings) {
-      warningLines.push(`${c.yellow}⚠${c.reset} ${warning.field}: ${warning.message} ${c.dim}[${warning.code}]${c.reset}`);
+      warningLines.push(
+        `${c.yellow}⚠${c.reset} ${warning.field}: ${warning.message} ${c.dim}[${warning.code}]${c.reset}`,
+      );
     }
     output.push(warningLines.join('\n'));
   }
 
   if (result.unknown.length > 0) {
     output.push('');
-    output.push(`${c.gray}?${c.reset}  Unknown variables: ${result.unknown.map((u) => `${c.dim}${u}${c.reset}`).join(', ')}`);
+    output.push(
+      `${c.gray}?${c.reset}  Unknown variables: ${result.unknown.map((u) => `${c.dim}${u}${c.reset}`).join(', ')}`,
+    );
   }
 
   return output.join('\n');
@@ -146,18 +152,12 @@ export function reportValidation(
  * @param options - Reporter options
  * @returns Formatted terminal string
  */
-export function reportError(
-  error: UltraenvError,
-  options: TerminalReporterOptions = {},
-): string {
+export function reportError(error: UltraenvError, options: TerminalReporterOptions = {}): string {
   const { color = true, boxStyle = DEFAULT_BOX } = options;
   const c = color ? ANSI : noColorANSI();
 
   const code = error.code ?? 'ULTRAENV_ERROR';
-  const lines: string[] = [
-    `${c.red}${c.bold}Error [${code}]${c.reset}`,
-    `  ${error.message}`,
-  ];
+  const lines: string[] = [`${c.red}${c.bold}Error [${code}]${c.reset}`, `  ${error.message}`];
 
   if (error.hint !== undefined) {
     lines.push('');
@@ -175,10 +175,7 @@ export function reportError(
  * @param options - Reporter options
  * @returns Formatted terminal string
  */
-export function reportSuccess(
-  message: string,
-  options: TerminalReporterOptions = {},
-): string {
+export function reportSuccess(message: string, options: TerminalReporterOptions = {}): string {
   const { color = true } = options;
   const c = color ? ANSI : noColorANSI();
   return `${c.green}${c.bold}  ✓${c.reset}  ${message}`;
@@ -220,10 +217,7 @@ export function reportWarning(
  * @param options - Reporter options
  * @returns Formatted terminal string
  */
-export function reportInfo(
-  message: string,
-  options: TerminalReporterOptions = {},
-): string {
+export function reportInfo(message: string, options: TerminalReporterOptions = {}): string {
   const { color = true } = options;
   const c = color ? ANSI : noColorANSI();
   return `${c.blue}  ℹ${c.reset}  ${message}`;
@@ -271,16 +265,14 @@ export function reportScanResult(
 
   const rows = [header];
   for (const secret of result.secrets) {
-    const severityColor = secret.pattern.severity === 'critical'
-      ? c.red
-      : secret.pattern.severity === 'high'
-        ? c.yellow
-        : c.dim;
-    const severityIcon = secret.pattern.severity === 'critical'
-      ? '✗'
-      : secret.pattern.severity === 'high'
-        ? '!'
-        : '?';
+    const severityColor =
+      secret.pattern.severity === 'critical'
+        ? c.red
+        : secret.pattern.severity === 'high'
+          ? c.yellow
+          : c.dim;
+    const severityIcon =
+      secret.pattern.severity === 'critical' ? '✗' : secret.pattern.severity === 'high' ? '!' : '?';
 
     const lastSlash = secret.file.lastIndexOf('/');
     const lastBackslash = secret.file.lastIndexOf('\\');

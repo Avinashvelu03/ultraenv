@@ -140,10 +140,10 @@ export class ArraySchemaBuilder extends SchemaBuilder<string[]> {
     const parser = (raw: string): ParseResult<string[]> => {
       let items = raw.split(sep);
       if (trim) {
-        items = items.map(item => item.trim());
+        items = items.map((item) => item.trim());
       }
       if (filterEmpty) {
-        items = items.filter(item => item.length > 0);
+        items = items.filter((item) => item.length > 0);
       }
       return { success: true, value: items };
     };

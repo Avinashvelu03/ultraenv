@@ -136,8 +136,10 @@ export const ENTROPY_SECRET_PATTERN: SecretPattern = {
   pattern: /./, // Placeholder; actual detection is entropy-based
   confidence: 0.5,
   severity: 'medium',
-  description: 'String with high Shannon entropy that may be a secret or token not caught by specific patterns.',
-  remediation: 'Review this value to determine if it is sensitive. If confirmed as a secret, move to a vault or environment variable.',
+  description:
+    'String with high Shannon entropy that may be a secret or token not caught by specific patterns.',
+  remediation:
+    'Review this value to determine if it is sensitive. If confirmed as a secret, move to a vault or environment variable.',
   category: 'entropy',
 };
 
@@ -193,9 +195,7 @@ function extractCandidates(line: string): Array<{ value: string; column: number 
     if (captured === undefined) continue;
     // Avoid duplicates with already-extracted candidates
     const tokenIndex = tokenMatch.index + 1;
-    const existing = candidates.some(
-      (c) => c.value === captured && c.column === tokenIndex,
-    );
+    const existing = candidates.some((c) => c.value === captured && c.column === tokenIndex);
     if (!existing) {
       candidates.push({ value: captured, column: tokenMatch.index + 1 });
     }

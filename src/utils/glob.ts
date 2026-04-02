@@ -99,10 +99,12 @@ async function walkDir(
   let entries: DirEntry[];
   try {
     const raw: Dirent[] = await readdir(dir, { withFileTypes: true });
-    entries = raw.map((entry: Dirent): DirEntry => ({
-      name: entry.name,
-      isDir: entry.isDirectory(),
-    }));
+    entries = raw.map(
+      (entry: Dirent): DirEntry => ({
+        name: entry.name,
+        isDir: entry.isDirectory(),
+      }),
+    );
   } catch {
     return; // Skip directories we can't read
   }

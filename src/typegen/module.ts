@@ -91,9 +91,8 @@ function generateModuleJSDoc(key: string, schema: SchemaEntry): string {
   const hasDefault = schema.default !== undefined || r.hasDefault === true;
   if (hasDefault) {
     const rawDefault = r.rawDefaultValue as string | undefined;
-    const defaultDisplay = r.isSecret === true
-      ? '[REDACTED]'
-      : rawDefault ?? String(schema.default ?? '');
+    const defaultDisplay =
+      r.isSecret === true ? '[REDACTED]' : (rawDefault ?? String(schema.default ?? ''));
     lines.push(` * @default ${defaultDisplay}`);
   }
 

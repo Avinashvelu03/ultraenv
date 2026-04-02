@@ -55,9 +55,7 @@ function closeInterface(rl: readline.Interface): void {
 export function prompt(message: string, options?: PromptOptions): Promise<string> {
   return new Promise<string>((resolve) => {
     const rl = createReadlineInterface();
-    const suffix = options?.default !== undefined
-      ? ` (${options.default})`
-      : '';
+    const suffix = options?.default !== undefined ? ` (${options.default})` : '';
     const requiredMark = options?.required ? ' *' : '';
 
     rl.question(`${message}${suffix}${requiredMark}: `, (answer) => {
@@ -73,9 +71,7 @@ export function prompt(message: string, options?: PromptOptions): Promise<string
       }
 
       // Use default if empty
-      const value = trimmed === '' && options?.default !== undefined
-        ? options.default
-        : trimmed;
+      const value = trimmed === '' && options?.default !== undefined ? options.default : trimmed;
 
       // Validate
       if (options?.validate !== undefined) {
@@ -177,14 +173,16 @@ export function select(message: string, choices: string[]): Promise<string> {
 
       // Check if they typed the choice directly
       const lower = trimmed.toLowerCase();
-      const match = choices.find(c => c.toLowerCase() === lower);
+      const match = choices.find((c) => c.toLowerCase() === lower);
       if (match !== undefined) {
         resolve(match);
         return;
       }
 
       // Invalid — try again
-      process.stderr.write(`  Invalid selection. Please enter a number between 1 and ${choices.length}.\n`);
+      process.stderr.write(
+        `  Invalid selection. Please enter a number between 1 and ${choices.length}.\n`,
+      );
       select(message, choices).then(resolve);
     });
   });

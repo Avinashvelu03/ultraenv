@@ -26,7 +26,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     // Read vault
     const vaultPath = join(baseDir, '.env.vault');
-    if (!await exists(vaultPath)) {
+    if (!(await exists(vaultPath))) {
       writeError(red('  .env.vault not found.'));
       return 1;
     }
@@ -46,7 +46,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       rawKey = parseKey(keyInput);
     } else {
       const keysPath = join(baseDir, '.env.keys');
-      if (!await exists(keysPath)) {
+      if (!(await exists(keysPath))) {
         writeError(red('  No encryption key provided and .env.keys not found.'));
         return 1;
       }

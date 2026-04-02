@@ -44,9 +44,7 @@ const presets: Record<string, Preset> = {};
  */
 export function registerPreset(name: string, preset: Preset): void {
   if (presets[name] !== undefined) {
-    process.stderr.write(
-      `[ultraenv] Warning: overwriting existing preset "${name}"\n`,
-    );
+    process.stderr.write(`[ultraenv] Warning: overwriting existing preset "${name}"\n`);
   }
   presets[name] = preset;
 }
@@ -115,9 +113,7 @@ export function unregisterPreset(name: string): boolean {
  * @returns Array of presets matching the given tag
  */
 export function getPresetsByTag(tag: string): Preset[] {
-  return Object.values(presets).filter(
-    (preset) => preset.tags.includes(tag),
-  );
+  return Object.values(presets).filter((preset) => preset.tags.includes(tag));
 }
 
 /**
@@ -166,16 +162,9 @@ export {
 };
 
 // Re-export preset-specific helpers
-export {
-  isNextPublicVar,
-  isServerOnlyVar,
-  detectClientLeakCandidates,
-} from './nextjs.js';
+export { isNextPublicVar, isServerOnlyVar, detectClientLeakCandidates } from './nextjs.js';
 
-export {
-  isVitePublicVar,
-  detectViteClientLeakCandidates,
-} from './vite.js';
+export { isVitePublicVar, detectViteClientLeakCandidates } from './vite.js';
 
 export {
   classifyNuxtVar,
@@ -184,18 +173,8 @@ export {
   detectNuxtClientLeakCandidates,
 } from './nuxt.js';
 
-export {
-  isSveltekitPublicVar,
-  detectSveltekitClientLeakCandidates,
-} from './sveltekit.js';
+export { isSveltekitPublicVar, detectSveltekitClientLeakCandidates } from './sveltekit.js';
 
-export {
-  isDockerArg,
-  isDockerEnv,
-} from './docker.js';
+export { isDockerArg, isDockerEnv } from './docker.js';
 
-export {
-  isAwsSystemVar,
-  isAwsVar,
-  getLambdaContext,
-} from './aws-lambda.js';
+export { isAwsSystemVar, isAwsVar, getLambdaContext } from './aws-lambda.js';

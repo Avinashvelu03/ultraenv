@@ -62,12 +62,11 @@ export type IsOptional<S> = S extends { __optional: true } ? true : false;
 export type ExtractDefault<S> = S extends { __default: infer D } ? D : never;
 
 /** Resolve the final output type of a schema */
-export type ResolveOutput<S> =
-  S extends { __optional: true }
-    ? ExtractType<S> | undefined
-    : S extends { __default: infer D }
-      ? D
-      : ExtractType<S>;
+export type ResolveOutput<S> = S extends { __optional: true }
+  ? ExtractType<S> | undefined
+  : S extends { __default: infer D }
+    ? D
+    : ExtractType<S>;
 
 // -----------------------------------------------------------------------------
 // SchemaBuilder — Core Chainable Class

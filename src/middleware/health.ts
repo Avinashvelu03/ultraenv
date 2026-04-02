@@ -91,9 +91,7 @@ export function healthCheck(options: HealthCheckOptions = {}): HealthCheckResult
   } = options;
 
   // Count non-empty env vars
-  const envKeys = Object.entries(source).filter(
-    ([, value]) => value !== undefined && value !== '',
-  );
+  const envKeys = Object.entries(source).filter(([, value]) => value !== undefined && value !== '');
   const loaded = envKeys.length;
 
   // Determine environment name
@@ -103,14 +101,15 @@ export function healthCheck(options: HealthCheckOptions = {}): HealthCheckResult
   const valid = validCount ?? loaded;
 
   // Build file list (strip absolute paths to relative)
-  const files = loadedFiles.length > 0
-    ? loadedFiles.map((f) => {
-        const lastSlash = f.lastIndexOf('/');
-        const lastBackslash = f.lastIndexOf('\\');
-        const lastSep = Math.max(lastSlash, lastBackslash);
-        return lastSep >= 0 ? f.slice(lastSep + 1) : f;
-      })
-    : [];
+  const files =
+    loadedFiles.length > 0
+      ? loadedFiles.map((f) => {
+          const lastSlash = f.lastIndexOf('/');
+          const lastBackslash = f.lastIndexOf('\\');
+          const lastSep = Math.max(lastSlash, lastBackslash);
+          return lastSep >= 0 ? f.slice(lastSep + 1) : f;
+        })
+      : [];
 
   return {
     status: 'ok',
@@ -198,13 +197,7 @@ export function readinessCheck(
  * Checks common variables in priority order.
  */
 function detectEnvironment(env: Record<string, string | undefined>): string {
-  const candidates = [
-    'NODE_ENV',
-    'APP_ENV',
-    'ENVIRONMENT',
-    'ENV',
-    'STAGE',
-  ];
+  const candidates = ['NODE_ENV', 'APP_ENV', 'ENVIRONMENT', 'ENV', 'STAGE'];
 
   for (const candidate of candidates) {
     const value = env[candidate];

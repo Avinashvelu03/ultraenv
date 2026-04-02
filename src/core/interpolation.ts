@@ -30,13 +30,13 @@ interface ParsedExpression {
 }
 
 type InterpolationOp =
-  | 'simple'       // ${VAR}
-  | 'default'      // ${VAR-default} or ${VAR:-default}
-  | 'alternative'  // ${VAR+alt} or ${VAR:+alt}
-  | 'error'        // ${VAR?err} or ${VAR:?err}
-  | 'uppercase'    // ${VAR^^}
-  | 'lowercase'    // ${VAR,,}
-  | 'substring';   // ${VAR:offset:length}
+  | 'simple' // ${VAR}
+  | 'default' // ${VAR-default} or ${VAR:-default}
+  | 'alternative' // ${VAR+alt} or ${VAR:+alt}
+  | 'error' // ${VAR?err} or ${VAR:?err}
+  | 'uppercase' // ${VAR^^}
+  | 'lowercase' // ${VAR,,}
+  | 'substring'; // ${VAR:offset:length}
 
 // -----------------------------------------------------------------------------
 // Expression Parser
@@ -125,9 +125,9 @@ function parseExpression(expr: string): ParsedExpression {
     return {
       varName,
       op: 'alternative',
-/* v8 ignore start */
+      /* v8 ignore start */
       operand: useColon ? rest.slice(1) : rest,
-/* v8 ignore stop */
+      /* v8 ignore stop */
       useColon,
     };
   }
@@ -141,9 +141,9 @@ function parseExpression(expr: string): ParsedExpression {
     return {
       varName,
       op: 'error',
-/* v8 ignore start */
+      /* v8 ignore start */
       operand: useColon ? rest.slice(1) : rest,
-/* v8 ignore stop */
+      /* v8 ignore stop */
       useColon,
     };
   }
@@ -219,9 +219,9 @@ function evaluateExpression(
     case 'alternative': {
       // With colon (:+): use replacement if set AND non-empty
       // Without colon (+): use replacement if set (even if empty)
-/* v8 ignore start */
+      /* v8 ignore start */
       const shouldAlt = parsed.useColon ? isNonEmpty : isSet;
-/* v8 ignore stop */
+      /* v8 ignore stop */
       if (shouldAlt) {
         return expandValue(parsed.operand, currentDepth);
       }
@@ -231,20 +231,20 @@ function evaluateExpression(
     case 'error': {
       // With colon (:?): error if unset OR empty
       // Without colon (?): error if unset only
-/* v8 ignore start */
+      /* v8 ignore start */
       const shouldError = parsed.useColon ? !isNonEmpty : !isSet;
-/* v8 ignore stop */
+      /* v8 ignore stop */
       if (shouldError) {
         const expandedMsg = expandValue(parsed.operand, currentDepth);
         throw new InterpolationError(
-/* v8 ignore start */
+          /* v8 ignore start */
           `Variable "${parsed.varName}" is ${parsed.useColon ? 'unset or empty' : 'unset'}: ${expandedMsg}`,
-/* v8 ignore stop */
+          /* v8 ignore stop */
           {
             variable: parsed.varName,
-/* v8 ignore start */
+            /* v8 ignore start */
             hint: parsed.operand || `Set the "${parsed.varName}" variable in your .env file.`,
-/* v8 ignore stop */
+            /* v8 ignore stop */
           },
         );
       }
@@ -259,16 +259,16 @@ function evaluateExpression(
 
     case 'substring': {
       const parts = parsed.operand.split(':');
-/* v8 ignore start */
+      /* v8 ignore start */
       const offset = parts[0] !== undefined ? parseInt(parts[0], 10) : 0;
-/* v8 ignore stop */
+      /* v8 ignore stop */
       const lengthArg = parts[1] !== undefined ? parseInt(parts[1], 10) : undefined;
 
       if (!isSet) return '';
 
-/* v8 ignore start */
+      /* v8 ignore start */
       if (Number.isNaN(offset)) return value;
-/* v8 ignore stop */
+      /* v8 ignore stop */
 
       const safeOffset = offset < 0 ? Math.max(0, value.length + offset) : offset;
 
@@ -341,12 +341,9 @@ export function expandVariables(
    */
   function expandValue(raw: string, depth: number): string {
     if (depth > maxDepth) {
-      throw new InterpolationError(
-        `Maximum interpolation depth (${maxDepth}) exceeded`,
-        {
-          hint: 'Check for deeply nested variable references. Consider simplifying your variable definitions.',
-        },
-      );
+      throw new InterpolationError(`Maximum interpolation depth (${maxDepth}) exceeded`, {
+        hint: 'Check for deeply nested variable references. Consider simplifying your variable definitions.',
+      });
     }
 
     const result: string[] = [];
@@ -398,14 +395,11 @@ export function expandVariables(
           // Circular reference detection
           if (resolving.has(parsed.varName)) {
             const chain = Array.from(resolving).concat(parsed.varName).join(' → ');
-            throw new InterpolationError(
-              `Circular variable reference detected: ${chain}`,
-              {
-                variable: parsed.varName,
-                circular: true,
-                hint: 'Break the cycle by removing one of the circular references.',
-              },
-            );
+            throw new InterpolationError(`Circular variable reference detected: ${chain}`, {
+              variable: parsed.varName,
+              circular: true,
+              hint: 'Break the cycle by removing one of the circular references.',
+            });
           }
 
           resolving.add(parsed.varName);
@@ -447,14 +441,11 @@ export function expandVariables(
         // Circular reference detection
         if (resolving.has(varName)) {
           const chain = Array.from(resolving).concat(varName).join(' → ');
-          throw new InterpolationError(
-            `Circular variable reference detected: ${chain}`,
-            {
-              variable: varName,
-              circular: true,
-              hint: 'Break the cycle by removing one of the circular references.',
-            },
-          );
+          throw new InterpolationError(`Circular variable reference detected: ${chain}`, {
+            variable: varName,
+            circular: true,
+            hint: 'Break the cycle by removing one of the circular references.',
+          });
         }
 
         resolving.add(varName);
@@ -511,10 +502,10 @@ function findClosingBrace(str: string, startIndex: number): number {
       continue;
     }
 
-/* v8 ignore start */
+    /* v8 ignore start */
     if (ch === '{') {
       depth++;
-/* v8 ignore stop */
+      /* v8 ignore stop */
     } else if (ch === '}') {
       depth--;
       if (depth === 0) {

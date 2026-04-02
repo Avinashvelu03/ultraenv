@@ -84,17 +84,15 @@ const HMAC_DIGEST_LENGTH = 64;
  */
 export function computeIntegrity(data: string, key: Buffer): string {
   if (key.length === 0) {
-    throw new EncryptionError(
-      'Cannot compute integrity with an empty key',
-      { hint: 'Provide a valid encryption key for integrity computation.' },
-    );
+    throw new EncryptionError('Cannot compute integrity with an empty key', {
+      hint: 'Provide a valid encryption key for integrity computation.',
+    });
   }
 
   if (data.length === 0) {
-    throw new EncryptionError(
-      'Cannot compute integrity for empty data',
-      { hint: 'Provide non-empty data for integrity computation.' },
-    );
+    throw new EncryptionError('Cannot compute integrity for empty data', {
+      hint: 'Provide non-empty data for integrity computation.',
+    });
   }
 
   const hmac = createHmac(HMAC_ALGORITHM, key);
@@ -125,42 +123,37 @@ export function computeIntegrity(data: string, key: Buffer): string {
  *   throw new Error('Data has been tampered with!');
  * }
  */
-export function verifyIntegrity(
-  data: string,
-  key: Buffer,
-  expected: string,
-): boolean {
+export function verifyIntegrity(data: string, key: Buffer, expected: string): boolean {
   if (key.length === 0) {
-    throw new EncryptionError(
-      'Cannot verify integrity with an empty key',
-    );
+    throw new EncryptionError('Cannot verify integrity with an empty key');
   }
 
   if (expected.length !== HMAC_DIGEST_LENGTH) {
     throw new EncryptionError(
       `Invalid expected digest length: expected ${HMAC_DIGEST_LENGTH} hex characters, got ${expected.length}`,
-      { hint: 'The integrity digest should be a 64-character lowercase hex string from computeIntegrity().' },
+      {
+        hint: 'The integrity digest should be a 64-character lowercase hex string from computeIntegrity().',
+      },
     );
   }
 
   if (!/^[0-9a-f]{64}$/.test(expected)) {
-    throw new EncryptionError(
-      'Invalid expected digest format: must be a lowercase hex string',
-      { hint: 'Ensure the stored digest is a 64-character lowercase hex string.' },
-    );
+    throw new EncryptionError('Invalid expected digest format: must be a lowercase hex string', {
+      hint: 'Ensure the stored digest is a 64-character lowercase hex string.',
+    });
   }
 
   try {
     const computed = computeIntegrity(data, key);
     return timingSafeEqualHex(computed, expected);
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch (error: unknown) {
     if (error instanceof EncryptionError) throw error;
     throw new EncryptionError('Integrity verification failed', {
       cause: error instanceof Error ? error : undefined,
     });
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------
@@ -195,15 +188,11 @@ export function computeVaultChecksum(
   key: Buffer,
 ): string {
   if (key.length === 0) {
-    throw new EncryptionError(
-      'Cannot compute vault checksum with an empty key',
-    );
+    throw new EncryptionError('Cannot compute vault checksum with an empty key');
   }
 
   if (environments.size === 0) {
-    throw new EncryptionError(
-      'Cannot compute vault checksum for empty environment set',
-    );
+    throw new EncryptionError('Cannot compute vault checksum for empty environment set');
   }
 
   // Sort environment names for deterministic ordering
@@ -213,9 +202,9 @@ export function computeVaultChecksum(
   const parts: string[] = [];
   for (const name of sortedNames) {
     const entry = environments.get(name);
-/* v8 ignore start */
+    /* v8 ignore start */
     if (entry === undefined) continue;
-/* v8 ignore stop */
+    /* v8 ignore stop */
 
     // Include the encrypted data if available (VaultEntry extends VaultEnvironment)
     const encrypted = (entry as unknown as Record<string, unknown>)['encrypted'];
@@ -250,9 +239,7 @@ export function verifyVaultChecksum(
   expected: string,
 ): boolean {
   if (key.length === 0) {
-    throw new EncryptionError(
-      'Cannot verify vault checksum with an empty key',
-    );
+    throw new EncryptionError('Cannot verify vault checksum with an empty key');
   }
 
   if (expected.length !== HMAC_DIGEST_LENGTH) {
@@ -264,14 +251,14 @@ export function verifyVaultChecksum(
   try {
     const computed = computeVaultChecksum(environments, key);
     return timingSafeEqualHex(computed, expected);
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch (error: unknown) {
     if (error instanceof EncryptionError) throw error;
     throw new EncryptionError('Vault checksum verification failed', {
       cause: error instanceof Error ? error : undefined,
     });
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------
@@ -319,9 +306,9 @@ export function checkIntegrity(
       source,
     };
   } catch (error: unknown) {
-/* v8 ignore start */
+    /* v8 ignore start */
     const message = error instanceof Error ? error.message : String(error);
-/* v8 ignore stop */
+    /* v8 ignore stop */
     return {
       valid: false,
       message: `Integrity check ERROR for "${source}": ${message}`,
@@ -399,12 +386,12 @@ export function checkVaultIntegrity(
   try {
     vaultChecksum = computeVaultChecksum(environments, key);
     vaultValid = timingSafeEqualHex(vaultChecksum, expectedChecksum);
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch {
     vaultChecksum = '';
     vaultValid = false;
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   return {
     valid: vaultValid && failedCount === 0,
@@ -442,7 +429,7 @@ function timingSafeEqualHex(a: string, b: string): boolean {
   // timingSafeEqual requires same-length buffers.
   // If lengths differ, we compare against a zeroed buffer of the expected length.
   // This ensures constant-time behavior even when lengths differ.
-/* v8 ignore start */
+  /* v8 ignore start */
   if (bufA.length !== bufB.length) {
     // Always allocate the larger size to avoid short-circuit timing
     const maxLen = Math.max(bufA.length, bufB.length);
@@ -457,13 +444,13 @@ function timingSafeEqualHex(a: string, b: string): boolean {
     }
     return false;
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   try {
     return cryptoTimingSafeEqual(bufA, bufB);
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch {
     return false;
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }

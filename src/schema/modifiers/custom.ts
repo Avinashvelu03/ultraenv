@@ -23,7 +23,10 @@ import { SchemaBuilder } from '../builder.js';
  * });
  * ```
  */
-export function applyCustom<T>(builder: SchemaBuilder<T>, fn: (value: T) => string | null): SchemaBuilder<T> {
+export function applyCustom<T>(
+  builder: SchemaBuilder<T>,
+  fn: (value: T) => string | null,
+): SchemaBuilder<T> {
   void builder;
   void fn;
   return builder;
@@ -56,7 +59,10 @@ export function maxLength<T extends string>(n: number): (value: T) => string | n
 /**
  * Create a validator that checks a condition with a custom error message.
  */
-export function check<T>(condition: (value: T) => boolean, message: string): (value: T) => string | null {
+export function check<T>(
+  condition: (value: T) => boolean,
+  message: string,
+): (value: T) => string | null {
   return (value: T) => {
     if (!condition(value)) {
       return message;
@@ -68,7 +74,9 @@ export function check<T>(condition: (value: T) => boolean, message: string): (va
 /**
  * Combine multiple validators with short-circuit evaluation.
  */
-export function allOf<T>(...validators: ReadonlyArray<(value: T) => string | null>): (value: T) => string | null {
+export function allOf<T>(
+  ...validators: ReadonlyArray<(value: T) => string | null>
+): (value: T) => string | null {
   return (value: T) => {
     for (const validator of validators) {
       const error = validator(value);

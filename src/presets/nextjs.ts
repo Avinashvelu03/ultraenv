@@ -205,10 +205,7 @@ export function isNextPublicVar(name: string): boolean {
 export function isServerOnlyVar(name: string): boolean {
   if (isNextPublicVar(name)) return false;
   // Built-in Next.js vars that are fine without the prefix
-  const allowedWithoutPrefix = new Set([
-    'NODE_ENV',
-    'NEXT_TELEMETRY_DISABLED',
-  ]);
+  const allowedWithoutPrefix = new Set(['NODE_ENV', 'NEXT_TELEMETRY_DISABLED']);
   if (allowedWithoutPrefix.has(name)) return false;
   return true;
 }
@@ -222,8 +219,14 @@ export function isServerOnlyVar(name: string): boolean {
 export function detectClientLeakCandidates(vars: Record<string, string>): readonly string[] {
   const warnings: string[] = [];
   const secretIndicators = [
-    'SECRET', 'PASSWORD', 'TOKEN', 'KEY', 'PRIVATE', 'CREDENTIAL',
-    'API_KEY', 'ACCESS_KEY',
+    'SECRET',
+    'PASSWORD',
+    'TOKEN',
+    'KEY',
+    'PRIVATE',
+    'CREDENTIAL',
+    'API_KEY',
+    'ACCESS_KEY',
   ];
 
   for (const key of Object.keys(vars)) {
@@ -251,7 +254,8 @@ export function detectClientLeakCandidates(vars: Record<string, string>): readon
 export const nextjsPreset: Preset = {
   id: 'nextjs',
   name: 'Next.js',
-  description: 'Configuration preset for Next.js applications with client/server variable separation',
+  description:
+    'Configuration preset for Next.js applications with client/server variable separation',
   schema: nextjsSchema,
   files: NEXTJS_FILES,
   tags: ['framework', 'react', 'ssr', 'fullstack'],

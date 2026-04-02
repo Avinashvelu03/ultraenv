@@ -18,11 +18,15 @@ export interface SemverValidatorOptions {
 
 // SemVer 2.0.0 regex components
 const SEMVER_CORE = '(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)';
-const SEMVER_PRERELEASE = '(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))';
+const SEMVER_PRERELEASE =
+  '(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))';
 const SEMVER_BUILD = '(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))';
 
-const STRICT_SEMVER_REGEX = new RegExp(`^${SEMVER_CORE}(?:${SEMVER_PRERELEASE})?(?:${SEMVER_BUILD})?$`);
-const LOOSE_SEMVER_REGEX = /^v?(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?(?:\.(0|[1-9]\d*))?(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
+const STRICT_SEMVER_REGEX = new RegExp(
+  `^${SEMVER_CORE}(?:${SEMVER_PRERELEASE})?(?:${SEMVER_BUILD})?$`,
+);
+const LOOSE_SEMVER_REGEX =
+  /^v?(0|[1-9]\d*)(?:\.(0|[1-9]\d*))?(?:\.(0|[1-9]\d*))?(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
 
 function parseAndValidateSemver(raw: string, opts: SemverValidatorOptions): ParseResult<string> {
   const trimmed = raw.trim();
@@ -50,7 +54,9 @@ function parseAndValidateSemver(raw: string, opts: SemverValidatorOptions): Pars
 
   if (!loose) {
     // Extract prerelease and build metadata
-    const match = content.match(new RegExp(`^${SEMVER_CORE}(?:${SEMVER_PRERELEASE})?(?:${SEMVER_BUILD})?$`));
+    const match = content.match(
+      new RegExp(`^${SEMVER_CORE}(?:${SEMVER_PRERELEASE})?(?:${SEMVER_BUILD})?$`),
+    );
     if (match) {
       const prerelease = match[4];
       const build = match[5];

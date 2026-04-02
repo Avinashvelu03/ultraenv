@@ -82,9 +82,9 @@ export class ValidationError extends UltraenvError {
       cause?: Error;
     } = {},
   ) {
-/* v8 ignore start */
+    /* v8 ignore start */
     const fullMessage = message || `Validation failed for "${field}"`;
-/* v8 ignore stop */
+    /* v8 ignore stop */
     super(fullMessage, {
       code: 'VALIDATION_ERROR',
       hint:
@@ -130,9 +130,10 @@ export class ParseError extends UltraenvError {
       cause?: Error;
     } = {},
   ) {
-    const location = options.line !== undefined
-      ? ` at line ${options.line}${options.column !== undefined ? `, column ${options.column}` : ''}`
-      : '';
+    const location =
+      options.line !== undefined
+        ? ` at line ${options.line}${options.column !== undefined ? `, column ${options.column}` : ''}`
+        : '';
     const file = options.filePath !== undefined ? ` in "${options.filePath}"` : '';
     const fullMessage = `${message}${file}${location}`;
 
@@ -344,18 +345,19 @@ export class FileSystemError extends UltraenvError {
       cause?: Error;
     } = {},
   ) {
-    const fsCode = options.code ?? (options.cause as NodeJS.ErrnoException | undefined)?.code ?? 'UNKNOWN';
-    const opHint = options.path !== undefined
-/* v8 ignore start */
-      ? `Could not ${options.operation ?? 'access'} "${options.path}".`
-/* v8 ignore stop */
-      : '';
+    const fsCode =
+      options.code ?? (options.cause as NodeJS.ErrnoException | undefined)?.code ?? 'UNKNOWN';
+    const opHint =
+      options.path !== undefined
+        ? /* v8 ignore start */
+          `Could not ${options.operation ?? 'access'} "${options.path}".`
+        : /* v8 ignore stop */
+          '';
 
     super(message, {
       code: `FS_${fsCode}`,
       hint:
-        options.hint ??
-        `${opHint} Ensure the file exists and you have the necessary permissions.`,
+        options.hint ?? `${opHint} Ensure the file exists and you have the necessary permissions.`,
       cause: options.cause,
     });
     this.path = options.path ?? '';

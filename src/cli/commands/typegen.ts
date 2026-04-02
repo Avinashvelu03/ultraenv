@@ -17,13 +17,16 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     const envDir = resolve(cwd);
 
     // Parse format: declaration | module | json-schema
-    const format = ((args.flags['--format'] as string) ?? 'declaration') as 'declaration' | 'module' | 'json-schema';
+    const format = ((args.flags['--format'] as string) ?? 'declaration') as
+      | 'declaration'
+      | 'module'
+      | 'json-schema';
 
     // Output path
     const outFlag = args.flags['--out'] as string | undefined;
     const defaultOutPaths: Record<string, string> = {
-      'declaration': 'src/env.d.ts',
-      'module': 'src/env.ts',
+      declaration: 'src/env.d.ts',
+      module: 'src/env.ts',
       'json-schema': 'env.schema.json',
     };
     const outputPath = outFlag
@@ -46,27 +49,21 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     if (format === 'declaration') {
       const { generateDeclarationContent } = await import('../../typegen/declaration.js');
-      content = generateDeclarationContent(
-        result.env,
-        schema,
-        { interfaceName, jsdoc: true, indent: 4 },
-      );
+      content = generateDeclarationContent(result.env, schema, {
+        interfaceName,
+        jsdoc: true,
+        indent: 4,
+      });
     } else if (format === 'module') {
       const { generateModuleContent } = await import('../../typegen/module.js');
       if (!schema) {
         writeError(yellow('  Warning: No schema defined. Generating empty module.'));
         writeError(yellow('  Add a schema to your .ultraenvrc.json for typed output.'));
       }
-      content = generateModuleContent(
-        schema ?? {},
-        { interfaceName, jsdoc: true, indent: 2 },
-      );
+      content = generateModuleContent(schema ?? {}, { interfaceName, jsdoc: true, indent: 2 });
     } else if (format === 'json-schema') {
       const { generateJsonSchemaContent } = await import('../../typegen/json-schema.js');
-      content = generateJsonSchemaContent(
-        schema ?? {},
-        { includeDescriptions: true, indent: 2 },
-      );
+      content = generateJsonSchemaContent(schema ?? {}, { includeDescriptions: true, indent: 2 });
     }
 
     // Write output

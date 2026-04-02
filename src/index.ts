@@ -46,11 +46,7 @@ export type { UltraenvConfig } from './core/types.js';
 // -----------------------------------------------------------------------------
 
 export { defineEnv, tryDefineEnv, validate, t } from './schema/index.js';
-export type {
-  SchemaDefinition,
-  InferSchema,
-  SchemaBuilder,
-} from './schema/index.js';
+export type { SchemaDefinition, InferSchema, SchemaBuilder } from './schema/index.js';
 
 // -----------------------------------------------------------------------------
 // Watcher (Hot Reload)
@@ -120,33 +116,17 @@ export {
   removeCustomPattern,
   resetPatterns,
 } from './scanner/patterns.js';
-export {
-  detectHighEntropyStrings,
-  scanLineForEntropy,
-} from './scanner/entropy.js';
+export { detectHighEntropyStrings, scanLineForEntropy } from './scanner/entropy.js';
 export { scanFiles } from './scanner/file-scanner.js';
-export {
-  scanGitHistory,
-  scanDiff,
-  scanStagedFiles,
-} from './scanner/git-scanner.js';
+export { scanGitHistory, scanDiff, scanStagedFiles } from './scanner/git-scanner.js';
 export { formatScanResult } from './scanner/reporter.js';
-export type {
-  ScanResult,
-  DetectedSecret,
-  SecretPattern,
-  ScanOptions,
-} from './core/types.js';
+export type { ScanResult, DetectedSecret, SecretPattern, ScanOptions } from './core/types.js';
 
 // -----------------------------------------------------------------------------
 // Sync (.env.example)
 // -----------------------------------------------------------------------------
 
-export {
-  generateExampleFile,
-  generateExampleContent,
-  needsUpdate,
-} from './sync/generator.js';
+export { generateExampleFile, generateExampleContent, needsUpdate } from './sync/generator.js';
 export { compareSync, compareValues } from './sync/comparator.js';
 export { createSyncWatcher } from './sync/watcher.js';
 export type { SyncResult, SyncDiff } from './core/types.js';
@@ -155,18 +135,10 @@ export type { SyncResult, SyncDiff } from './core/types.js';
 // TypeGen (TypeScript Type Generation)
 // -----------------------------------------------------------------------------
 
-export {
-  generateDeclaration,
-} from './typegen/declaration.js';
-export {
-  generateModule,
-} from './typegen/module.js';
-export {
-  generateJsonSchema,
-} from './typegen/json-schema.js';
-export {
-  createTypegenWatcher,
-} from './typegen/watcher.js';
+export { generateDeclaration } from './typegen/declaration.js';
+export { generateModule } from './typegen/module.js';
+export { generateJsonSchema } from './typegen/json-schema.js';
+export { createTypegenWatcher } from './typegen/watcher.js';
 export type { TypegenOptions } from './core/types.js';
 
 // -----------------------------------------------------------------------------
@@ -180,10 +152,7 @@ export {
   getActiveEnvironment,
   discoverEnvironments,
 } from './environments/manager.js';
-export {
-  compareEnvironments,
-  formatComparison,
-} from './environments/comparator.js';
+export { compareEnvironments, formatComparison } from './environments/comparator.js';
 export {
   createEnvironment,
   removeEnvironment,
@@ -229,9 +198,7 @@ export {
   reportError as reportErrorJson,
   reportScanResult as reportScanResultJson,
 } from './reporters/json.js';
-export {
-  reportScanResult as reportScanResultSarif,
-} from './reporters/sarif.js';
+export { reportScanResult as reportScanResultSarif } from './reporters/sarif.js';
 
 // -----------------------------------------------------------------------------
 // Error Classes

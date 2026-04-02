@@ -140,7 +140,7 @@ export const COUNTRIES: readonly Country[] = [
   { code: 'KR', name: 'Korea, Republic of', alpha3: 'KOR' },
   { code: 'KW', name: 'Kuwait', alpha3: 'KWT' },
   { code: 'KG', name: 'Kyrgyzstan', alpha3: 'KGZ' },
-  { code: 'LA', name: 'Lao People\'s Democratic Republic', alpha3: 'LAO' },
+  { code: 'LA', name: "Lao People's Democratic Republic", alpha3: 'LAO' },
   { code: 'LV', name: 'Latvia', alpha3: 'LVA' },
   { code: 'LB', name: 'Lebanon', alpha3: 'LBN' },
   { code: 'LS', name: 'Lesotho', alpha3: 'LSO' },
@@ -269,7 +269,7 @@ export const COUNTRIES: readonly Country[] = [
 ] as const;
 
 /** Pre-computed Set of alpha-2 country codes for O(1) lookups */
-const ALPHA2_SET = new Set<string>(COUNTRIES.map(c => c.code));
+const ALPHA2_SET = new Set<string>(COUNTRIES.map((c) => c.code));
 
 /**
  * Check whether a given string is a valid ISO 3166-1 alpha-2 country code.

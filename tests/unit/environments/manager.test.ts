@@ -1,8 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import {
-  listEnvironments,
-  validateAllEnvironments,
-} from '../../../src/environments/manager.js';
+import { listEnvironments, validateAllEnvironments } from '../../../src/environments/manager.js';
 
 // Mock the dependencies
 vi.mock('node:fs', () => ({
@@ -177,9 +174,7 @@ describe('environments manager', () => {
       const results = await validateAllEnvironments(schema, '/project');
       for (const [, result] of results) {
         if (!result.valid) {
-          const numberErrors = result.errors.filter(
-            (e) => e.message.includes('number'),
-          );
+          const numberErrors = result.errors.filter((e) => e.message.includes('number'));
           expect(numberErrors.length).toBeGreaterThanOrEqual(1);
         }
       }
@@ -196,9 +191,7 @@ describe('environments manager', () => {
       const results = await validateAllEnvironments(schema, '/project');
       for (const [, result] of results) {
         if (!result.valid) {
-          const boolErrors = result.errors.filter(
-            (e) => e.message.includes('boolean'),
-          );
+          const boolErrors = result.errors.filter((e) => e.message.includes('boolean'));
           expect(boolErrors.length).toBeGreaterThanOrEqual(1);
         }
       }

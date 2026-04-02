@@ -35,17 +35,20 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'AWS IAM Access Key ID. Grants programmatic access to AWS resources.',
-    remediation: 'Rotate the key immediately in the AWS IAM Console. Use environment variables or a secrets manager. Never commit access keys to source control.',
+    remediation:
+      'Rotate the key immediately in the AWS IAM Console. Use environment variables or a secrets manager. Never commit access keys to source control.',
     category: 'aws',
   },
   {
     id: 'aws-secret-access-key',
     name: 'AWS Secret Access Key',
-    pattern: /(?:^|["'\s:=,`])(aws(.{0,20})?(secret|Secret|SECRET)(.{0,20})?[=\s]\s*["']?)([A-Za-z0-9/+=]{40})(?:["'\s,`;]|$)/gm,
+    pattern:
+      /(?:^|["'\s:=,`])(aws(.{0,20})?(secret|Secret|SECRET)(.{0,20})?[=\s]\s*["']?)([A-Za-z0-9/+=]{40})(?:["'\s,`;]|$)/gm,
     confidence: 0.85,
     severity: 'critical',
     description: 'AWS Secret Access Key. The secret counterpart to an AWS Access Key ID.',
-    remediation: 'Rotate the key immediately. Use AWS IAM to generate new credentials and store them in a secure vault.',
+    remediation:
+      'Rotate the key immediately. Use AWS IAM to generate new credentials and store them in a secure vault.',
     category: 'aws',
   },
   {
@@ -55,7 +58,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'AWS temporary session token (STS). Grants short-lived AWS credentials.',
-    remediation: 'Do not commit session tokens. They expire but should still be treated as sensitive. Use role-based access instead.',
+    remediation:
+      'Do not commit session tokens. They expire but should still be treated as sensitive. Use role-based access instead.',
     category: 'aws',
   },
   {
@@ -64,8 +68,10 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     pattern: /(?:^|["'\s:=,(])(\d{12})(?:["'\s,)]|$)/gm,
     confidence: 0.3,
     severity: 'medium',
-    description: 'Potential AWS Account ID (12-digit number). May indicate hardcoded AWS resource references.',
-    remediation: 'Use environment variables or parameter store for account IDs. Avoid hardcoding account-specific identifiers.',
+    description:
+      'Potential AWS Account ID (12-digit number). May indicate hardcoded AWS resource references.',
+    remediation:
+      'Use environment variables or parameter store for account IDs. Avoid hardcoding account-specific identifiers.',
     category: 'aws',
   },
 
@@ -78,8 +84,10 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     pattern: /(?:^|["'\s:=,`])(ghp_[A-Za-z0-9_]{36,})(?:["'\s,`;]|$)/gm,
     confidence: 0.95,
     severity: 'critical',
-    description: 'GitHub Personal Access Token (classic). Grants access to GitHub APIs and repositories.',
-    remediation: 'Revoke the token immediately at GitHub Settings > Developer settings > Personal access tokens. Use GitHub Secrets or a vault.',
+    description:
+      'GitHub Personal Access Token (classic). Grants access to GitHub APIs and repositories.',
+    remediation:
+      'Revoke the token immediately at GitHub Settings > Developer settings > Personal access tokens. Use GitHub Secrets or a vault.',
     category: 'github',
   },
   {
@@ -89,7 +97,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'GitHub OAuth Access Token. Used for OAuth-based GitHub authentication.',
-    remediation: 'Revoke the OAuth application at GitHub Settings > Developer settings > OAuth Apps. Rotate the token.',
+    remediation:
+      'Revoke the OAuth application at GitHub Settings > Developer settings > OAuth Apps. Rotate the token.',
     category: 'github',
   },
   {
@@ -99,7 +108,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'GitHub App Installation Token. Grants repository-scoped access via a GitHub App.',
-    remediation: 'Revoke the app installation and generate a new token. Store tokens in a secure vault with short TTL.',
+    remediation:
+      'Revoke the app installation and generate a new token. Store tokens in a secure vault with short TTL.',
     category: 'github',
   },
   {
@@ -109,7 +119,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'GitHub Refresh Token. Used to obtain new user-to-server tokens.',
-    remediation: 'Revoke the refresh token at GitHub Settings > Developer settings. Regenerate and store securely.',
+    remediation:
+      'Revoke the refresh token at GitHub Settings > Developer settings. Regenerate and store securely.',
     category: 'github',
   },
   {
@@ -119,7 +130,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'GitHub User-to-Server Token. Grants a user access to a GitHub App.',
-    remediation: 'Revoke the token at GitHub Settings > Developer settings. Use GitHub Secrets for storage.',
+    remediation:
+      'Revoke the token at GitHub Settings > Developer settings. Use GitHub Secrets for storage.',
     category: 'github',
   },
   {
@@ -129,7 +141,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'high',
     description: 'GitHub Webhook Secret. Used to verify the authenticity of webhook payloads.',
-    remediation: 'Regenerate the webhook secret in repository settings. Store in a secure vault. Never commit to source.',
+    remediation:
+      'Regenerate the webhook secret in repository settings. Store in a secure vault. Never commit to source.',
     category: 'github',
   },
 
@@ -143,7 +156,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'Stripe Live Secret Key. Can process live payments and access customer data.',
-    remediation: 'Roll the API key immediately in the Stripe Dashboard. Use environment variables and never commit to source.',
+    remediation:
+      'Roll the API key immediately in the Stripe Dashboard. Use environment variables and never commit to source.',
     category: 'stripe',
   },
   {
@@ -153,7 +167,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.7,
     severity: 'medium',
     description: 'Stripe Live Publishable Key. Designed to be public but should not be hardcoded.',
-    remediation: 'Use environment variables for publishable keys to enable environment-specific configuration.',
+    remediation:
+      'Use environment variables for publishable keys to enable environment-specific configuration.',
     category: 'stripe',
   },
   {
@@ -163,7 +178,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'Stripe Restricted Key. Scoped API key with limited permissions for live mode.',
-    remediation: 'Roll the restricted key in the Stripe Dashboard. Store in a vault with proper access controls.',
+    remediation:
+      'Roll the restricted key in the Stripe Dashboard. Store in a vault with proper access controls.',
     category: 'stripe',
   },
 
@@ -177,7 +193,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'Slack Bot Token (xoxb-). Grants API access to Slack workspace.',
-    remediation: 'Revoke the bot token at api.slack.com/apps. Rotate and store in a secrets manager.',
+    remediation:
+      'Revoke the bot token at api.slack.com/apps. Rotate and store in a secrets manager.',
     category: 'slack',
   },
   {
@@ -207,7 +224,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'high',
     description: 'Slack Incoming Webhook URL. Can be used to post messages to Slack channels.',
-    remediation: 'Rotate the webhook URL in your Slack app configuration. Use environment variables.',
+    remediation:
+      'Rotate the webhook URL in your Slack app configuration. Use environment variables.',
     category: 'slack',
   },
 
@@ -221,17 +239,20 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.85,
     severity: 'high',
     description: 'Google API Key. Grants access to Google Cloud Platform services.',
-    remediation: 'Restrict the API key in Google Cloud Console > APIs & Services > Credentials. Set application restrictions and API restrictions.',
+    remediation:
+      'Restrict the API key in Google Cloud Console > APIs & Services > Credentials. Set application restrictions and API restrictions.',
     category: 'google',
   },
   {
     id: 'google-oauth-client-id',
     name: 'Google OAuth Client ID',
-    pattern: /(?:^|["'\s:=,`])(\d{4,}-[a-z0-9_]{32}\.apps\.googleusercontent\.com)(?:["'\s,`;]|$)/gm,
+    pattern:
+      /(?:^|["'\s:=,`])(\d{4,}-[a-z0-9_]{32}\.apps\.googleusercontent\.com)(?:["'\s,`;]|$)/gm,
     confidence: 0.85,
     severity: 'medium',
     description: 'Google OAuth Client ID. Identifies the application for OAuth flows.',
-    remediation: 'Restrict the OAuth client to specific domains in Google Cloud Console. Store in environment variables.',
+    remediation:
+      'Restrict the OAuth client to specific domains in Google Cloud Console. Store in environment variables.',
     category: 'google',
   },
   {
@@ -251,17 +272,20 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.8,
     severity: 'high',
     description: 'Google Firebase Cloud Messaging API Key (Server Key / Legacy).',
-    remediation: 'Migrate to Firebase Cloud Messaging v1 API. Use service account credentials instead of legacy API keys.',
+    remediation:
+      'Migrate to Firebase Cloud Messaging v1 API. Use service account credentials instead of legacy API keys.',
     category: 'google',
   },
   {
     id: 'google-service-account-private-key',
     name: 'Google Service Account Private Key',
-    pattern: /"private_key"\s*:\s*"(-----BEGIN (?:RSA |EC )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |EC )?PRIVATE KEY-----)"/gm,
+    pattern:
+      /"private_key"\s*:\s*"(-----BEGIN (?:RSA |EC )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |EC )?PRIVATE KEY-----)"/gm,
     confidence: 0.95,
     severity: 'critical',
     description: 'Google Cloud Service Account private key embedded in JSON credentials.',
-    remediation: 'Rotate the service account key in Google Cloud IAM. Use Workload Identity or ADC (Application Default Credentials) instead.',
+    remediation:
+      'Rotate the service account key in Google Cloud IAM. Use Workload Identity or ADC (Application Default Credentials) instead.',
     category: 'google',
   },
 
@@ -275,7 +299,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.99,
     severity: 'critical',
     description: 'RSA Private Key in PEM format. Used for TLS, SSH, or code signing.',
-    remediation: 'Remove the private key from source code. Generate a new key pair and store the private key in a hardware security module or vault.',
+    remediation:
+      'Remove the private key from source code. Generate a new key pair and store the private key in a hardware security module or vault.',
     category: 'keys',
   },
   {
@@ -285,7 +310,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.99,
     severity: 'critical',
     description: 'Elliptic Curve Private Key in PEM format.',
-    remediation: 'Remove from source code. Generate a new key pair and store the private key in a secure vault.',
+    remediation:
+      'Remove from source code. Generate a new key pair and store the private key in a secure vault.',
     category: 'keys',
   },
   {
@@ -305,7 +331,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.99,
     severity: 'critical',
     description: 'OpenSSH Private Key. Grants SSH access to remote systems.',
-    remediation: 'Remove from source code. Generate a new SSH key pair and store the private key securely.',
+    remediation:
+      'Remove from source code. Generate a new SSH key pair and store the private key securely.',
     category: 'keys',
   },
   {
@@ -355,11 +382,13 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
   {
     id: 'jwt-token',
     name: 'JSON Web Token',
-    pattern: /(?:^|["'\s:=,`])(eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,})(?:["'\s,`;]|$)/gm,
+    pattern:
+      /(?:^|["'\s:=,`])(eyJ[A-Za-z0-9_-]{10,}\.eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,})(?:["'\s,`;]|$)/gm,
     confidence: 0.75,
     severity: 'high',
     description: 'JSON Web Token (JWT). May contain sensitive claims and grant authentication.',
-    remediation: 'Do not hardcode JWTs. Use secure token exchange mechanisms and short-lived tokens.',
+    remediation:
+      'Do not hardcode JWTs. Use secure token exchange mechanisms and short-lived tokens.',
     category: 'auth',
   },
 
@@ -373,7 +402,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'MongoDB connection URI containing credentials and connection details.',
-    remediation: 'Store connection strings in a secrets manager. Use environment variables. Mask credentials in connection strings.',
+    remediation:
+      'Store connection strings in a secrets manager. Use environment variables. Mask credentials in connection strings.',
     category: 'database',
   },
   {
@@ -383,7 +413,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'PostgreSQL connection URI containing username and password.',
-    remediation: 'Store connection strings in a secrets manager. Use IAM authentication when possible.',
+    remediation:
+      'Store connection strings in a secrets manager. Use IAM authentication when possible.',
     category: 'database',
   },
   {
@@ -393,7 +424,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'MySQL connection URI containing username and password.',
-    remediation: 'Store connection strings in a secrets manager. Rotate database credentials regularly.',
+    remediation:
+      'Store connection strings in a secrets manager. Rotate database credentials regularly.',
     category: 'database',
   },
   {
@@ -403,7 +435,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.85,
     severity: 'critical',
     description: 'Redis connection URI with optional credentials.',
-    remediation: 'Store connection strings in a secrets manager. Enable TLS and use ACLs for authentication.',
+    remediation:
+      'Store connection strings in a secrets manager. Enable TLS and use ACLs for authentication.',
     category: 'database',
   },
   {
@@ -427,7 +460,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'SendGrid API Key. Grants access to send emails and manage contacts.',
-    remediation: 'Revoke the key in SendGrid Dashboard > Settings > API Keys. Store new key in a secrets manager.',
+    remediation:
+      'Revoke the key in SendGrid Dashboard > Settings > API Keys. Store new key in a secrets manager.',
     category: 'email',
   },
 
@@ -447,7 +481,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
   {
     id: 'twilio-auth-token',
     name: 'Twilio Auth Token',
-    pattern: /(?:twilio|TWILIO).{0,30}(?:auth|AUTH).{0,10}(?:token|TOKEN)[\s]*[:=][\s]*["']?([A-Za-z0-9]{32})(?:["'\s,`;]|$)/gm,
+    pattern:
+      /(?:twilio|TWILIO).{0,30}(?:auth|AUTH).{0,10}(?:token|TOKEN)[\s]*[:=][\s]*["']?([A-Za-z0-9]{32})(?:["'\s,`;]|$)/gm,
     confidence: 0.85,
     severity: 'critical',
     description: 'Twilio Account Auth Token. Grants full access to the Twilio account.',
@@ -465,13 +500,15 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'Azure Storage Account connection string containing the account key.',
-    remediation: 'Use Azure Key Vault or Managed Identity instead of connection strings. Rotate the account key.',
+    remediation:
+      'Use Azure Key Vault or Managed Identity instead of connection strings. Rotate the account key.',
     category: 'azure',
   },
   {
     id: 'azure-credential',
     name: 'Azure Credentials',
-    pattern: /(?:^|["'\s:=,`])([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.[A-Za-z0-9_-]{30,})(?:["'\s,`;]|$)/gm,
+    pattern:
+      /(?:^|["'\s:=,`])([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.[A-Za-z0-9_-]{30,})(?:["'\s,`;]|$)/gm,
     confidence: 0.75,
     severity: 'critical',
     description: 'Potential Azure service principal credential or managed identity token.',
@@ -489,7 +526,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'DigitalOcean API Token (v1). Grants full API access.',
-    remediation: 'Revoke the token in the DigitalOcean Control Panel > API > Tokens. Store in a secrets manager.',
+    remediation:
+      'Revoke the token in the DigitalOcean Control Panel > API > Tokens. Store in a secrets manager.',
     category: 'cloud',
   },
   {
@@ -499,7 +537,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'DigitalOcean Personal Access Token.',
-    remediation: 'Revoke the token in DigitalOcean settings and generate a new one. Store securely.',
+    remediation:
+      'Revoke the token in DigitalOcean settings and generate a new one. Store securely.',
     category: 'cloud',
   },
 
@@ -509,7 +548,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
   {
     id: 'heroku-api-key',
     name: 'Heroku API Key',
-    pattern: /(?:^|["'\s:=,`])([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-[a-f0-9]{16})(?:["'\s,`;]|$)/gm,
+    pattern:
+      /(?:^|["'\s:=,`])([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}-[a-f0-9]{16})(?:["'\s,`;]|$)/gm,
     confidence: 0.7,
     severity: 'high',
     description: 'Heroku API Key. Grants access to Heroku platform APIs.',
@@ -527,7 +567,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.95,
     severity: 'critical',
     description: 'NPM Access Token. Can be used to publish packages to the npm registry.',
-    remediation: 'Revoke the token at https://www.npmjs.com/settings/keys. Generate a new token with minimal scope.',
+    remediation:
+      'Revoke the token at https://www.npmjs.com/settings/keys. Generate a new token with minimal scope.',
     category: 'package-manager',
   },
 
@@ -541,17 +582,21 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.85,
     severity: 'high',
     description: 'Docker Hub credentials embedded in a registry URL.',
-    remediation: 'Use docker login with credentials stored securely. Use Docker credential helpers.',
+    remediation:
+      'Use docker login with credentials stored securely. Use Docker credential helpers.',
     category: 'container',
   },
   {
     id: 'docker-auth-token',
     name: 'Docker Registry Auth Token',
-    pattern: /(?:^|["'\s:=,`])(eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,})(?:["'\s,`;]|$)/gm,
+    pattern:
+      /(?:^|["'\s:=,`])(eyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{20,})(?:["'\s,`;]|$)/gm,
     confidence: 0.7,
     severity: 'high',
-    description: 'Docker Registry Bearer Token (JWT format). Used for container registry authentication.',
-    remediation: 'Do not store Docker auth tokens in source. Use docker credential store or CI secrets.',
+    description:
+      'Docker Registry Bearer Token (JWT format). Used for container registry authentication.',
+    remediation:
+      'Do not store Docker auth tokens in source. Use docker credential store or CI secrets.',
     category: 'container',
   },
 
@@ -565,7 +610,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.8,
     severity: 'medium',
     description: 'Firebase configuration block containing API keys and project identifiers.',
-    remediation: 'Use Firebase Admin SDK with service account credentials. Restrict API keys in Google Cloud Console.',
+    remediation:
+      'Use Firebase Admin SDK with service account credentials. Restrict API keys in Google Cloud Console.',
     category: 'google',
   },
 
@@ -603,7 +649,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.85,
     severity: 'high',
     description: 'Telegram Bot API Token. Grants control over a Telegram bot.',
-    remediation: 'Revoke the token by messaging @BotFather on Telegram. Generate a new token and store securely.',
+    remediation:
+      'Revoke the token by messaging @BotFather on Telegram. Generate a new token and store securely.',
     category: 'messaging',
   },
 
@@ -617,7 +664,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'Discord Bot Token. Grants full bot access to Discord guilds and channels.',
-    remediation: 'Reset the token in the Discord Developer Portal > Bot page. Store in environment variables.',
+    remediation:
+      'Reset the token in the Discord Developer Portal > Bot page. Store in environment variables.',
     category: 'messaging',
   },
   {
@@ -661,7 +709,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
   {
     id: 'base64-encoded-secret',
     name: 'Base64-Encoded Secret String',
-    pattern: /(?:^|["'\s:=,`])(?:password|secret|token|credential|apikey)(?:["'\s]*)[:=](?:["'\s]*)([A-Za-z0-9+/]{40,}={0,2})(?:["'\s,`;]|$)/gim,
+    pattern:
+      /(?:^|["'\s:=,`])(?:password|secret|token|credential|apikey)(?:["'\s]*)[:=](?:["'\s]*)([A-Za-z0-9+/]{40,}={0,2})(?:["'\s,`;]|$)/gim,
     confidence: 0.65,
     severity: 'high',
     description: 'A base64-encoded value assigned to a secret-related variable name.',
@@ -679,7 +728,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.7,
     severity: 'high',
     description: 'Generic API_KEY variable assignment with a suspicious value.',
-    remediation: 'Move API keys to a secrets manager or environment variables. Never hardcode in source.',
+    remediation:
+      'Move API keys to a secrets manager or environment variables. Never hardcode in source.',
     category: 'generic',
   },
   {
@@ -695,7 +745,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
   {
     id: 'generic-secret-assignment',
     name: 'Generic Secret Assignment',
-    pattern: /(?:^|["'\s])(?:SECRET|secret|Secret)[_-]?(?:KEY|key|Key)?\s*[:=]\s*["']([^\s"'`]{8,})["']/gm,
+    pattern:
+      /(?:^|["'\s])(?:SECRET|secret|Secret)[_-]?(?:KEY|key|Key)?\s*[:=]\s*["']([^\s"'`]{8,})["']/gm,
     confidence: 0.65,
     severity: 'high',
     description: 'Generic SECRET variable assignment with a suspicious value.',
@@ -719,11 +770,13 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
   {
     id: 'env-file-secret-pattern',
     name: '.env File Secret Pattern',
-    pattern: /(?:^|[\r\n])([A-Z][A-Z0-9_]*(?:(?:PASSWORD|SECRET|TOKEN|KEY|CREDENTIAL|PRIVATE|AUTH)[A-Z0-9_]*)\s*=\s*[^\s][^\r\n]{7,})(?:[\r\n]|$)/gm,
+    pattern:
+      /(?:^|[\r\n])([A-Z][A-Z0-9_]*(?:(?:PASSWORD|SECRET|TOKEN|KEY|CREDENTIAL|PRIVATE|AUTH)[A-Z0-9_]*)\s*=\s*[^\s][^\r\n]{7,})(?:[\r\n]|$)/gm,
     confidence: 0.7,
     severity: 'high',
     description: 'Environment variable with a secret-like name and a value in an .env file.',
-    remediation: 'Use ultraenv vault encryption for sensitive .env values. Never commit .env files to source control.',
+    remediation:
+      'Use ultraenv vault encryption for sensitive .env values. Never commit .env files to source control.',
     category: 'env',
   },
 
@@ -737,7 +790,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.8,
     severity: 'critical',
     description: 'URL containing embedded credentials (protocol://user:password@host).',
-    remediation: 'Remove credentials from URLs. Use environment variables for authentication parameters.',
+    remediation:
+      'Remove credentials from URLs. Use environment variables for authentication parameters.',
     category: 'generic',
   },
   {
@@ -747,7 +801,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.7,
     severity: 'high',
     description: 'Hardcoded password string in configuration or code.',
-    remediation: 'Replace with references to a secrets manager. Never store plain-text passwords in code.',
+    remediation:
+      'Replace with references to a secrets manager. Never store plain-text passwords in code.',
     category: 'generic',
   },
 
@@ -761,7 +816,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.99,
     severity: 'critical',
     description: 'SSH Private Key in any PEM format. Grants remote access to systems.',
-    remediation: 'Remove from source immediately. Generate a new SSH key pair. Store private key in SSH agent or vault.',
+    remediation:
+      'Remove from source immediately. Generate a new SSH key pair. Store private key in SSH agent or vault.',
     category: 'keys',
   },
 
@@ -775,7 +831,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.9,
     severity: 'critical',
     description: 'Cloudflare API Token. Grants access to Cloudflare services and zones.',
-    remediation: 'Revoke the token in Cloudflare Dashboard > My Profile > API Tokens. Store securely.',
+    remediation:
+      'Revoke the token in Cloudflare Dashboard > My Profile > API Tokens. Store securely.',
     category: 'cloud',
   },
   {
@@ -785,7 +842,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.4,
     severity: 'high',
     description: 'Potential Cloudflare Global API Key (24 hex + 13 chars).',
-    remediation: 'Revoke the key in Cloudflare Dashboard. Use scoped API tokens instead of global keys.',
+    remediation:
+      'Revoke the key in Cloudflare Dashboard. Use scoped API tokens instead of global keys.',
     category: 'cloud',
   },
 
@@ -841,7 +899,8 @@ export const SECRET_PATTERNS: readonly SecretPattern[] = [
     confidence: 0.3,
     severity: 'medium',
     description: 'Long base64-like string that may be a secret, token, or encoded credential.',
-    remediation: 'Review the value to determine if it is sensitive. Move to a secrets manager if confirmed.',
+    remediation:
+      'Review the value to determine if it is sensitive. Move to a secrets manager if confirmed.',
     category: 'generic',
   },
 ] as const;

@@ -8,11 +8,7 @@ import { randomBytes } from 'node:crypto';
 import { deriveKey, bufferToBase64, base64ToBuffer } from '../utils/crypto.js';
 import { EncryptionError } from '../core/errors.js';
 import { encryptValue } from './encryption.js';
-import {
-  KEY_PREFIX,
-  DEFAULT_KEY_LENGTH,
-  DEFAULT_SALT_LENGTH,
-} from '../core/constants.js';
+import { KEY_PREFIX, DEFAULT_KEY_LENGTH, DEFAULT_SALT_LENGTH } from '../core/constants.js';
 
 // -----------------------------------------------------------------------------
 // Constants
@@ -70,10 +66,7 @@ export function generateMasterKey(): Buffer {
  * const prodKey = deriveEnvironmentKey(masterKey, 'production');
  * // devKey !== prodKey — each environment has a unique key
  */
-export function deriveEnvironmentKey(
-  masterKey: Buffer,
-  environment: string,
-): Buffer {
+export function deriveEnvironmentKey(masterKey: Buffer, environment: string): Buffer {
   if (masterKey.length !== DEFAULT_KEY_LENGTH) {
     throw new EncryptionError(
       `Invalid master key length: expected ${DEFAULT_KEY_LENGTH} bytes, got ${masterKey.length}`,
@@ -82,10 +75,9 @@ export function deriveEnvironmentKey(
   }
 
   if (environment.length === 0) {
-    throw new EncryptionError(
-      'Environment name cannot be empty',
-      { hint: 'Provide a valid environment name (e.g., "development", "production").' },
-    );
+    throw new EncryptionError('Environment name cannot be empty', {
+      hint: 'Provide a valid environment name (e.g., "development", "production").',
+    });
   }
 
   if (HKDF_SALT.length < DEFAULT_SALT_LENGTH) {
@@ -99,15 +91,10 @@ export function deriveEnvironmentKey(
       `${HKDF_INFO_PREFIX}${environment}`,
       DEFAULT_KEY_LENGTH,
     );
-/* v8 ignore start */
+    /* v8 ignore start */
   }
 
-  return deriveKey(
-    masterKey,
-    HKDF_SALT,
-    `${HKDF_INFO_PREFIX}${environment}`,
-    DEFAULT_KEY_LENGTH,
-  );
+  return deriveKey(masterKey, HKDF_SALT, `${HKDF_INFO_PREFIX}${environment}`, DEFAULT_KEY_LENGTH);
 }
 /* v8 ignore stop */
 
@@ -168,25 +155,21 @@ export function parseKey(formatted: string): Buffer {
   const base64Part = formatted.slice(KEY_PREFIX.length);
 
   if (base64Part.length === 0) {
-    throw new EncryptionError(
-      'Invalid key format: base64 payload is empty after prefix',
-      { hint: 'The key appears to be truncated. Generate a new key.' },
-    );
+    throw new EncryptionError('Invalid key format: base64 payload is empty after prefix', {
+      hint: 'The key appears to be truncated. Generate a new key.',
+    });
   }
 
   try {
     return base64ToBuffer(base64Part);
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch (error: unknown) {
-    throw new EncryptionError(
-      'Failed to decode key: invalid base64 encoding',
-      {
-        cause: error instanceof Error ? error : undefined,
-        hint: 'The key may be corrupted. Generate a new key with "ultraenv key generate".',
-      },
-    );
+    throw new EncryptionError('Failed to decode key: invalid base64 encoding', {
+      cause: error instanceof Error ? error : undefined,
+      hint: 'The key may be corrupted. Generate a new key with "ultraenv key generate".',
+    });
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 /**
@@ -206,23 +189,23 @@ export function parseKey(formatted: string): Buffer {
 export function isValidKeyFormat(formatted: string): boolean {
   if (typeof formatted !== 'string') return false;
   if (formatted.length <= KEY_PREFIX.length) return false;
-/* v8 ignore start */
+  /* v8 ignore start */
   if (!formatted.startsWith(KEY_PREFIX)) return false;
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   const base64Part = formatted.slice(KEY_PREFIX.length);
-/* v8 ignore start */
+  /* v8 ignore start */
   if (base64Part.length === 0) return false;
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   try {
     const decoded = base64ToBuffer(base64Part);
     return decoded.length >= 16;
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch {
     return false;
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------
@@ -252,11 +235,11 @@ export function maskKey(formatted: string): string {
   const visibleEnd = 4;
   const maskedLength = formatted.length - visibleStart - visibleEnd;
 
-/* v8 ignore start */
+  /* v8 ignore start */
   if (maskedLength <= 0) {
     return '***';
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   const start = formatted.slice(0, visibleStart);
   const end = formatted.slice(-visibleEnd);
@@ -292,9 +275,7 @@ export function maskKey(formatted: string): string {
  * const masterKey = generateMasterKey();
  * const keysFile = generateKeysFile(['development', 'staging', 'production'], masterKey);
  */
-export function generateKeysFile(
-  environments: string[],
-): string {
+export function generateKeysFile(environments: string[]): string {
   const timestamp = new Date().toISOString();
   const lines: string[] = [
     '# ultraenv encryption keys — DO NOT COMMIT',
@@ -349,12 +330,9 @@ export function parseKeysFile(content: string): Map<string, string> {
       // Try without quotes
       const plainMatch = line.match(/^ULTRAENV_KEY_([A-Za-z0-9_]+)=(.*)$/);
       if (!plainMatch) {
-        throw new EncryptionError(
-          `Invalid keys file format at line ${i + 1}: "${line}"`,
-          {
-            hint: 'Each key entry should be in the format: ULTRAENV_KEY_{ENVIRONMENT}="ultraenv_key_v1_..."',
-          },
-        );
+        throw new EncryptionError(`Invalid keys file format at line ${i + 1}: "${line}"`, {
+          hint: 'Each key entry should be in the format: ULTRAENV_KEY_{ENVIRONMENT}="ultraenv_key_v1_..."',
+        });
       }
       const envName = plainMatch[1]!.toLowerCase();
       const keyValue = plainMatch[2]!;
@@ -392,11 +370,7 @@ export function parseKeysFile(content: string): Map<string, string> {
  * @example
  * const newEncrypted = rotateKey(oldEnvironmentKey, 'my-secret', newEnvironmentKey);
  */
-export function rotateKey(
-  oldKey: Buffer,
-  newData: string,
-  newKey: Buffer,
-): string {
+export function rotateKey(oldKey: Buffer, newData: string, newKey: Buffer): string {
   if (oldKey.length !== DEFAULT_KEY_LENGTH) {
     throw new EncryptionError(
       `Invalid old key length: expected ${DEFAULT_KEY_LENGTH} bytes, got ${oldKey.length}`,

@@ -22,10 +22,19 @@ describe('integration: cascade loading', () => {
     tempDir = new TempDir();
     cascadeDir = tempDir.path;
 
-    tempDir.write('.env', `DATABASE_URL=postgres://localhost/base\nAPP_NAME=ultraenv\nBASE_VAR=base_value\nSHARED=from_base`);
+    tempDir.write(
+      '.env',
+      `DATABASE_URL=postgres://localhost/base\nAPP_NAME=ultraenv\nBASE_VAR=base_value\nSHARED=from_base`,
+    );
     tempDir.write('.env.local', `DATABASE_URL=postgres://localhost/local\nLOCAL_ONLY=true`);
-    tempDir.write('.env.development', `DATABASE_URL=postgres://localhost/development\nNODE_ENV=development\nDEV_ONLY=yes\nSHARED=from_development`);
-    tempDir.write('.env.development.local', `DATABASE_URL=postgres://localhost/dev_local\nDEV_LOCAL_ONLY=true\nDEBUG=true`);
+    tempDir.write(
+      '.env.development',
+      `DATABASE_URL=postgres://localhost/development\nNODE_ENV=development\nDEV_ONLY=yes\nSHARED=from_development`,
+    );
+    tempDir.write(
+      '.env.development.local',
+      `DATABASE_URL=postgres://localhost/dev_local\nDEV_LOCAL_ONLY=true\nDEBUG=true`,
+    );
 
     // Force NODE_ENV=development so the cascade resolves correctly
     envMock = mockEnv({ NODE_ENV: 'development' });
@@ -41,12 +50,7 @@ describe('integration: cascade loading', () => {
   // ---------------------------------------------------------------------------
   describe('fixture setup', () => {
     it('all cascade fixture files exist', () => {
-      const expectedFiles = [
-        '.env',
-        '.env.local',
-        '.env.development',
-        '.env.development.local',
-      ];
+      const expectedFiles = ['.env', '.env.local', '.env.development', '.env.development.local'];
 
       for (const file of expectedFiles) {
         const filePath = path.join(cascadeDir, file);
@@ -72,9 +76,7 @@ describe('integration: cascade loading', () => {
       expect(cascade.existingFiles.length).toBe(4);
 
       // Check file names in order (lowest priority first)
-      const fileNames = cascade.files.map(f =>
-        path.basename(f.absolutePath),
-      );
+      const fileNames = cascade.files.map((f) => path.basename(f.absolutePath));
       expect(fileNames).toEqual([
         '.env',
         '.env.local',
@@ -89,7 +91,7 @@ describe('integration: cascade loading', () => {
         environment: 'development',
       });
 
-      const priorities = cascade.files.map(f => f.priority);
+      const priorities = cascade.files.map((f) => f.priority);
       for (let i = 1; i < priorities.length; i++) {
         expect(priorities[i]).toBeGreaterThan(priorities[i - 1]!);
       }
@@ -153,35 +155,29 @@ describe('integration: cascade loading', () => {
         environment: 'development',
       });
 
-      const parsedFiles = cascade.existingFiles.map(entry => {
+      const parsedFiles = cascade.existingFiles.map((entry) => {
         const content = fs.readFileSync(entry.absolutePath, 'utf-8');
         return parseEnvFile(content, entry.absolutePath);
       });
 
       // Parse individual files to check their DATABASE_URL
-      const baseFile = parsedFiles.find(f =>
-        path.basename(f.path) === '.env',
-      );
-      const localFile = parsedFiles.find(f =>
-        path.basename(f.path) === '.env.local',
-      );
-      const devFile = parsedFiles.find(f =>
-        path.basename(f.path) === '.env.development',
-      );
-      const devLocalFile = parsedFiles.find(f =>
-        path.basename(f.path) === '.env.development.local',
+      const baseFile = parsedFiles.find((f) => path.basename(f.path) === '.env');
+      const localFile = parsedFiles.find((f) => path.basename(f.path) === '.env.local');
+      const devFile = parsedFiles.find((f) => path.basename(f.path) === '.env.development');
+      const devLocalFile = parsedFiles.find(
+        (f) => path.basename(f.path) === '.env.development.local',
       );
 
-      expect(baseFile?.vars.find(v => v.key === 'DATABASE_URL')?.value).toBe(
+      expect(baseFile?.vars.find((v) => v.key === 'DATABASE_URL')?.value).toBe(
         'postgres://localhost/base',
       );
-      expect(localFile?.vars.find(v => v.key === 'DATABASE_URL')?.value).toBe(
+      expect(localFile?.vars.find((v) => v.key === 'DATABASE_URL')?.value).toBe(
         'postgres://localhost/local',
       );
-      expect(devFile?.vars.find(v => v.key === 'DATABASE_URL')?.value).toBe(
+      expect(devFile?.vars.find((v) => v.key === 'DATABASE_URL')?.value).toBe(
         'postgres://localhost/development',
       );
-      expect(devLocalFile?.vars.find(v => v.key === 'DATABASE_URL')?.value).toBe(
+      expect(devLocalFile?.vars.find((v) => v.key === 'DATABASE_URL')?.value).toBe(
         'postgres://localhost/dev_local',
       );
     });
@@ -248,7 +244,7 @@ describe('integration: cascade loading', () => {
       });
 
       // Parse and merge to populate source tracking
-      const parsedFiles = cascade.existingFiles.map(entry => {
+      const parsedFiles = cascade.existingFiles.map((entry) => {
         const content = fs.readFileSync(entry.absolutePath, 'utf-8');
         return parseEnvFile(content, entry.absolutePath);
       });

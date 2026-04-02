@@ -15,21 +15,62 @@ export interface TimezoneValidatorOptions {
 }
 
 // IANA timezone regex (area/location format)
-const IANA_TZ_REGEX = /^(?:Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific|Etc|UTC)\/[a-zA-Z0-9_+-]+(?:\/[a-zA-Z0-9_+-]+)*$/;
+const IANA_TZ_REGEX =
+  /^(?:Africa|America|Antarctica|Arctic|Asia|Atlantic|Australia|Europe|Indian|Pacific|Etc|UTC)\/[a-zA-Z0-9_+-]+(?:\/[a-zA-Z0-9_+-]+)*$/;
 
 // UTC offset regex (e.g., UTC+5:30, UTC-8, GMT+0)
 const UTC_OFFSET_REGEX = /^(?:UTC|GMT)(?:[+-](?:[01]?\d|2[0-3])(?::(?:[0-5]\d))?)?$/;
 
 // Common short timezone abbreviations
 const SHORT_TIMEZONES = new Set([
-  'UTC', 'GMT', 'EST', 'EDT', 'CST', 'CDT', 'MST', 'MDT', 'PST', 'PDT',
-  'AKST', 'AKDT', 'HST', 'HDT', 'SST', 'SDT', 'CHST',
-  'WET', 'WEST', 'CET', 'CEST', 'EET', 'EEST', 'MSK', 'MSD',
-  'AST', 'ADT', 'NST', 'NDT', 'GST', 'AZT', 'AFT', 'PKT', 'IST',
-  'NPT', 'BST', 'ICT', 'WIB', 'PHT', 'JST', 'KST', 'CST',
+  'UTC',
+  'GMT',
+  'EST',
+  'EDT',
+  'CST',
+  'CDT',
+  'MST',
+  'MDT',
+  'PST',
+  'PDT',
+  'AKST',
+  'AKDT',
+  'HST',
+  'HDT',
+  'SST',
+  'SDT',
+  'CHST',
+  'WET',
+  'WEST',
+  'CET',
+  'CEST',
+  'EET',
+  'EEST',
+  'MSK',
+  'MSD',
+  'AST',
+  'ADT',
+  'NST',
+  'NDT',
+  'GST',
+  'AZT',
+  'AFT',
+  'PKT',
+  'IST',
+  'NPT',
+  'BST',
+  'ICT',
+  'WIB',
+  'PHT',
+  'JST',
+  'KST',
+  'CST',
 ]);
 
-function parseAndValidateTimezone(raw: string, opts: TimezoneValidatorOptions): ParseResult<string> {
+function parseAndValidateTimezone(
+  raw: string,
+  opts: TimezoneValidatorOptions,
+): ParseResult<string> {
   const trimmed = raw.trim();
 
   if (trimmed.length === 0) {

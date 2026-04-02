@@ -161,11 +161,7 @@ export function ultraenvMiddleware(
     exposeNodeEnv,
   );
 
-  return (
-    _req: UltraenvRequest,
-    _res: UltraenvResponse,
-    next: UltraenvNextFunction,
-  ): void => {
+  return (_req: UltraenvRequest, _res: UltraenvResponse, next: UltraenvNextFunction): void => {
     _req.env = filteredEnv;
     next();
   };
@@ -254,9 +250,7 @@ export function healthCheckRoute(
   const { source = process.env as Record<string, string | undefined>, metadata = {} } = options;
 
   return (_req: UltraenvRequest, res: UltraenvResponse): void => {
-    const envKeys = Object.keys(source).filter(
-      (k) => source[k] !== undefined && source[k] !== '',
-    );
+    const envKeys = Object.keys(source).filter((k) => source[k] !== undefined && source[k] !== '');
     const nodeEnv = source['NODE_ENV'] ?? 'unknown';
 
     const response: Record<string, string | number | boolean> = {

@@ -107,7 +107,11 @@ export class JsonSchemaBuilder<T = unknown> extends SchemaBuilder<T> {
   /** Require a specific top-level key to exist */
   hasKey(key: string): JsonSchemaBuilder<T> {
     this._addValidator((value: T) => {
-      if (typeof value !== 'object' || value === null || !(key in (value as Record<string, unknown>))) {
+      if (
+        typeof value !== 'object' ||
+        value === null ||
+        !(key in (value as Record<string, unknown>))
+      ) {
         return `JSON object must have key "${key}"`;
       }
       return null;

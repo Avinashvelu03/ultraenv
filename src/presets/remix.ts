@@ -166,9 +166,15 @@ export function categorizeRemixVar(name: string): 'server-only' | 'config' | 'un
   const serverOnly = getRemixServerOnlyVars();
   if (serverOnly.has(name)) return 'server-only';
   const configVars = new Set([
-    'NODE_ENV', 'PORT', 'HOST', 'REMIX_DEV_ORIGIN',
-    'REMIX_PUBLIC_PATH', 'BASE_URL', 'DATABASE_POOL_SIZE',
-    'SESSION_MAX_AGE', 'AUTH_REDIRECT_URL',
+    'NODE_ENV',
+    'PORT',
+    'HOST',
+    'REMIX_DEV_ORIGIN',
+    'REMIX_PUBLIC_PATH',
+    'BASE_URL',
+    'DATABASE_POOL_SIZE',
+    'SESSION_MAX_AGE',
+    'AUTH_REDIRECT_URL',
   ]);
   if (configVars.has(name)) return 'config';
   return 'unknown';

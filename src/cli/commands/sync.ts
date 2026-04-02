@@ -49,7 +49,11 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
   }
 }
 
-async function checkSync(envPath: string, examplePath: string, ctx: CommandContext): Promise<number> {
+async function checkSync(
+  envPath: string,
+  examplePath: string,
+  ctx: CommandContext,
+): Promise<number> {
   const envExists = await exists(envPath);
   const exampleExists = await exists(examplePath);
 
@@ -57,7 +61,11 @@ async function checkSync(envPath: string, examplePath: string, ctx: CommandConte
     if (ctx.outputFormat === 'json') {
       writeJson({ inSync: false, error: '.env file not found' });
     } else {
-      writeError(yellow('  ⚠ .env file not found. Run "ultraenv sync --mode generate" to create .env.example.'));
+      writeError(
+        yellow(
+          '  ⚠ .env file not found. Run "ultraenv sync --mode generate" to create .env.example.',
+        ),
+      );
     }
     return 1;
   }
@@ -66,7 +74,9 @@ async function checkSync(envPath: string, examplePath: string, ctx: CommandConte
     if (ctx.outputFormat === 'json') {
       writeJson({ inSync: false, error: '.env.example not found' });
     } else {
-      writeError(yellow('  ⚠ .env.example not found. Run "ultraenv sync --mode generate" to create it.'));
+      writeError(
+        yellow('  ⚠ .env.example not found. Run "ultraenv sync --mode generate" to create it.'),
+      );
     }
     return 1;
   }
@@ -91,11 +101,14 @@ async function checkSync(envPath: string, examplePath: string, ctx: CommandConte
   writeLine('');
 
   if (!diff.inSync) {
-    const box = drawBox([
-      'Your .env is out of sync with .env.example.',
-      'Run "ultraenv sync --mode generate" to update .env.example',
-      'or "ultraenv sync --mode interactive" to review changes.',
-    ], { title: 'ACTION NEEDED', border: 'rounded' });
+    const box = drawBox(
+      [
+        'Your .env is out of sync with .env.example.',
+        'Run "ultraenv sync --mode generate" to update .env.example',
+        'or "ultraenv sync --mode interactive" to review changes.',
+      ],
+      { title: 'ACTION NEEDED', border: 'rounded' },
+    );
     writeLine(box);
     writeLine('');
     return 1;

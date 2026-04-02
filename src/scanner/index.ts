@@ -8,7 +8,12 @@
 import type { ScanOptions, ScanResult, DetectedSecret, SecretPattern } from '../core/types.js';
 import { scanFiles } from './file-scanner.js';
 import { scanGitHistory, scanStagedFiles, scanDiff } from './git-scanner.js';
-import { addCustomPattern, removeCustomPattern, resetPatterns, getRegisteredPatterns } from './patterns.js';
+import {
+  addCustomPattern,
+  removeCustomPattern,
+  resetPatterns,
+  getRegisteredPatterns,
+} from './patterns.js';
 import { formatScanResult } from './reporter.js';
 
 // -----------------------------------------------------------------------------
@@ -100,7 +105,10 @@ const SEVERITY_ORDER: Record<SeverityLevel, number> = {
  */
 function getSeverityFromPattern(pattern: SecretPattern): SeverityLevel {
   const patternWithSeverity = pattern as SecretPattern & { severity?: SeverityLevel };
-  if (patternWithSeverity.severity !== undefined && patternWithSeverity.severity in SEVERITY_ORDER) {
+  if (
+    patternWithSeverity.severity !== undefined &&
+    patternWithSeverity.severity in SEVERITY_ORDER
+  ) {
     return patternWithSeverity.severity;
   }
   if (pattern.confidence >= 0.9) return 'critical';
@@ -271,9 +279,4 @@ export {
   formatScanResult,
 };
 
-export type {
-  DetectedSecret,
-  ScanResult,
-  ScanOptions,
-  SecretPattern,
-};
+export type { DetectedSecret, ScanResult, ScanOptions, SecretPattern };

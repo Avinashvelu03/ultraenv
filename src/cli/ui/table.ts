@@ -91,10 +91,7 @@ function alignText(text: string, width: number, alignment: 'left' | 'center' | '
 /**
  * Calculate the natural width of each column (longest cell content).
  */
-function calculateColumnWidths(
-  headers: string[],
-  rows: readonly string[][],
-): number[] {
+function calculateColumnWidths(headers: string[], rows: readonly string[][]): number[] {
   const colCount = headers.length;
   const widths: number[] = [];
 
@@ -148,34 +145,29 @@ export function drawTable(
 
     if (availableWidth > 0) {
       const avgWidth = Math.floor(availableWidth / headers.length);
-      colWidths = naturalWidths.map(w => Math.min(w, Math.max(avgWidth, 4)));
+      colWidths = naturalWidths.map((w) => Math.min(w, Math.max(avgWidth, 4)));
     }
   }
 
   // Wrap all cell content to column widths
-  const wrappedHeaders: string[][] = headers.map((h, i) =>
-    wrapText(h, colWidths[i] ?? 8),
-  );
+  const wrappedHeaders: string[][] = headers.map((h, i) => wrapText(h, colWidths[i] ?? 8));
 
-  const wrappedRows: string[][][] = rows.map(row =>
-    row.map((cell, i) =>
-      wrapText(cell, colWidths[i] ?? 8),
-    ),
+  const wrappedRows: string[][][] = rows.map((row) =>
+    row.map((cell, i) => wrapText(cell, colWidths[i] ?? 8)),
   );
 
   // Determine the max number of lines per row
-  const maxHeaderLines = Math.max(...wrappedHeaders.map(lines => lines.length));
-  const maxRowLines = rows.length > 0
-    ? Math.max(...wrappedRows.map(row =>
-        Math.max(...row.map(cell => cell.length)),
-      ))
-    : 1;
+  const maxHeaderLines = Math.max(...wrappedHeaders.map((lines) => lines.length));
+  const maxRowLines =
+    rows.length > 0
+      ? Math.max(...wrappedRows.map((row) => Math.max(...row.map((cell) => cell.length))))
+      : 1;
   const maxLines = Math.max(maxHeaderLines, maxRowLines);
 
   const lines: string[] = [];
 
   // Build separator
-  const separatorParts = colWidths.map(w => '─'.repeat(w + opts.padding * 2));
+  const separatorParts = colWidths.map((w) => '─'.repeat(w + opts.padding * 2));
   const separator = `┌${separatorParts.join('┬')}┐`;
 
   // Header separator

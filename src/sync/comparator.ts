@@ -77,10 +77,7 @@ function parseToVars(content: string): ParsedVars {
  * @returns SyncDiff with categorized differences
  * @throws FileSystemError if either file cannot be read
  */
-export async function compareSync(
-  envPath: string,
-  examplePath: string,
-): Promise<SyncDiff> {
+export async function compareSync(envPath: string, examplePath: string): Promise<SyncDiff> {
   const envContent = await readFile(envPath);
   const exampleContent = await readFile(examplePath);
 

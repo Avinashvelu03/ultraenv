@@ -23,22 +23,20 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       writeLine('');
     }
 
-    const results = await validateAllEnvironments(
-      ctx.config.schema?.definitions ?? {},
-      cwd,
-    );
+    const results = await validateAllEnvironments(ctx.config.schema?.definitions ?? {}, cwd);
 
     if (ctx.outputFormat === 'json') {
-      const jsonResults: Record<string, { valid: boolean; errors: string[]; warnings: string[] }> = {};
+      const jsonResults: Record<string, { valid: boolean; errors: string[]; warnings: string[] }> =
+        {};
       for (const [name, result] of results) {
         jsonResults[name] = {
           valid: result.valid,
-          errors: result.errors.map(e => e.message),
-          warnings: result.warnings.map(w => w.message),
+          errors: result.errors.map((e) => e.message),
+          warnings: result.warnings.map((w) => w.message),
         };
       }
       writeJson({ environments: jsonResults });
-      return [...results.values()].every(r => r.valid) ? 0 : 1;
+      return [...results.values()].every((r) => r.valid) ? 0 : 1;
     }
 
     const headers = ['Environment', 'Status', 'Errors', 'Warnings'];

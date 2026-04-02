@@ -58,7 +58,9 @@ describe('vault encryption', () => {
       };
       const encrypted = encryptEnvironment(data, key);
       const serialized = decryptEnvironment(encrypted, key);
-      expect(serialized).toContain('CONNECTION_STRING=postgresql://user:p@ssw0rd!@db.example.com:5432/mydb?sslmode=require');
+      expect(serialized).toContain(
+        'CONNECTION_STRING=postgresql://user:p@ssw0rd!@db.example.com:5432/mydb?sslmode=require',
+      );
       expect(serialized).toContain('JWT_SECRET=my-secret-123_456.789');
     });
 
@@ -330,9 +332,8 @@ describe('vault encryption', () => {
       const encrypted = encryptValue('secret', key);
       // Flip a bit in the middle of the encrypted string
       const mid = Math.floor(encrypted.length / 2);
-      const tampered = encrypted.slice(0, mid) +
-        (encrypted[mid] === 'A' ? 'B' : 'A') +
-        encrypted.slice(mid + 1);
+      const tampered =
+        encrypted.slice(0, mid) + (encrypted[mid] === 'A' ? 'B' : 'A') + encrypted.slice(mid + 1);
       expect(() => decryptValue(tampered, key)).toThrow();
     });
 

@@ -1,9 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import {
-  compareSync,
-  compareValues,
-  formatSyncDiff,
-} from '../../../src/sync/comparator.js';
+import { compareSync, compareValues, formatSyncDiff } from '../../../src/sync/comparator.js';
 
 // Mock the fs utilities
 vi.mock('../../../src/utils/fs.js', () => ({

@@ -22,30 +22,30 @@ interface SeverityConfig {
 
 const SEVERITY_CONFIG: Record<Severity, SeverityConfig> = {
   critical: {
-    icon: '\u274C',  // ❌
+    icon: '\u274C', // ❌
     color: '#dc2626',
-    terminalColor: '\x1b[31m',  // red
+    terminalColor: '\x1b[31m', // red
     label: 'CRITICAL',
     sarifLevel: 'error',
   },
   high: {
-    icon: '\u26A0\uFE0F',  // ⚠️
+    icon: '\u26A0\uFE0F', // ⚠️
     color: '#ea580c',
-    terminalColor: '\x1b[33m',  // yellow
+    terminalColor: '\x1b[33m', // yellow
     label: 'HIGH',
     sarifLevel: 'error',
   },
   medium: {
-    icon: '\u2139\uFE0F',  // ℹ️
+    icon: '\u2139\uFE0F', // ℹ️
     color: '#2563eb',
-    terminalColor: '\x1b[36m',  // cyan
+    terminalColor: '\x1b[36m', // cyan
     label: 'MEDIUM',
     sarifLevel: 'warning',
   },
   low: {
-    icon: '\u2022',  // •
+    icon: '\u2022', // •
     color: '#6b7280',
-    terminalColor: '\x1b[90m',  // gray
+    terminalColor: '\x1b[90m', // gray
     label: 'LOW',
     sarifLevel: 'note',
   },
@@ -114,15 +114,9 @@ function formatTerminal(result: ScanResult): string {
 
   // Header
   const totalCount = result.secrets.length;
-  const criticalCount = result.secrets.filter(
-    (s) => getSeverity(s.pattern) === 'critical',
-  ).length;
-  const highCount = result.secrets.filter(
-    (s) => getSeverity(s.pattern) === 'high',
-  ).length;
-  const mediumCount = result.secrets.filter(
-    (s) => getSeverity(s.pattern) === 'medium',
-  ).length;
+  const criticalCount = result.secrets.filter((s) => getSeverity(s.pattern) === 'critical').length;
+  const highCount = result.secrets.filter((s) => getSeverity(s.pattern) === 'high').length;
+  const mediumCount = result.secrets.filter((s) => getSeverity(s.pattern) === 'medium').length;
 
   lines.push('');
   lines.push(`${BOLD}=== ultraenv Secret Scan Report ===${RESET}`);
@@ -142,7 +136,9 @@ function formatTerminal(result: ScanResult): string {
   // Summary counts
   const summaryParts: string[] = [];
   if (criticalCount > 0) {
-    summaryParts.push(`${SEVERITY_CONFIG.critical.terminalColor}${BOLD}${criticalCount} critical${RESET}`);
+    summaryParts.push(
+      `${SEVERITY_CONFIG.critical.terminalColor}${BOLD}${criticalCount} critical${RESET}`,
+    );
   }
   if (highCount > 0) {
     summaryParts.push(`${SEVERITY_CONFIG.high.terminalColor}${BOLD}${highCount} high${RESET}`);
@@ -172,16 +168,12 @@ function formatTerminal(result: ScanResult): string {
     const config = SEVERITY_CONFIG[severity];
 
     const sevStr = `${config.terminalColor}${config.label.padEnd(8)}${RESET}`;
-    const fileStr = secret.file.length > 34
-      ? '...' + secret.file.slice(-31)
-      : secret.file.padEnd(35);
+    const fileStr =
+      secret.file.length > 34 ? '...' + secret.file.slice(-31) : secret.file.padEnd(35);
     const lineStr = String(secret.line).padStart(4);
-    const typeStr = secret.type.length > 27
-      ? secret.type.slice(0, 25) + '..'
-      : secret.type.padEnd(28);
-    const valueStr = secret.value.length > 25
-      ? secret.value.slice(0, 23) + '..'
-      : secret.value;
+    const typeStr =
+      secret.type.length > 27 ? secret.type.slice(0, 25) + '..' : secret.type.padEnd(28);
+    const valueStr = secret.value.length > 25 ? secret.value.slice(0, 23) + '..' : secret.value;
 
     lines.push(`  ${sevStr}  ${DIM}${fileStr}${RESET} ${lineStr}  ${typeStr} ${valueStr}`);
   }
@@ -308,7 +300,8 @@ function formatSarif(result: ScanResult): string {
     if (!ruleMap.has(secret.pattern.id)) {
       const severity = getSeverity(secret.pattern);
       const severityScore = severity === 'critical' ? '9.0' : severity === 'high' ? '7.0' : '4.0';
-      const category = (secret.pattern as SecretPattern & { category?: string }).category ?? 'unknown';
+      const category =
+        (secret.pattern as SecretPattern & { category?: string }).category ?? 'unknown';
 
       ruleMap.set(secret.pattern.id, {
         id: secret.pattern.id,
@@ -355,7 +348,8 @@ function formatSarif(result: ScanResult): string {
 
   // Build SARIF document
   const sarifDocument = {
-    $schema: 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
+    $schema:
+      'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
     version: '2.1.0',
     runs: [
       {

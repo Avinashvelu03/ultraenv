@@ -244,9 +244,7 @@ function resolveVariables(
     }
 
     // Case-insensitive lookup
-    const caseInsensitiveKey = Object.keys(vars).find(
-      k => k.toLowerCase() === key.toLowerCase(),
-    );
+    const caseInsensitiveKey = Object.keys(vars).find((k) => k.toLowerCase() === key.toLowerCase());
     if (caseInsensitiveKey !== undefined && vars[caseInsensitiveKey] !== undefined) {
       result[key] = vars[caseInsensitiveKey];
       continue;
@@ -262,9 +260,7 @@ function resolveVariables(
           break;
         }
         // Case-insensitive alias lookup
-        const ciAlias = Object.keys(vars).find(
-          k => k.toLowerCase() === alias.toLowerCase(),
-        );
+        const ciAlias = Object.keys(vars).find((k) => k.toLowerCase() === alias.toLowerCase());
         if (ciAlias !== undefined && vars[ciAlias] !== undefined) {
           result[key] = vars[ciAlias];
           foundAlias = true;
@@ -306,7 +302,10 @@ export function validateValue<T>(
     }
     // For optional fields with undefined value, we can't return T
     // This is a type system limitation — the caller should handle this
-    return { success: false, error: 'Value is undefined and optional (use defineEnv for proper handling)' };
+    return {
+      success: false,
+      error: 'Value is undefined and optional (use defineEnv for proper handling)',
+    };
   }
   return builder._parse(rawValue);
 }

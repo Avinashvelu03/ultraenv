@@ -71,33 +71,26 @@ export function parseVaultFile(content: string): Map<string, VaultEntry> {
   for (let i = 0; i < lines.length; i++) {
     const lineNumber = i + 1;
     const rawLine = lines[i];
-/* v8 ignore start */
+    /* v8 ignore start */
     if (rawLine === undefined) continue;
-/* v8 ignore stop */
+    /* v8 ignore stop */
     const line = rawLine.trim();
 
     // Skip empty lines and comments
     if (line.length === 0 || line.startsWith('#')) continue;
 
     // Parse ULTRAENV_VAULT_{ENV}="encrypted:..."
-    const match = line.match(
-      new RegExp(`^${VAULT_VAR_PREFIX}([A-Za-z0-9_]+)="(.*)"$`),
-    );
+    const match = line.match(new RegExp(`^${VAULT_VAR_PREFIX}([A-Za-z0-9_]+)="(.*)"$`));
 
     if (!match) {
       // Try without quotes (legacy format support)
-      const plainMatch = line.match(
-        new RegExp(`^${VAULT_VAR_PREFIX}([A-Za-z0-9_]+)=(.*)$`),
-      );
+      const plainMatch = line.match(new RegExp(`^${VAULT_VAR_PREFIX}([A-Za-z0-9_]+)=(.*)$`));
 
       if (!plainMatch) {
-        throw new VaultError(
-          `Invalid vault file format at line ${lineNumber}: "${line}"`,
-          {
-            operation: 'parse',
-            hint: `Each environment entry should be in the format: ${VAULT_VAR_PREFIX}{ENVIRONMENT}="encrypted:..."`,
-          },
-        );
+        throw new VaultError(`Invalid vault file format at line ${lineNumber}: "${line}"`, {
+          operation: 'parse',
+          hint: `Each environment entry should be in the format: ${VAULT_VAR_PREFIX}{ENVIRONMENT}="encrypted:..."`,
+        });
       }
 
       const envName = plainMatch[1]!.toLowerCase();
@@ -166,9 +159,9 @@ export function serializeVaultFile(environments: Map<string, VaultEntry>): strin
 
   for (const envName of envNames) {
     const entry = environments.get(envName);
-/* v8 ignore start */
+    /* v8 ignore start */
     if (entry === undefined) continue;
-/* v8 ignore stop */
+    /* v8 ignore stop */
 
     const varName = `${VAULT_VAR_PREFIX}${envName.toUpperCase()}`;
     lines.push(`${varName}="${entry.encrypted}"`);
@@ -202,15 +195,12 @@ export async function readVaultFile(path: string): Promise<Map<string, VaultEntr
     return parseVaultFile(content);
   } catch (error: unknown) {
     if (error instanceof VaultError) throw error;
-    throw new VaultError(
-      `Failed to read vault file "${path}"`,
-      {
-        operation: 'read',
-/* v8 ignore start */
-        cause: error instanceof Error ? error : undefined,
-/* v8 ignore stop */
-      },
-    );
+    throw new VaultError(`Failed to read vault file "${path}"`, {
+      operation: 'read',
+      /* v8 ignore start */
+      cause: error instanceof Error ? error : undefined,
+      /* v8 ignore stop */
+    });
   }
 }
 
@@ -236,31 +226,25 @@ export async function writeVaultFile(
   environments: Map<string, VaultEntry>,
 ): Promise<void> {
   if (environments.size === 0) {
-    throw new VaultError(
-      'Cannot write an empty vault file',
-      {
-        operation: 'write',
-        hint: 'Add at least one environment to the vault before writing.',
-      },
-    );
+    throw new VaultError('Cannot write an empty vault file', {
+      operation: 'write',
+      hint: 'Add at least one environment to the vault before writing.',
+    });
   }
 
   try {
     const content = serializeVaultFile(environments);
     await writeFile(path, content, 'utf-8');
   } catch (error: unknown) {
-/* v8 ignore start */
+    /* v8 ignore start */
     if (error instanceof VaultError) throw error;
-/* v8 ignore stop */
-    throw new VaultError(
-      `Failed to write vault file "${path}"`,
-      {
-        operation: 'write',
-/* v8 ignore start */
-        cause: error instanceof Error ? error : undefined,
-/* v8 ignore stop */
-      },
-    );
+    /* v8 ignore stop */
+    throw new VaultError(`Failed to write vault file "${path}"`, {
+      operation: 'write',
+      /* v8 ignore start */
+      cause: error instanceof Error ? error : undefined,
+      /* v8 ignore stop */
+    });
   }
 }
 
@@ -298,9 +282,7 @@ export function getEnvironmentData(
  * @param vault - The parsed vault Map.
  * @returns Array of environment names sorted alphabetically.
  */
-export function getVaultEnvironments(
-  vault: Map<string, VaultEntry>,
-): string[] {
+export function getVaultEnvironments(vault: Map<string, VaultEntry>): string[] {
   return Array.from(vault.keys()).sort();
 }
 
@@ -341,14 +323,14 @@ function extractKeyIds(encrypted: string): string[] {
 
   // Parse the version from the prefix: "encrypted:v1:..."
   const colonIndex = encrypted.indexOf(':', 'encrypted:'.length);
-/* v8 ignore start */
+  /* v8 ignore start */
   if (colonIndex === -1) {
     return ['unknown'];
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   const version = encrypted.slice('encrypted:'.length, colonIndex);
-/* v8 ignore start */
+  /* v8 ignore start */
   return [`v${version === 'v1' ? '1' : version}`];
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }

@@ -73,9 +73,7 @@ export interface ResolvedCascadeResult {
  * @param systemEnv - The system env to check (defaults to process.env)
  * @returns The detected environment name, or 'development' as fallback
  */
-export function detectEnvironment(
-  systemEnv?: Record<string, string | undefined>,
-): string {
+export function detectEnvironment(systemEnv?: Record<string, string | undefined>): string {
   const env = systemEnv ?? process.env;
 
   for (const varName of ENVIRONMENT_VARIABLES) {
@@ -98,9 +96,9 @@ export function detectEnvironment(
  */
 function detectFileType(fileName: string): EnvFileType | null {
   // Strip leading path components
-/* v8 ignore start */
+  /* v8 ignore start */
   const baseName = fileName.split('/').pop() ?? fileName;
-/* v8 ignore stop */
+  /* v8 ignore stop */
   const baseNameLower = baseName.toLowerCase();
 
   const fileTypeMap: ReadonlyMap<string, EnvFileType> = new Map<string, EnvFileType>([
@@ -137,10 +135,7 @@ function detectFileType(fileName: string): EnvFileType | null {
  * @param environment - The environment name
  * @returns Array of file entries in priority order
  */
-function getStandardCascadeFiles(
-  envDir: string,
-  environment: string,
-): CascadeFileEntry[] {
+function getStandardCascadeFiles(envDir: string, environment: string): CascadeFileEntry[] {
   const files: CascadeFileEntry[] = [];
   let priority = 0;
 
@@ -247,7 +242,7 @@ export function resolveCascade(options: CascadeOptions = {}): ResolvedCascadeRes
   // Sort by priority (ascending = lowest priority first)
   const sorted = [...entries].sort((a, b) => a.priority - b.priority);
 
-  const existingFiles = sorted.filter(entry => entry.exists);
+  const existingFiles = sorted.filter((entry) => entry.exists);
 
   // Build source tracking
   const sources: Record<string, string> = {};
@@ -311,9 +306,9 @@ export function mergeCascade(
       for (const envVar of file.vars) {
         if (envVar.key in merged) {
           throw new ConfigError(
-/* v8 ignore start */
+            /* v8 ignore start */
             `Duplicate key "${envVar.key}" found in "${file.path}" (line ${envVar.lineNumber}). Previously defined in "${cascade.sources[envVar.key] ?? 'unknown'}".`,
-/* v8 ignore stop */
+            /* v8 ignore stop */
             {
               field: 'mergeStrategy',
               hint: `Either use 'first-wins' or 'last-wins' merge strategy, or rename one of the conflicting variables.`,

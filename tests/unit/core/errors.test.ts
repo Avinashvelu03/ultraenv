@@ -316,7 +316,13 @@ describe('isUltraenvError type guard', () => {
   });
 });
 
-import { isValidationError, isParseError, isEncryptionError, isVaultError, getErrorMessage } from '../../../src/core/errors.js';
+import {
+  isValidationError,
+  isParseError,
+  isEncryptionError,
+  isVaultError,
+  getErrorMessage,
+} from '../../../src/core/errors.js';
 
 describe('Error type guards', () => {
   it('isValidationError works', () => {

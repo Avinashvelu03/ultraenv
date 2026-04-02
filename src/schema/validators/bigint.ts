@@ -15,9 +15,8 @@ function parseBigIntProper(raw: string, radix: number): ParseResult<bigint> {
   try {
     // Handle hex prefix
     const cleaned = trimmed.replace(/^0x/i, '');
-    const value = radix === 16 && trimmed.startsWith('0x')
-      ? BigInt('0x' + cleaned)
-      : BigInt(cleaned);
+    const value =
+      radix === 16 && trimmed.startsWith('0x') ? BigInt('0x' + cleaned) : BigInt(cleaned);
     return { success: true, value };
   } catch {
     return { success: false, error: `"${trimmed}" is not a valid BigInt (radix: ${radix})` };

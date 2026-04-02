@@ -48,13 +48,13 @@ function resolveEscapeSequence(
   filePath: string,
   lineNumber: number,
 ): { resolved: string; charsConsumed: number } {
-/* v8 ignore start */
+  /* v8 ignore start */
   const next = startIndex + 1 < chars.length ? chars[startIndex + 1] : '';
 
   if (next === '') {
     return { resolved: '\\', charsConsumed: 1 };
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   switch (next) {
     case 'n':
@@ -67,12 +67,12 @@ function resolveEscapeSequence(
       return { resolved: '\\', charsConsumed: 2 };
     case '"':
       return { resolved: '"', charsConsumed: 2 };
-/* v8 ignore start */
+    /* v8 ignore start */
     case '$':
       return { resolved: '$', charsConsumed: 2 };
     case '/':
       return { resolved: '/', charsConsumed: 2 };
-/* v8 ignore stop */
+    /* v8 ignore stop */
     case 'x':
     case 'X': {
       // Hex escape: \xHH
@@ -88,14 +88,11 @@ function resolveEscapeSequence(
         }
         return { resolved: String.fromCodePoint(codePoint), charsConsumed: 4 };
       }
-      throw new ParseError(
-        `Invalid hex escape sequence: ${'\\'}x${hex}`,
-        {
-          line: lineNumber,
-          filePath,
-          hint: 'Hex escapes must be exactly 2 hex digits, e.g. \\x0A for newline.',
-        },
-      );
+      throw new ParseError(`Invalid hex escape sequence: ${'\\'}x${hex}`, {
+        line: lineNumber,
+        filePath,
+        hint: 'Hex escapes must be exactly 2 hex digits, e.g. \\x0A for newline.',
+      });
     }
     case 'u':
     case 'U': {
@@ -103,31 +100,28 @@ function resolveEscapeSequence(
       const hexDigits = chars.slice(startIndex + 2, startIndex + 6).join('');
       if (hexDigits.length === 4 && /^[0-9A-Fa-f]{4}$/.test(hexDigits)) {
         const codePoint = parseInt(hexDigits, 16);
-/* v8 ignore start */
+        /* v8 ignore start */
         if (codePoint === 0) {
           throw new ParseError('Null character (\\u0000) is not allowed in .env values', {
             line: lineNumber,
             filePath,
           });
         }
-/* v8 ignore stop */
+        /* v8 ignore stop */
         return { resolved: String.fromCodePoint(codePoint), charsConsumed: 6 };
       }
-      throw new ParseError(
-        `Invalid unicode escape sequence: ${'\\'}u${hexDigits}`,
-        {
-          line: lineNumber,
-          filePath,
-          hint: 'Unicode escapes must be exactly 4 hex digits, e.g. \\u0041 for "A".',
-        },
-      );
+      throw new ParseError(`Invalid unicode escape sequence: ${'\\'}u${hexDigits}`, {
+        line: lineNumber,
+        filePath,
+        hint: 'Unicode escapes must be exactly 4 hex digits, e.g. \\u0041 for "A".',
+      });
     }
-/* v8 ignore start */
+    /* v8 ignore start */
     default: {
       // Unknown escape: keep the backslash and the character as-is
       return { resolved: `\\${next}`, charsConsumed: 2 };
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
   }
 }
 
@@ -159,7 +153,7 @@ function parseDoubleQuotedValue(
         };
       }
 
-/* v8 ignore start */
+      /* v8 ignore start */
       if (ch === '\n') {
         // Newline inside double quotes: keep as literal newline
         parts.push('\n');
@@ -176,7 +170,7 @@ function parseDoubleQuotedValue(
         }
         continue;
       }
-/* v8 ignore stop */
+      /* v8 ignore stop */
 
       if (ch === '\\') {
         const resolved = resolveEscapeSequence(
@@ -243,14 +237,14 @@ function parseSingleQuotedValue(
     }
 
     lineIndex++;
-/* v8 ignore start */
+    /* v8 ignore start */
     if (lineIndex < lines.length) {
       parts.push('\n');
       currentLine = lines[lineIndex]!;
       chars = Array.from(currentLine);
       charIndex = 0;
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
   }
 
   return {
@@ -292,14 +286,14 @@ function parseBacktickQuotedValue(
     }
 
     lineIndex++;
-/* v8 ignore start */
+    /* v8 ignore start */
     if (lineIndex < lines.length) {
       parts.push('\n');
       currentLine = lines[lineIndex]!;
       chars = Array.from(currentLine);
       charIndex = 0;
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
   }
 
   return {
@@ -334,7 +328,7 @@ function parseKey(
   const keyStart = i;
 
   // First character must be a letter or underscore
-/* v8 ignore start */
+  /* v8 ignore start */
   if (i >= len || !NAME_START_RE.test(line[i]!)) {
     throw new ParseError('Expected a variable name starting with a letter or underscore', {
       line: lineIndex + 1,
@@ -343,7 +337,7 @@ function parseKey(
       filePath,
     });
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
   i++;
 
   // Remaining characters can be letters, digits, or underscores
@@ -368,7 +362,7 @@ function extractInlineComment(value: string): { cleanValue: string; comment: str
   // Walk backwards from the end, looking for whitespace followed by #
   let commentStart = -1;
   for (let i = value.length - 1; i >= 0; i--) {
-/* v8 ignore start */
+    /* v8 ignore start */
     if (value[i] === ' ' || value[i] === '\t') {
       // Check if # follows
       const rest = value.slice(i + 1);
@@ -377,21 +371,21 @@ function extractInlineComment(value: string): { cleanValue: string; comment: str
       }
       break;
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
     // If we hit a non-whitespace character, no inline comment
     if (value[i] !== ' ' && value[i] !== '\t') {
       break;
     }
   }
 
-/* v8 ignore start */
+  /* v8 ignore start */
   if (commentStart >= 0) {
     return {
       cleanValue: value.slice(0, commentStart).trimEnd(),
       comment: value.slice(commentStart + 1).trim(),
     };
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   return { cleanValue: value, comment: '' };
 }
@@ -454,12 +448,12 @@ export function parseEnvFile(content: string, filePath?: string): ParsedEnvFile 
     }
 
     // Skip if the remaining line after stripping `export` is empty or a comment
-/* v8 ignore start */
+    /* v8 ignore start */
     if (isEmptyLine(workingLine) || COMMENT_LINE_RE.test(workingLine)) {
       lineIndex++;
       continue;
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
 
     // Try to parse the key
     let key: string;
@@ -468,16 +462,19 @@ export function parseEnvFile(content: string, filePath?: string): ParsedEnvFile 
       const parsed = parseKey(workingLine, lineIndex, resolvedPath);
       key = parsed.key;
       afterKeyIndex = parsed.endIndex;
-/* v8 ignore start */
+      /* v8 ignore start */
     } catch {
       // Not a valid KEY= line — skip
       lineIndex++;
       continue;
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
 
     // Skip whitespace after key
-    while (afterKeyIndex < workingLine.length && (workingLine[afterKeyIndex] === ' ' || workingLine[afterKeyIndex] === '\t')) {
+    while (
+      afterKeyIndex < workingLine.length &&
+      (workingLine[afterKeyIndex] === ' ' || workingLine[afterKeyIndex] === '\t')
+    ) {
       afterKeyIndex++;
     }
 
@@ -508,7 +505,10 @@ export function parseEnvFile(content: string, filePath?: string): ParsedEnvFile 
     afterKeyIndex++; // now pointing at the start of the value
 
     // Skip whitespace after =
-    while (afterKeyIndex < workingLine.length && (workingLine[afterKeyIndex] === ' ' || workingLine[afterKeyIndex] === '\t')) {
+    while (
+      afterKeyIndex < workingLine.length &&
+      (workingLine[afterKeyIndex] === ' ' || workingLine[afterKeyIndex] === '\t')
+    ) {
       afterKeyIndex++;
     }
 
@@ -570,18 +570,14 @@ export function parseEnvFile(content: string, filePath?: string): ParsedEnvFile 
       }
     } else if (firstChar === "'") {
       // Single-quoted value (literal, no escaping)
-      const result = parseSingleQuotedValue(
-        lines,
-        lineIndex,
-        valueStartIndex + 1,
-      );
+      const result = parseSingleQuotedValue(lines, lineIndex, valueStartIndex + 1);
 
       if (!result.closed) {
         throw new ParseError('Unterminated single-quoted string', {
           line: oneBasedLine,
           raw: workingLine,
           filePath: resolvedPath,
-          hint: 'Make sure every single-quoted value has a closing \'.',
+          hint: "Make sure every single-quoted value has a closing '.",
         });
       }
 
@@ -595,18 +591,14 @@ export function parseEnvFile(content: string, filePath?: string): ParsedEnvFile 
         valueStartIndex + 1 + result.value.length + 1,
       );
       const trimmedAfter = afterClosingQuote.trim();
-/* v8 ignore start */
+      /* v8 ignore start */
       if (trimmedAfter.startsWith('#')) {
         comment = trimmedAfter.slice(1).trim();
       }
-/* v8 ignore stop */
+      /* v8 ignore stop */
     } else if (firstChar === '`') {
       // Backtick-quoted value
-      const result = parseBacktickQuotedValue(
-        lines,
-        lineIndex,
-        valueStartIndex + 1,
-      );
+      const result = parseBacktickQuotedValue(lines, lineIndex, valueStartIndex + 1);
 
       if (!result.closed) {
         throw new ParseError('Unterminated backtick-quoted string', {
@@ -627,11 +619,11 @@ export function parseEnvFile(content: string, filePath?: string): ParsedEnvFile 
         valueStartIndex + 1 + result.value.length + 1,
       );
       const trimmedAfter = afterClosingQuote.trim();
-/* v8 ignore start */
+      /* v8 ignore start */
       if (trimmedAfter.startsWith('#')) {
         comment = trimmedAfter.slice(1).trim();
       }
-/* v8 ignore stop */
+      /* v8 ignore stop */
     } else {
       // Unquoted value
       let rawValue = workingLine.slice(valueStartIndex);

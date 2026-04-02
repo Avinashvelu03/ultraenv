@@ -66,8 +66,13 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     // Environment files
     writeLine(bold('  Environment Files:'));
     const envFiles = [
-      '.env', '.env.local', '.env.development', '.env.production',
-      '.env.staging', '.env.test', '.env.ci',
+      '.env',
+      '.env.local',
+      '.env.development',
+      '.env.production',
+      '.env.staging',
+      '.env.test',
+      '.env.ci',
     ];
 
     const fileHeaders = ['File', 'Exists', 'Size', 'Modified'];
@@ -78,7 +83,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       const exists = existsSync(filePath);
 
       if (exists) {
-        const stat = await import('node:fs/promises').then(m => m.stat(filePath));
+        const stat = await import('node:fs/promises').then((m) => m.stat(filePath));
         const size = `${(stat.size / 1024).toFixed(1)} KB`;
         const modified = stat.mtime.toISOString().slice(0, 19).replace('T', ' ');
         fileRows.push([file, green('Yes'), size, modified]);

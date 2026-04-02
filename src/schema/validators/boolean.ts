@@ -58,7 +58,7 @@ export class BooleanSchemaBuilder extends SchemaBuilder<boolean> {
    * Common defaults: true, 1, yes, on
    */
   truthy(values: readonly string[]): BooleanSchemaBuilder {
-    this._truthyValues = new Set(values.map(v => v.toLowerCase()));
+    this._truthyValues = new Set(values.map((v) => v.toLowerCase()));
     // Rebuild the parser with custom truthy/falsy values
     this._rebuildParser();
     return this;
@@ -69,7 +69,7 @@ export class BooleanSchemaBuilder extends SchemaBuilder<boolean> {
    * Common defaults: false, 0, no, off, ''
    */
   falsy(values: readonly string[]): BooleanSchemaBuilder {
-    this._falsyValues = new Set(values.map(v => v.toLowerCase()));
+    this._falsyValues = new Set(values.map((v) => v.toLowerCase()));
     this._rebuildParser();
     return this;
   }

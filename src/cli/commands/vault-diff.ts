@@ -25,7 +25,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     // Read vault
     const vaultPath = join(baseDir, '.env.vault');
-    if (!await exists(vaultPath)) {
+    if (!(await exists(vaultPath))) {
       writeError(red('  .env.vault not found.'));
       return 1;
     }
@@ -40,7 +40,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     // Read .env file
     const envPath = join(baseDir, `.env.${envName}`);
-    if (!await exists(envPath)) {
+    if (!(await exists(envPath))) {
       writeError(red(`  .env.${envName} not found.`));
       return 1;
     }
@@ -59,7 +59,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     }
 
     // Compare
-    const envKeys = new Set(parsed.vars.map(v => v.key));
+    const envKeys = new Set(parsed.vars.map((v) => v.key));
     const vaultKeys = new Set(Object.keys(vaultVars));
 
     const onlyInEnv: string[] = [];
@@ -81,7 +81,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     for (const key of envKeys) {
       if (!vaultKeys.has(key)) continue;
-      const envVal = parsed.vars.find(v => v.key === key)?.value ?? '';
+      const envVal = parsed.vars.find((v) => v.key === key)?.value ?? '';
       const vaultVal = vaultVars[key] ?? '';
 
       // Compare: if vault has encrypted value and env has plaintext,
@@ -99,7 +99,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     if (onlyInEnv.length > 0) {
       writeLine(yellow(`  Only in .env (${onlyInEnv.length}):`));
       for (const key of onlyInEnv) {
-        const val = parsed.vars.find(v => v.key === key)?.value ?? '';
+        const val = parsed.vars.find((v) => v.key === key)?.value ?? '';
         writeLine(`    + ${key}=${maskValue(val)}`);
       }
       writeLine('');

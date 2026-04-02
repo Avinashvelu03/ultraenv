@@ -109,10 +109,7 @@ export interface RetryOptions {
  * );
  * ```
  */
-export async function retry<T>(
-  fn: () => Promise<T>,
-  options: RetryOptions,
-): Promise<T> {
+export async function retry<T>(fn: () => Promise<T>, options: RetryOptions): Promise<T> {
   const {
     maxAttempts = 3,
     delay = 1000,
@@ -137,10 +134,7 @@ export async function retry<T>(
       }
 
       // Calculate delay with backoff
-      const currentDelay = Math.min(
-        delay * Math.pow(backoff, attempt - 1),
-        maxDelay,
-      );
+      const currentDelay = Math.min(delay * Math.pow(backoff, attempt - 1), maxDelay);
 
       onRetry?.(attempt, err, currentDelay);
       await sleep(currentDelay);
@@ -167,7 +161,10 @@ export async function retry<T>(
  * ]);
  * ```
  */
-export function createTimeoutError(ms: number, message: string = `Timed out after ${ms}ms`): Promise<never> {
+export function createTimeoutError(
+  ms: number,
+  message: string = `Timed out after ${ms}ms`,
+): Promise<never> {
   return new Promise((_, reject) => {
     setTimeout(() => {
       reject(new Error(message));

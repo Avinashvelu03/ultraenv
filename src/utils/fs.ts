@@ -16,7 +16,10 @@ import { FileSystemError } from '../core/errors.js';
  * Read a file and return its contents as a string.
  * @throws FileSystemError if the file cannot be read.
  */
-export async function readFile(filePath: string, encoding: BufferEncoding = 'utf-8'): Promise<string> {
+export async function readFile(
+  filePath: string,
+  encoding: BufferEncoding = 'utf-8',
+): Promise<string> {
   try {
     return await fsp.readFile(filePath, { encoding });
   } catch (error: unknown) {
@@ -205,7 +208,12 @@ export async function listFiles(dirPath: string, recursive: boolean = false): Pr
       const fullPath = join(currentDir, entry.name);
       if (entry.isFile()) {
         results.push(relative(dirPath, fullPath));
-      } else if (entry.isDirectory() && recursive && !entry.name.startsWith('.') && entry.name !== 'node_modules') {
+      } else if (
+        entry.isDirectory() &&
+        recursive &&
+        !entry.name.startsWith('.') &&
+        entry.name !== 'node_modules'
+      ) {
         await walk(fullPath);
       }
     }

@@ -16,10 +16,7 @@ const execFileAsync = promisify(execFile);
  * Execute a git command and return trimmed stdout.
  * Returns empty string if git is not available or command fails.
  */
-async function git(
-  args: readonly string[],
-  cwd?: string,
-): Promise<string> {
+async function git(args: readonly string[], cwd?: string): Promise<string> {
   try {
     const { stdout } = await execFileAsync('git', [...args], {
       cwd: cwd ?? process.cwd(),
@@ -36,10 +33,7 @@ async function git(
 /**
  * Execute a git command and return a boolean success indicator.
  */
-async function gitSuccess(
-  args: readonly string[],
-  cwd?: string,
-): Promise<boolean> {
+async function gitSuccess(args: readonly string[], cwd?: string): Promise<boolean> {
   try {
     await execFileAsync('git', [...args], {
       cwd: cwd ?? process.cwd(),
@@ -95,11 +89,7 @@ export async function getStagedFiles(cwd?: string): Promise<string[]> {
  * @param cwd - Working directory.
  * @returns Array of file paths relative to the repo root.
  */
-export async function getDiffFiles(
-  from: string,
-  to?: string,
-  cwd?: string,
-): Promise<string[]> {
+export async function getDiffFiles(from: string, to?: string, cwd?: string): Promise<string[]> {
   const args = ['diff', '--name-only', from];
   if (to !== undefined) {
     args.push(to);
@@ -178,7 +168,10 @@ export async function getCurrentBranch(cwd?: string): Promise<string | null> {
  * Get the remote URL for a given remote name.
  * @param remote - Remote name (default: 'origin').
  */
-export async function getRemoteUrl(remote: string = 'origin', cwd?: string): Promise<string | null> {
+export async function getRemoteUrl(
+  remote: string = 'origin',
+  cwd?: string,
+): Promise<string | null> {
   return getConfig(`remote.${remote}.url`, cwd);
 }
 

@@ -18,11 +18,7 @@ export const VITE_PREFIX = 'VITE_';
 // -----------------------------------------------------------------------------
 
 /** All valid Vite modes */
-export const VITE_MODES: string[] = [
-  'development',
-  'production',
-  'test',
-];
+export const VITE_MODES: string[] = ['development', 'production', 'test'];
 
 // -----------------------------------------------------------------------------
 // Schema
@@ -177,8 +173,14 @@ export function isVitePublicVar(name: string): boolean {
 export function detectViteClientLeakCandidates(vars: Record<string, string>): readonly string[] {
   const warnings: string[] = [];
   const secretIndicators = [
-    'SECRET', 'PASSWORD', 'TOKEN', 'PRIVATE_KEY', 'API_KEY',
-    'CREDENTIAL', 'ACCESS_KEY', 'AUTH',
+    'SECRET',
+    'PASSWORD',
+    'TOKEN',
+    'PRIVATE_KEY',
+    'API_KEY',
+    'CREDENTIAL',
+    'ACCESS_KEY',
+    'AUTH',
   ];
 
   for (const key of Object.keys(vars)) {

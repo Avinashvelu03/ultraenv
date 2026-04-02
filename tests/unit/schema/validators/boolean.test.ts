@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { BooleanSchemaBuilder, createBooleanSchema } from '../../../../src/schema/validators/boolean.js';
+import {
+  BooleanSchemaBuilder,
+  createBooleanSchema,
+} from '../../../../src/schema/validators/boolean.js';
 
 describe('BooleanSchemaBuilder', () => {
   // ===========================================================================

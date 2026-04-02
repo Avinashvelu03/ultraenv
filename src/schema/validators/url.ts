@@ -26,7 +26,7 @@ function parseAndValidateUrl(raw: string, opts: UrlValidatorOptions): ParseResul
     const url = new URL(trimmed);
 
     // Protocol check
-    const protocols = (opts.protocols ?? ['http', 'https']).map(p => p.toLowerCase());
+    const protocols = (opts.protocols ?? ['http', 'https']).map((p) => p.toLowerCase());
     if (!protocols.includes(url.protocol.replace(':', ''))) {
       return {
         success: false,
@@ -44,7 +44,7 @@ function parseAndValidateUrl(raw: string, opts: UrlValidatorOptions): ParseResul
 
     // Port check
     if (opts.allowedPorts !== undefined) {
-      const port = url.port !== '' ? Number(url.port) : (url.protocol === 'https:' ? 443 : 80);
+      const port = url.port !== '' ? Number(url.port) : url.protocol === 'https:' ? 443 : 80;
       if (!opts.allowedPorts.includes(port)) {
         return {
           success: false,

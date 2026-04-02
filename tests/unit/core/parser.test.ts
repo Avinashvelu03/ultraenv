@@ -259,7 +259,7 @@ describe('parseEnvFile', () => {
       expect(result.vars[0]!.value).toBe('');
     });
 
-    it('handles KEY=\'\' (empty single-quoted)', () => {
+    it("handles KEY='' (empty single-quoted)", () => {
       const result = parseEnvFile("KEY=''");
       expect(result.vars[0]!.key).toBe('KEY');
       expect(result.vars[0]!.value).toBe('');

@@ -50,7 +50,10 @@ function parseAndValidatePath(raw: string, opts: PathValidatorOptions): ParseRes
   }
 
   if (opts.maxDepth !== undefined) {
-    const segments = trimmed.replace(/^\//, '').split('/').filter(s => s.length > 0);
+    const segments = trimmed
+      .replace(/^\//, '')
+      .split('/')
+      .filter((s) => s.length > 0);
     if (segments.length > opts.maxDepth) {
       return {
         success: false,
@@ -60,7 +63,7 @@ function parseAndValidatePath(raw: string, opts: PathValidatorOptions): ParseRes
   }
 
   if (opts.extensions !== undefined && opts.extensions.length > 0) {
-    const validExts = opts.extensions.map(e => e.toLowerCase());
+    const validExts = opts.extensions.map((e) => e.toLowerCase());
     const lastDot = trimmed.lastIndexOf('.');
     const ext = lastDot >= 0 ? trimmed.slice(lastDot).toLowerCase() : '';
     if (!validExts.includes(ext)) {

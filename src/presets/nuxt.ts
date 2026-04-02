@@ -187,8 +187,14 @@ export function isNitroVar(name: string): boolean {
 export function detectNuxtClientLeakCandidates(vars: Record<string, string>): readonly string[] {
   const warnings: string[] = [];
   const secretIndicators = [
-    'SECRET', 'PASSWORD', 'TOKEN', 'PRIVATE_KEY', 'API_KEY',
-    'CREDENTIAL', 'ACCESS_KEY', 'CLIENT_SECRET',
+    'SECRET',
+    'PASSWORD',
+    'TOKEN',
+    'PRIVATE_KEY',
+    'API_KEY',
+    'CREDENTIAL',
+    'ACCESS_KEY',
+    'CLIENT_SECRET',
   ];
 
   for (const key of Object.keys(vars)) {

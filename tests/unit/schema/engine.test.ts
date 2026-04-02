@@ -5,10 +5,18 @@ import { NumberSchemaBuilder } from '../../../src/schema/validators/number.js';
 import { BooleanSchemaBuilder } from '../../../src/schema/validators/boolean.js';
 import { EnumSchemaBuilder } from '../../../src/schema/validators/enum.js';
 
-function str() { return new StringSchemaBuilder<string>(); }
-function num() { return new NumberSchemaBuilder<number>(); }
-function bool() { return new BooleanSchemaBuilder(); }
-function enu(values: readonly string[]) { return new EnumSchemaBuilder(values); }
+function str() {
+  return new StringSchemaBuilder<string>();
+}
+function num() {
+  return new NumberSchemaBuilder<number>();
+}
+function bool() {
+  return new BooleanSchemaBuilder();
+}
+function enu(values: readonly string[]) {
+  return new EnumSchemaBuilder(values);
+}
 
 describe('validate (schema engine)', () => {
   // ---------------------------------------------------------------------------
@@ -128,7 +136,9 @@ describe('validate (schema engine)', () => {
     it('skips validation when condition is false', () => {
       const schema = {
         MODE: enu(['dev', 'prod'] as const),
-        DB_URL: str().minLength(1).when((env) => env.MODE === 'prod'),
+        DB_URL: str()
+          .minLength(1)
+          .when((env) => env.MODE === 'prod'),
       };
       const result = validate({ MODE: 'dev' }, schema);
       expect(result.valid).toBe(true);
@@ -137,7 +147,9 @@ describe('validate (schema engine)', () => {
     it('validates when condition is true', () => {
       const schema = {
         MODE: enu(['dev', 'prod'] as const),
-        DB_URL: str().minLength(1).when((env) => env.MODE === 'prod'),
+        DB_URL: str()
+          .minLength(1)
+          .when((env) => env.MODE === 'prod'),
       };
       const result = validate({ MODE: 'prod' }, schema);
       expect(result.valid).toBe(false);
@@ -147,7 +159,9 @@ describe('validate (schema engine)', () => {
     it('provides default for skipped conditional field', () => {
       const schema = {
         MODE: enu(['dev', 'prod'] as const),
-        DB_URL: str().default('sqlite://local.db').when((env) => env.MODE === 'prod'),
+        DB_URL: str()
+          .default('sqlite://local.db')
+          .when((env) => env.MODE === 'prod'),
       };
       const result = validate({ MODE: 'dev' }, schema);
       expect(result.valid).toBe(true);

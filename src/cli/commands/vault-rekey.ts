@@ -35,7 +35,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     } else {
       // Read from .env.keys
       const keysPath = join(baseDir, '.env.keys');
-      if (!await exists(keysPath)) {
+      if (!(await exists(keysPath))) {
         writeError(red('  .env.keys not found.'));
         return 1;
       }
@@ -56,7 +56,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     // Read vault
     const vaultPath = join(baseDir, '.env.vault');
-    if (!await exists(vaultPath)) {
+    if (!(await exists(vaultPath))) {
       writeError(red('  .env.vault not found.'));
       return 1;
     }
@@ -109,7 +109,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       const envVarName = `ULTRAENV_KEY_${envName.toUpperCase()}`;
       const newFormatted = formatKey(newKey);
 
-      const updatedLines = keysContent.split('\n').map(line => {
+      const updatedLines = keysContent.split('\n').map((line) => {
         if (line.startsWith(`${envVarName}=`)) {
           return `${envVarName}="${newFormatted}"`;
         }

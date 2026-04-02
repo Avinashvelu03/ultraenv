@@ -15,19 +15,40 @@ export interface CronValidatorOptions {
 }
 
 const PREDEFINED_CRON = new Set([
-  '@yearly', '@annually', '@monthly', '@weekly', '@daily', '@midnight',
+  '@yearly',
+  '@annually',
+  '@monthly',
+  '@weekly',
+  '@daily',
+  '@midnight',
   '@hourly',
 ]);
 
 const CRON_FIELD_REGEX = /^(?:\*|[0-9]+(?:-[0-9]+)?(?:,[0-9]+(?:-[0-9]+)?)*)(?:\/[0-9]+)?$/;
 
 const MONTH_NAMES: Record<string, string> = {
-  jan: '1', feb: '2', mar: '3', apr: '4', may: '5', jun: '6',
-  jul: '7', aug: '8', sep: '9', oct: '10', nov: '11', dec: '12',
+  jan: '1',
+  feb: '2',
+  mar: '3',
+  apr: '4',
+  may: '5',
+  jun: '6',
+  jul: '7',
+  aug: '8',
+  sep: '9',
+  oct: '10',
+  nov: '11',
+  dec: '12',
 };
 
 const DAY_NAMES: Record<string, string> = {
-  sun: '0', mon: '1', tue: '2', wed: '3', thu: '4', fri: '5', sat: '6',
+  sun: '0',
+  mon: '1',
+  tue: '2',
+  wed: '3',
+  thu: '4',
+  fri: '5',
+  sat: '6',
 };
 
 function replaceNames(field: string, names: Record<string, string>): string {
@@ -87,7 +108,14 @@ function parseAndValidateCron(raw: string, opts: CronValidatorOptions): ParseRes
 
   if (opts.allowSeconds === true && fields.length === 6) {
     // seconds, minute, hour, day-of-month, month, day-of-week
-    const ranges = [[0, 59], [0, 59], [0, 23], [1, 31], [1, 12], [0, 6]];
+    const ranges = [
+      [0, 59],
+      [0, 59],
+      [0, 23],
+      [1, 31],
+      [1, 12],
+      [0, 6],
+    ];
     for (let i = 0; i < fields.length; i++) {
       const range = ranges[i] ?? [0, 59];
       const error = validateCronField(fields[i] ?? '', range[0] ?? 0, range[1] ?? 0);
@@ -98,7 +126,14 @@ function parseAndValidateCron(raw: string, opts: CronValidatorOptions): ParseRes
 
   if (opts.allowYear === true && fields.length === 6) {
     // minute, hour, day-of-month, month, day-of-week, year
-    const ranges = [[0, 59], [0, 23], [1, 31], [1, 12], [0, 6], [1970, 2099]];
+    const ranges = [
+      [0, 59],
+      [0, 23],
+      [1, 31],
+      [1, 12],
+      [0, 6],
+      [1970, 2099],
+    ];
     for (let i = 0; i < fields.length; i++) {
       const range = ranges[i] ?? [0, 59];
       const error = validateCronField(fields[i] ?? '', range[0] ?? 0, range[1] ?? 0);
@@ -109,7 +144,13 @@ function parseAndValidateCron(raw: string, opts: CronValidatorOptions): ParseRes
 
   if (fields.length === 5) {
     // Standard: minute, hour, day-of-month, month, day-of-week
-    const ranges = [[0, 59], [0, 23], [1, 31], [1, 12], [0, 6]];
+    const ranges = [
+      [0, 59],
+      [0, 23],
+      [1, 31],
+      [1, 12],
+      [0, 6],
+    ];
     for (let i = 0; i < fields.length; i++) {
       const range = ranges[i] ?? [0, 59];
       const error = validateCronField(fields[i] ?? '', range[0] ?? 0, range[1] ?? 0);

@@ -19,7 +19,8 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     const scope = (args.flags['--scope'] as string) ?? 'files';
 
     // Output format: terminal | json | sarif
-    const outputFormat = (args.flags['--format'] as string) ?? (ctx.outputFormat === 'json' ? 'json' : 'terminal');
+    const outputFormat =
+      (args.flags['--format'] as string) ?? (ctx.outputFormat === 'json' ? 'json' : 'terminal');
 
     // Include/exclude patterns
     const include = args.flags['--include'] as string | undefined;
@@ -33,8 +34,8 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       exclude: exclude ? [exclude] : undefined,
       scanGitHistory: scope === 'git-history' || scope === 'all',
       scanStaged: scope === 'staged',
-      diffFrom: scope === 'diff' ? (args.flags['--from'] as string) ?? 'HEAD' : undefined,
-      diffTo: scope === 'diff' ? args.flags['--to'] as string : undefined,
+      diffFrom: scope === 'diff' ? ((args.flags['--from'] as string) ?? 'HEAD') : undefined,
+      diffTo: scope === 'diff' ? (args.flags['--to'] as string) : undefined,
       failFast: (args.flags['--fail-fast'] as boolean) ?? false,
       outputFormat: outputFormat as 'terminal' | 'json' | 'sarif',
     };

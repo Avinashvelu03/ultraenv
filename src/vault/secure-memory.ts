@@ -53,9 +53,7 @@ export class SecureBuffer {
    */
   constructor(size: number) {
     if (size < 1 || !Number.isInteger(size)) {
-      throw new RangeError(
-        `SecureBuffer: size must be a positive integer, got ${size}`,
-      );
+      throw new RangeError(`SecureBuffer: size must be a positive integer, got ${size}`);
     }
 
     this._buffer = Buffer.alloc(size);
@@ -117,9 +115,7 @@ export class SecureBuffer {
    */
   fill(value: number): SecureBuffer {
     if (value < 0 || value > 255 || !Number.isInteger(value)) {
-      throw new RangeError(
-        `SecureBuffer.fill: value must be an integer 0-255, got ${value}`,
-      );
+      throw new RangeError(`SecureBuffer.fill: value must be an integer 0-255, got ${value}`);
     }
 
     this._buffer.fill(value);
@@ -235,11 +231,14 @@ export class SecureBuffer {
    * Custom inspect for console.log — never exposes contents.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [Symbol.for('nodejs.util.inspect.custom')](_depth: number, _options: Record<string, unknown>): string {
-/* v8 ignore start */
+  [Symbol.for('nodejs.util.inspect.custom')](
+    _depth: number,
+    _options: Record<string, unknown>,
+  ): string {
+    /* v8 ignore start */
     return `[SecureBuffer: ${this._length} bytes${this._zeroed ? ' (zeroed)' : ''}]`;
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   /**
    * Manual cleanup — call when the SecureBuffer is no longer needed.
@@ -331,11 +330,14 @@ export class SecureString {
    * Custom inspect for console.log.
    */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [Symbol.for('nodejs.util.inspect.custom')](_depth: number, _options: Record<string, unknown>): string {
-/* v8 ignore start */
+  [Symbol.for('nodejs.util.inspect.custom')](
+    _depth: number,
+    _options: Record<string, unknown>,
+  ): string {
+    /* v8 ignore start */
     return `[SecureString: ${this._disposed ? 'disposed' : `${this.length} chars`}]`;
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------
@@ -418,11 +420,11 @@ export function wipeString(str: string): void {
     // by referencing the "wiped" version
     const _wiped = chars.join('');
     void _wiped;
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch {
     // Silently fail — this is a best-effort operation
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------
@@ -451,10 +453,7 @@ export function wipeString(str: string): void {
  * // Also works with Buffers
  * const isMatch = secureCompare(keyBuffer, expectedKeyBuffer);
  */
-export function secureCompare(
-  a: string | Buffer,
-  b: string | Buffer,
-): boolean {
+export function secureCompare(a: string | Buffer, b: string | Buffer): boolean {
   // Fast path: same reference
   if (a === b) return true;
 
@@ -476,20 +475,20 @@ export function secureCompare(
     try {
       cryptoTimingSafeEqual(padA, padB);
       return false; // Different lengths → never equal
-/* v8 ignore start */
+      /* v8 ignore start */
     } catch {
       return false;
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
   }
 
   try {
     return cryptoTimingSafeEqual(bufA, bufB);
-/* v8 ignore start */
+    /* v8 ignore start */
   } catch {
     return false;
   }
-/* v8 ignore stop */
+  /* v8 ignore stop */
 }
 
 // -----------------------------------------------------------------------------

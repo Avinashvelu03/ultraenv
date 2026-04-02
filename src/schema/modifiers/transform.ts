@@ -19,7 +19,10 @@ import { SchemaBuilder } from '../builder.js';
  * const upper = applyTransform(t.string(), (v) => v.toUpperCase());
  * ```
  */
-export function applyTransform<T>(builder: SchemaBuilder<T>, fn: (value: T) => T): SchemaBuilder<T> {
+export function applyTransform<T>(
+  builder: SchemaBuilder<T>,
+  fn: (value: T) => T,
+): SchemaBuilder<T> {
   void builder;
   void fn;
   return builder;

@@ -166,11 +166,7 @@ export async function scanStagedFiles(cwd?: string): Promise<DetectedSecret[]> {
  * @param cwd - Working directory.
  * @returns Array of DetectedSecret objects found in the diff.
  */
-export async function scanDiff(
-  from: string,
-  to?: string,
-  cwd?: string,
-): Promise<DetectedSecret[]> {
+export async function scanDiff(from: string, to?: string, cwd?: string): Promise<DetectedSecret[]> {
   const workingDir = cwd ?? process.cwd();
 
   if (!(await isGitRepository(workingDir))) {

@@ -62,17 +62,17 @@ export function maskValue(value: string, options?: MaskOptions): string {
  * Patterns commonly found in secret values (API keys, tokens, passwords, etc.).
  */
 const SECRET_INDICATORS: readonly RegExp[] = [
-  /^[a-zA-Z0-9]{20,}$/,                 // Long alphanumeric strings (20+ chars)
-  /^[a-f0-9]{32,}$/,                     // Hex strings (32+ chars, likely hashes/keys)
-  /^sk-[a-zA-Z0-9]{20,}$/,              // Stripe-style API keys
-  /^sk_live_[a-zA-Z0-9]{20,}$/,         // Stripe live keys
-  /^sk_test_[a-zA-Z0-9]{20,}$/,         // Stripe test keys
-  /^key-[a-zA-Z0-9]{16,}$/,             // Generic key- prefixed
-  /^token-[a-zA-Z0-9]{16,}$/,           // Generic token- prefixed
-  /^pk_[a-zA-Z0-9]{20,}$/,              // Public key patterns
-  /^secret_[a-zA-Z0-9]{16,}$/,          // Secret key patterns
-  /^[A-Za-z0-9+/]{40,}={0,2}$/,        // Base64-like strings (40+ chars)
-  /^[A-Za-z0-9_-]{40,}$/,               // Base64url-like strings (40+ chars)
+  /^[a-zA-Z0-9]{20,}$/, // Long alphanumeric strings (20+ chars)
+  /^[a-f0-9]{32,}$/, // Hex strings (32+ chars, likely hashes/keys)
+  /^sk-[a-zA-Z0-9]{20,}$/, // Stripe-style API keys
+  /^sk_live_[a-zA-Z0-9]{20,}$/, // Stripe live keys
+  /^sk_test_[a-zA-Z0-9]{20,}$/, // Stripe test keys
+  /^key-[a-zA-Z0-9]{16,}$/, // Generic key- prefixed
+  /^token-[a-zA-Z0-9]{16,}$/, // Generic token- prefixed
+  /^pk_[a-zA-Z0-9]{20,}$/, // Public key patterns
+  /^secret_[a-zA-Z0-9]{16,}$/, // Secret key patterns
+  /^[A-Za-z0-9+/]{40,}={0,2}$/, // Base64-like strings (40+ chars)
+  /^[A-Za-z0-9_-]{40,}$/, // Base64url-like strings (40+ chars)
 ];
 
 /**

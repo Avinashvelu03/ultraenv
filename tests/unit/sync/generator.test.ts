@@ -214,14 +214,16 @@ describe('sync generator', () => {
     it('reads the env file and writes the example file', async () => {
       mockReadFile.mockResolvedValueOnce('DATABASE_URL=postgres://localhost/db\n');
       mockParseEnvFile.mockReturnValueOnce({
-        vars: [{
-          key: 'DATABASE_URL',
-          value: 'postgres://localhost/db',
-          raw: 'postgres://localhost/db',
-          source: '.env',
-          lineNumber: 1,
-          comment: '',
-        }],
+        vars: [
+          {
+            key: 'DATABASE_URL',
+            value: 'postgres://localhost/db',
+            raw: 'postgres://localhost/db',
+            source: '.env',
+            lineNumber: 1,
+            comment: '',
+          },
+        ],
       });
       mockWriteFile.mockResolvedValueOnce(undefined);
 
@@ -233,14 +235,16 @@ describe('sync generator', () => {
     it('writes content that includes the header', async () => {
       mockReadFile.mockResolvedValueOnce('KEY=value\n');
       mockParseEnvFile.mockReturnValueOnce({
-        vars: [{
-          key: 'KEY',
-          value: 'value',
-          raw: 'value',
-          source: '.env',
-          lineNumber: 1,
-          comment: '',
-        }],
+        vars: [
+          {
+            key: 'KEY',
+            value: 'value',
+            raw: 'value',
+            source: '.env',
+            lineNumber: 1,
+            comment: '',
+          },
+        ],
       });
       mockWriteFile.mockResolvedValueOnce(undefined);
 
@@ -255,14 +259,14 @@ describe('sync generator', () => {
   // ===========================================================================
   describe('needsUpdate', () => {
     it('returns true when env exists but example does not', async () => {
-      mockExists.mockResolvedValueOnce(true);   // env exists
-      mockExists.mockResolvedValueOnce(false);  // example doesn't
+      mockExists.mockResolvedValueOnce(true); // env exists
+      mockExists.mockResolvedValueOnce(false); // example doesn't
       const result = await needsUpdate('.env', '.env.example');
       expect(result).toBe(true);
     });
 
     it('returns false when neither exists', async () => {
-      mockExists.mockResolvedValueOnce(false);  // env doesn't exist
+      mockExists.mockResolvedValueOnce(false); // env doesn't exist
       const result = await needsUpdate('.env', '.env.example');
       expect(result).toBe(false);
     });
@@ -273,14 +277,16 @@ describe('sync generator', () => {
       mockReadFile.mockResolvedValueOnce('KEY1=value1\n'); // env content
       mockReadFile.mockResolvedValueOnce('KEY2=value2\n'); // example content
       mockParseEnvFile.mockReturnValue({
-        vars: [{
-          key: 'KEY1',
-          value: 'value1',
-          raw: 'value1',
-          source: '.env',
-          lineNumber: 1,
-          comment: '',
-        }],
+        vars: [
+          {
+            key: 'KEY1',
+            value: 'value1',
+            raw: 'value1',
+            source: '.env',
+            lineNumber: 1,
+            comment: '',
+          },
+        ],
       });
 
       const result = await needsUpdate('.env', '.env.example');
@@ -294,14 +300,16 @@ describe('sync generator', () => {
       mockReadFile.mockResolvedValueOnce('KEY=value\n'); // env content
       mockReadFile.mockResolvedValueOnce('different-content\n'); // example content
       mockParseEnvFile.mockReturnValue({
-        vars: [{
-          key: 'KEY',
-          value: 'value',
-          raw: 'value',
-          source: '.env',
-          lineNumber: 1,
-          comment: '',
-        }],
+        vars: [
+          {
+            key: 'KEY',
+            value: 'value',
+            raw: 'value',
+            source: '.env',
+            lineNumber: 1,
+            comment: '',
+          },
+        ],
       });
 
       const result = await needsUpdate('.env', '.env.example');

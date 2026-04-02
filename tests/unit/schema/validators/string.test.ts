@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { StringSchemaBuilder, createStringSchema } from '../../../../src/schema/validators/string.js';
+import {
+  StringSchemaBuilder,
+  createStringSchema,
+} from '../../../../src/schema/validators/string.js';
 
 describe('StringSchemaBuilder', () => {
   // ===========================================================================

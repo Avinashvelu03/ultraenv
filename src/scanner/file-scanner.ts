@@ -41,16 +41,64 @@ const DEFAULT_SKIP_PATHS: ReadonlySet<string> = new Set([
 
 /** Binary file extensions to skip */
 const BINARY_EXTENSIONS: ReadonlySet<string> = new Set([
-  '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.ico', '.webp', '.svg', '.tiff',
-  '.mp3', '.mp4', '.avi', '.mov', '.wmv', '.flv', '.wav', '.ogg', '.m4a',
-  '.zip', '.tar', '.gz', '.bz2', '.7z', '.rar', '.xz', '.zst',
-  '.pdf', '.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx',
-  '.exe', '.dll', '.so', '.dylib', '.bin', '.dat', '.wasm',
-  '.ttf', '.otf', '.woff', '.woff2', '.eot',
-  '.sqlite', '.sqlite3', '.db',
-  '.class', '.jar', '.war', '.ear',
-  '.pyc', '.pyo',
-  '.o', '.obj', '.a', '.lib',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.bmp',
+  '.ico',
+  '.webp',
+  '.svg',
+  '.tiff',
+  '.mp3',
+  '.mp4',
+  '.avi',
+  '.mov',
+  '.wmv',
+  '.flv',
+  '.wav',
+  '.ogg',
+  '.m4a',
+  '.zip',
+  '.tar',
+  '.gz',
+  '.bz2',
+  '.7z',
+  '.rar',
+  '.xz',
+  '.zst',
+  '.pdf',
+  '.doc',
+  '.docx',
+  '.xls',
+  '.xlsx',
+  '.ppt',
+  '.pptx',
+  '.exe',
+  '.dll',
+  '.so',
+  '.dylib',
+  '.bin',
+  '.dat',
+  '.wasm',
+  '.ttf',
+  '.otf',
+  '.woff',
+  '.woff2',
+  '.eot',
+  '.sqlite',
+  '.sqlite3',
+  '.db',
+  '.class',
+  '.jar',
+  '.war',
+  '.ear',
+  '.pyc',
+  '.pyo',
+  '.o',
+  '.obj',
+  '.a',
+  '.lib',
 ]);
 
 /** Maximum bytes to read for binary detection */
@@ -237,9 +285,11 @@ async function collectFiles(
       const stat = await fsp.stat(absPath);
       if (stat.isFile()) {
         const relPath = relative(options.cwd, absPath).replace(/\\/g, '/');
-        if (!matchesExcludePattern(relPath, options.excludes) &&
-            matchesIncludePattern(relPath, options.includes) &&
-            !isBinaryExtension(relPath)) {
+        if (
+          !matchesExcludePattern(relPath, options.excludes) &&
+          matchesIncludePattern(relPath, options.includes) &&
+          !isBinaryExtension(relPath)
+        ) {
           files.push(relPath);
         } else {
           skipped.push(relPath);
@@ -269,10 +319,7 @@ async function collectFiles(
  * @param cwd - Working directory for relative path computation.
  * @returns Array of detected secrets, or empty array if the file is skipped.
  */
-export async function scanFile(
-  filePath: string,
-  cwd: string,
-): Promise<DetectedSecret[]> {
+export async function scanFile(filePath: string, cwd: string): Promise<DetectedSecret[]> {
   const relPath = relative(cwd, filePath).replace(/\\/g, '/');
 
   // Skip binary extensions

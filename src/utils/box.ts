@@ -158,7 +158,9 @@ export function drawBox(
     const visibleLen = stripped.length;
     const totalPad = innerWidth - visibleLen - padding * 2;
     const rightPad = Math.max(0, totalPad);
-    result.push(`${chars.vertical}${padStr}${line}${' '.repeat(rightPad)}${padStr}${chars.vertical}`);
+    result.push(
+      `${chars.vertical}${padStr}${line}${' '.repeat(rightPad)}${padStr}${chars.vertical}`,
+    );
   }
 
   // Bottom border
@@ -191,11 +193,7 @@ export function drawTitledBox(
     return [hRuleTitled(title, 0, chars), boxLine('', 0, chars), hRuleBottom(0, chars)].join('\n');
   }
 
-  const innerWidth = Math.max(
-    ...lines.map((line) => stripAnsi(line).length),
-    title.length + 2,
-    0,
-  );
+  const innerWidth = Math.max(...lines.map((line) => stripAnsi(line).length), title.length + 2, 0);
 
   const result: string[] = [];
 
@@ -227,9 +225,10 @@ export function hRuleTitled(title: string, width: number, chars: BoxChars = DOUB
   const paddedTitle = ` ${title} `;
   const totalWidth = width + 2;
   const remaining = Math.max(0, totalWidth - paddedTitle.length);
-  const right = remaining % 2 === 0
-    ? chars.horizontal.repeat(remaining)
-    : chars.horizontal.repeat(remaining) + ' ';
+  const right =
+    remaining % 2 === 0
+      ? chars.horizontal.repeat(remaining)
+      : chars.horizontal.repeat(remaining) + ' ';
   return `${chars.topLeft}${chars.horizontal}${paddedTitle}${right}${chars.topRight}`;
 }
 

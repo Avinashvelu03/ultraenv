@@ -164,11 +164,19 @@ export function isSveltekitPublicVar(name: string): boolean {
 /**
  * Detect PUBLIC_ vars that contain secret-like keywords.
  */
-export function detectSveltekitClientLeakCandidates(vars: Record<string, string>): readonly string[] {
+export function detectSveltekitClientLeakCandidates(
+  vars: Record<string, string>,
+): readonly string[] {
   const warnings: string[] = [];
   const secretIndicators = [
-    'SECRET', 'PASSWORD', 'TOKEN', 'PRIVATE_KEY', 'API_KEY',
-    'CREDENTIAL', 'ACCESS_KEY', 'CLIENT_SECRET',
+    'SECRET',
+    'PASSWORD',
+    'TOKEN',
+    'PRIVATE_KEY',
+    'API_KEY',
+    'CREDENTIAL',
+    'ACCESS_KEY',
+    'CLIENT_SECRET',
   ];
 
   for (const key of Object.keys(vars)) {

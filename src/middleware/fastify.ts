@@ -132,13 +132,7 @@ export function ultraenvPlugin(
   const denySet = new Set(denyList.map((k) => k.toUpperCase()));
 
   // Build filtered env
-  const filteredEnv = buildFastifyEnv(
-    source,
-    allPrefixes,
-    allowSet,
-    denySet,
-    exposeNodeEnv,
-  );
+  const filteredEnv = buildFastifyEnv(source, allPrefixes, allowSet, denySet, exposeNodeEnv);
 
   // Decorate the Fastify instance
   fastify.decorate('env', filteredEnv);
@@ -229,7 +223,11 @@ function buildFastifyEnv(
  */
 export function createUltraenvPlugin(_opts: UltraenvPluginOptions = {}): {
   name: string;
-  handler: (instance: FastifyInstance, options: UltraenvPluginOptions | undefined, done: () => void) => void;
+  handler: (
+    instance: FastifyInstance,
+    options: UltraenvPluginOptions | undefined,
+    done: () => void,
+  ) => void;
 } {
   return {
     name: 'ultraenv',

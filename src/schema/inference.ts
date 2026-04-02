@@ -67,12 +67,11 @@ export type ExtractDefault<S> = S extends { __default: infer D } ? D : never;
  * // V3 = number
  * ```
  */
-export type ResolveOutput<S> =
-  S extends { __optional: true }
-    ? ExtractType<S> | undefined
-    : S extends { __default: infer D }
-      ? D
-      : ExtractType<S>;
+export type ResolveOutput<S> = S extends { __optional: true }
+  ? ExtractType<S> | undefined
+  : S extends { __default: infer D }
+    ? D
+    : ExtractType<S>;
 
 // -----------------------------------------------------------------------------
 // Schema Definition Inference
@@ -141,25 +140,34 @@ export type OptionalFields<T extends Record<string, unknown>> = {
 /**
  * Omit fields from a schema definition (preserves types).
  */
-export type SchemaOmit<T extends Record<string, SchemaBuilder<unknown>>, K extends keyof T> = Omit<T, K>;
+export type SchemaOmit<T extends Record<string, SchemaBuilder<unknown>>, K extends keyof T> = Omit<
+  T,
+  K
+>;
 
 /**
  * Pick fields from a schema definition (preserves types).
  */
-export type SchemaPick<T extends Record<string, SchemaBuilder<unknown>>, K extends keyof T> = Pick<T, K>;
+export type SchemaPick<T extends Record<string, SchemaBuilder<unknown>>, K extends keyof T> = Pick<
+  T,
+  K
+>;
 
 /**
  * Merge two schema definitions.
  * Values from B override values from A for overlapping keys.
  */
-export type SchemaMerge<A extends Record<string, SchemaBuilder<unknown>>, B extends Record<string, SchemaBuilder<unknown>>> =
-  Omit<A, keyof B> & B;
+export type SchemaMerge<
+  A extends Record<string, SchemaBuilder<unknown>>,
+  B extends Record<string, SchemaBuilder<unknown>>,
+> = Omit<A, keyof B> & B;
 
 /**
  * Get the union of all output types in a schema.
  */
-export type SchemaValueUnion<T extends Record<string, SchemaBuilder<unknown>>> =
-  ExtractType<T[keyof T]>;
+export type SchemaValueUnion<T extends Record<string, SchemaBuilder<unknown>>> = ExtractType<
+  T[keyof T]
+>;
 
 /**
  * Create a mapped type that wraps each value in a Promise.

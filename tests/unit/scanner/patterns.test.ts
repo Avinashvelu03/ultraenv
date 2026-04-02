@@ -39,7 +39,7 @@ describe('scanner patterns', () => {
     });
 
     it('detects Stripe secret keys', () => {
-      const content = 'STRIPE_KEY="sk_' + 'live_abcdefghijklmnopqrstuvwxyz"';  // need 24+ chars after prefix
+      const content = 'STRIPE_KEY="sk_' + 'live_abcdefghijklmnopqrstuvwxyz"'; // need 24+ chars after prefix
       const results = matchPatterns(content, '.env');
       const stripeKeys = results.filter((r) => r.type === 'Stripe Secret Key');
       // The pattern requires 24+ chars after sk_live_
@@ -70,15 +70,16 @@ QuPwKrhN1NbZ
     it('detects hardcoded passwords in URLs', () => {
       const content = 'postgres://user:password@host/db';
       const results = matchPatterns(content, 'app.ts');
-      const secrets = results.filter((r) =>
-        r.type.includes('PostgreSQL') || r.type.includes('Password'),
+      const secrets = results.filter(
+        (r) => r.type.includes('PostgreSQL') || r.type.includes('Password'),
       );
       expect(secrets.length).toBeGreaterThanOrEqual(1);
     });
 
     it('detects SendGrid API keys', () => {
       // Pattern: SG\.{22 chars}.{43 chars}
-      const content = 'SENDGRID_API_KEY="SG.aaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"';
+      const content =
+        'SENDGRID_API_KEY="SG.aaaaaaaaaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"';
       const results = matchPatterns(content, '.env');
       const sendgrid = results.filter((r) => r.type === 'SendGrid API Key');
       expect(sendgrid.length).toBeGreaterThanOrEqual(1);
@@ -100,7 +101,8 @@ QuPwKrhN1NbZ
     });
 
     it('returns empty array for clean content', () => {
-      const content = 'const apiUrl = process.env.API_URL;\nconst port = parseInt(process.env.PORT || "3000", 10);';
+      const content =
+        'const apiUrl = process.env.API_URL;\nconst port = parseInt(process.env.PORT || "3000", 10);';
       const results = matchPatterns(content, 'safe-code.js');
       // May still detect some generic patterns, but core secrets should not be found
       const critical = results.filter((r) => r.pattern.severity === 'critical');

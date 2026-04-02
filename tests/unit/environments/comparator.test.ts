@@ -81,8 +81,10 @@ describe('environments comparator', () => {
     it('masks secret values in output', async () => {
       mockExists.mockResolvedValue(true);
       mockReadFile.mockImplementation((path: string) => {
-        if (path.includes('development')) return Promise.resolve('API_KEY=sk-abcdefghijklmnopqrstuvwxyz012345\n');
-        if (path.includes('production')) return Promise.resolve('API_KEY=sk-zyxwvutsrqponmlkjihgfedcba987654\n');
+        if (path.includes('development'))
+          return Promise.resolve('API_KEY=sk-abcdefghijklmnopqrstuvwxyz012345\n');
+        if (path.includes('production'))
+          return Promise.resolve('API_KEY=sk-zyxwvutsrqponmlkjihgfedcba987654\n');
         return Promise.resolve('');
       });
 
@@ -111,18 +113,14 @@ describe('environments comparator', () => {
 
     it('throws when first env file not found', async () => {
       mockExists.mockResolvedValue(false);
-      await expect(
-        compareEnvironments('development', 'production', '/project'),
-      ).rejects.toThrow();
+      await expect(compareEnvironments('development', 'production', '/project')).rejects.toThrow();
     });
 
     it('throws when second env file not found', async () => {
       mockExists.mockImplementation((path: string) => {
         return Promise.resolve(path.includes('development'));
       });
-      await expect(
-        compareEnvironments('development', 'production', '/project'),
-      ).rejects.toThrow();
+      await expect(compareEnvironments('development', 'production', '/project')).rejects.toThrow();
     });
 
     it('sorts results for deterministic output', async () => {

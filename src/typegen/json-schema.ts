@@ -168,8 +168,8 @@ function schemaToJsonSchemaProperty(
         property.uniqueItems = true;
       }
       if (typeof r.separator === 'string' && r.separator !== ',') {
-        property.description = (property.description ?? '')
-          + ` (separator: "${r.separator as string}")`;
+        property.description =
+          (property.description ?? '') + ` (separator: "${r.separator as string}")`;
       }
 
       break;
@@ -188,8 +188,7 @@ function schemaToJsonSchemaProperty(
 
     case 'bigint': {
       property.type = 'string';
-      property.description = (property.description ?? '')
-        + ' (bigint as string)';
+      property.description = (property.description ?? '') + ' (bigint as string)';
       break;
     }
 
@@ -247,8 +246,8 @@ export function generateJsonSchemaContent(
   const includeDescriptions = options?.includeDescriptions ?? true;
   const indent = options?.indent ?? 2;
   const title = options?.title ?? 'Environment Variables';
-  const description = options?.description
-    ?? 'Schema for environment variables managed by ultraenv';
+  const description =
+    options?.description ?? 'Schema for environment variables managed by ultraenv';
 
   const properties: Record<string, JsonSchemaProperty> = {};
   const required: string[] = [];
@@ -262,9 +261,8 @@ export function generateJsonSchemaContent(
     properties[key] = schemaToJsonSchemaProperty(key, schemaEntry, includeDescriptions);
 
     const r = schemaEntry as unknown as Record<string, unknown>;
-    const isOptional = schemaEntry.optional === true
-      || schemaEntry.default !== undefined
-      || r.hasDefault === true;
+    const isOptional =
+      schemaEntry.optional === true || schemaEntry.default !== undefined || r.hasDefault === true;
 
     if (!isOptional) {
       required.push(key);

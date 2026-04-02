@@ -4,7 +4,13 @@
 // =============================================================================
 
 import { describe, it, expect } from 'vitest';
-import { parseArgs, formatHelp, formatCommandHelp, parseBoolean, type CommandHelp } from '../../src/cli/parser.js';
+import {
+  parseArgs,
+  formatHelp,
+  formatCommandHelp,
+  parseBoolean,
+  type CommandHelp,
+} from '../../src/cli/parser.js';
 
 describe('integration: CLI commands', () => {
   // ---------------------------------------------------------------------------

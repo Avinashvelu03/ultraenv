@@ -110,7 +110,9 @@ describe('vault integrity', () => {
     });
 
     it('throws EncryptionError for empty key', () => {
-      expect(() => verifyIntegrity('data', Buffer.alloc(0), 'a'.repeat(64))).toThrow(EncryptionError);
+      expect(() => verifyIntegrity('data', Buffer.alloc(0), 'a'.repeat(64))).toThrow(
+        EncryptionError,
+      );
     });
 
     it('throws EncryptionError for wrong digest length', () => {
@@ -252,7 +254,9 @@ describe('vault integrity', () => {
     it('throws EncryptionError for empty key', () => {
       const envs = new Map<string, VaultEnvironment>();
       envs.set('dev', makeVaultEnv('dev'));
-      expect(() => verifyVaultChecksum(envs, Buffer.alloc(0), 'a'.repeat(64))).toThrow(EncryptionError);
+      expect(() => verifyVaultChecksum(envs, Buffer.alloc(0), 'a'.repeat(64))).toThrow(
+        EncryptionError,
+      );
     });
 
     it('throws EncryptionError for wrong checksum length', () => {

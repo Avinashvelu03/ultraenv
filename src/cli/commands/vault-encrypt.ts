@@ -12,11 +12,7 @@ import { exists, readFile } from '../../utils/fs.js';
 import { parseEnvFile } from '../../core/parser.js';
 import { encryptValue, isEncryptedValue } from '../../vault/encryption.js';
 import { parseKey } from '../../vault/key-manager.js';
-import {
-  readVaultFile,
-  writeVaultFile,
-  type VaultEntry,
-} from '../../vault/vault-file.js';
+import { readVaultFile, writeVaultFile, type VaultEntry } from '../../vault/vault-file.js';
 import { getErrorMessage } from '../../core/errors.js';
 
 export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number> {
@@ -31,7 +27,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     // Source .env file
     const envFilePath = join(baseDir, `.env.${envName}`);
-    if (!await exists(envFilePath)) {
+    if (!(await exists(envFilePath))) {
       writeError(red(`  .env.${envName} not found.`));
       return 1;
     }
@@ -43,7 +39,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     } else {
       // Try to read from .env.keys
       const keysPath = join(baseDir, '.env.keys');
-      if (!await exists(keysPath)) {
+      if (!(await exists(keysPath))) {
         writeError(red('  No encryption key provided and .env.keys not found.'));
         writeError(yellow('  Run "ultraenv vault init" first.'));
         return 1;

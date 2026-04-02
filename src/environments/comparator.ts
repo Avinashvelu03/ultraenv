@@ -162,11 +162,7 @@ const DANGER_PATTERNS: ReadonlyArray<{
 /**
  * Detect potentially dangerous differences between two values.
  */
-function detectDanger(
-  key: string,
-  value1: string,
-  value2: string,
-): ComparisonWarning | null {
+function detectDanger(key: string, value1: string, value2: string): ComparisonWarning | null {
   for (const danger of DANGER_PATTERNS) {
     if (danger.pattern.test(key)) {
       return {
@@ -200,8 +196,10 @@ function detectDanger(
   }
 
   // Detect boolean-like value going from true to false (security feature disabled)
-  if ((value1.toLowerCase() === 'true' || value1 === '1') &&
-      (value2.toLowerCase() === 'false' || value2 === '0')) {
+  if (
+    (value1.toLowerCase() === 'true' || value1 === '1') &&
+    (value2.toLowerCase() === 'false' || value2 === '0')
+  ) {
     return {
       key,
       message: `Feature toggled off: "${key}" changed from enabled to disabled`,
@@ -244,33 +242,23 @@ export async function compareEnvironments(
   const env2Path = join(baseDir, `.env.${env2}`);
 
   // Resolve file paths — support direct paths too
-  const resolvedEnv1Path = env1.includes('/') || env1.includes('\\')
-    ? resolve(env1)
-    : env1Path;
-  const resolvedEnv2Path = env2.includes('/') || env2.includes('\\')
-    ? resolve(env2)
-    : env2Path;
+  const resolvedEnv1Path = env1.includes('/') || env1.includes('\\') ? resolve(env1) : env1Path;
+  const resolvedEnv2Path = env2.includes('/') || env2.includes('\\') ? resolve(env2) : env2Path;
 
-  if (!await exists(resolvedEnv1Path)) {
-    throw new FileSystemError(
-      `Environment file not found: "${resolvedEnv1Path}"`,
-      {
-        path: resolvedEnv1Path,
-        operation: 'read',
-        hint: `Ensure ".env.${env1}" exists in the project directory.`,
-      },
-    );
+  if (!(await exists(resolvedEnv1Path))) {
+    throw new FileSystemError(`Environment file not found: "${resolvedEnv1Path}"`, {
+      path: resolvedEnv1Path,
+      operation: 'read',
+      hint: `Ensure ".env.${env1}" exists in the project directory.`,
+    });
   }
 
-  if (!await exists(resolvedEnv2Path)) {
-    throw new FileSystemError(
-      `Environment file not found: "${resolvedEnv2Path}"`,
-      {
-        path: resolvedEnv2Path,
-        operation: 'read',
-        hint: `Ensure ".env.${env2}" exists in the project directory.`,
-      },
-    );
+  if (!(await exists(resolvedEnv2Path))) {
+    throw new FileSystemError(`Environment file not found: "${resolvedEnv2Path}"`, {
+      path: resolvedEnv2Path,
+      operation: 'read',
+      hint: `Ensure ".env.${env2}" exists in the project directory.`,
+    });
   }
 
   const env1Content = await readFile(resolvedEnv1Path);
@@ -391,10 +379,14 @@ export function formatComparison(comparison: EnvironmentComparison): string {
     lines.push('');
     lines.push(`⚠ ${comparison.warnings.length} warning(s):`);
     for (const warning of comparison.warnings) {
-      const icon = warning.severity === 'critical' ? '🔴'
-        : warning.severity === 'high' ? '🟠'
-        : warning.severity === 'medium' ? '🟡'
-        : '🔵';
+      const icon =
+        warning.severity === 'critical'
+          ? '🔴'
+          : warning.severity === 'high'
+            ? '🟠'
+            : warning.severity === 'medium'
+              ? '🟡'
+              : '🔵';
       lines.push(`  ${icon} ${warning.key}: ${warning.message}`);
     }
   }
@@ -404,7 +396,9 @@ export function formatComparison(comparison: EnvironmentComparison): string {
     lines.push('');
     lines.push(`Only in ${comparison.env1Name} (${comparison.onlyInEnv1.length}):`);
     for (const diff of comparison.onlyInEnv1) {
-      lines.push(`  - ${diff.key}${diff.isSecret ? ' [SECRET]' : ''} = ${diff.value1 || '(empty)'}`);
+      lines.push(
+        `  - ${diff.key}${diff.isSecret ? ' [SECRET]' : ''} = ${diff.value1 || '(empty)'}`,
+      );
     }
   }
 
@@ -413,7 +407,9 @@ export function formatComparison(comparison: EnvironmentComparison): string {
     lines.push('');
     lines.push(`Only in ${comparison.env2Name} (${comparison.onlyInEnv2.length}):`);
     for (const diff of comparison.onlyInEnv2) {
-      lines.push(`  + ${diff.key}${diff.isSecret ? ' [SECRET]' : ''} = ${diff.value2 || '(empty)'}`);
+      lines.push(
+        `  + ${diff.key}${diff.isSecret ? ' [SECRET]' : ''} = ${diff.value2 || '(empty)'}`,
+      );
     }
   }
 

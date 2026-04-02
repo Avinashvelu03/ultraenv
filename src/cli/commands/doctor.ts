@@ -115,12 +115,9 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
 
     // Display results
     const headers = ['Check', 'Status', 'Details'];
-    const rows: string[][] = checks.map(check => {
-      const statusIcon = check.status === 'pass'
-        ? green('✓')
-        : check.status === 'warn'
-          ? yellow('⚠')
-          : red('✗');
+    const rows: string[][] = checks.map((check) => {
+      const statusIcon =
+        check.status === 'pass' ? green('✓') : check.status === 'warn' ? yellow('⚠') : red('✗');
       return [check.name, statusIcon, check.message];
     });
 
@@ -128,16 +125,18 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     writeLine('');
 
     // Summary
-    const passed = checks.filter(c => c.status === 'pass').length;
-    const warnings = checks.filter(c => c.status === 'warn').length;
-    const failed = checks.filter(c => c.status === 'fail').length;
+    const passed = checks.filter((c) => c.status === 'pass').length;
+    const warnings = checks.filter((c) => c.status === 'warn').length;
+    const failed = checks.filter((c) => c.status === 'fail').length;
 
     if (ctx.outputFormat === 'json') {
       writeJson({ checks, summary: { passed, warnings, failed, total: checks.length } });
       return failed > 0 ? 1 : 0;
     }
 
-    writeLine(cyan(`  ${passed}/${checks.length} passed, ${warnings} warning(s), ${failed} failure(s)`));
+    writeLine(
+      cyan(`  ${passed}/${checks.length} passed, ${warnings} warning(s), ${failed} failure(s)`),
+    );
     writeLine('');
 
     if (failed > 0) {

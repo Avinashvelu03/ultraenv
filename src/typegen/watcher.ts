@@ -263,17 +263,17 @@ export class TypegenWatcher implements Watcher {
       const outputPaths: string[] = [];
 
       if (format === 'declaration' || format === 'all') {
-        const declPath = format === 'all'
-          ? outputPath.replace(/\.\w+$/, '.d.ts') || 'ultraenv.d.ts'
-          : outputPath;
+        const declPath =
+          format === 'all' ? outputPath.replace(/\.\w+$/, '.d.ts') || 'ultraenv.d.ts' : outputPath;
         await generateDeclaration(vars, this.options.schema, declPath);
         outputPaths.push(declPath);
       }
 
       if (format === 'module' || format === 'all') {
-        const modulePath = format === 'all'
-          ? outputPath.replace(/\.\w+$/, '.env.ts') || 'ultraenv.env.ts'
-          : outputPath;
+        const modulePath =
+          format === 'all'
+            ? outputPath.replace(/\.\w+$/, '.env.ts') || 'ultraenv.env.ts'
+            : outputPath;
         if (this.options.schema !== undefined) {
           await generateModule(this.options.schema, modulePath);
         }
@@ -281,9 +281,10 @@ export class TypegenWatcher implements Watcher {
       }
 
       if (format === 'json-schema' || format === 'all') {
-        const jsonPath = format === 'all'
-          ? outputPath.replace(/\.\w+$/, '.schema.json') || 'ultraenv.schema.json'
-          : outputPath;
+        const jsonPath =
+          format === 'all'
+            ? outputPath.replace(/\.\w+$/, '.schema.json') || 'ultraenv.schema.json'
+            : outputPath;
         if (this.options.schema !== undefined) {
           await generateJsonSchema(this.options.schema, jsonPath);
         }

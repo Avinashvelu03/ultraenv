@@ -3,10 +3,7 @@
 // Structured JSON output for validation results, errors, and scan results.
 // =============================================================================
 
-import type {
-  ValidationResult,
-  ScanResult,
-} from '../core/types.js';
+import type { ValidationResult, ScanResult } from '../core/types.js';
 import { UltraenvError } from '../core/errors.js';
 
 // -----------------------------------------------------------------------------
@@ -124,10 +121,7 @@ export function reportValidationDetailed(
  * @param options - Reporter options
  * @returns JSON string
  */
-export function reportError(
-  error: UltraenvError,
-  options: JsonReporterOptions = {},
-): string {
+export function reportError(error: UltraenvError, options: JsonReporterOptions = {}): string {
   const { pretty = true, indent = 2, includeStack = false } = options;
 
   const output: Record<string, unknown> = {
@@ -145,13 +139,14 @@ export function reportError(
   }
 
   if (error.cause !== undefined) {
-    output.cause = error.cause instanceof Error
-      ? {
-          name: error.cause.name,
-          message: error.cause.message,
-          ...(includeStack && error.cause.stack ? { stack: error.cause.stack } : {}),
-        }
-      : String(error.cause);
+    output.cause =
+      error.cause instanceof Error
+        ? {
+            name: error.cause.name,
+            message: error.cause.message,
+            ...(includeStack && error.cause.stack ? { stack: error.cause.stack } : {}),
+          }
+        : String(error.cause);
   }
 
   return serialize(output, pretty, indent);
@@ -174,10 +169,7 @@ export function reportError(
  * const json = reportScanResult(scanResult);
  * ```
  */
-export function reportScanResult(
-  result: ScanResult,
-  options: JsonReporterOptions = {},
-): string {
+export function reportScanResult(result: ScanResult, options: JsonReporterOptions = {}): string {
   const { pretty = true, indent = 2 } = options;
 
   // Severity breakdown
@@ -221,11 +213,7 @@ export function reportScanResult(
 /**
  * Serialize an object to JSON string.
  */
-function serialize(
-  obj: Record<string, unknown>,
-  pretty: boolean,
-  indent: number,
-): string {
+function serialize(obj: Record<string, unknown>, pretty: boolean, indent: number): string {
   if (pretty) {
     return JSON.stringify(obj, null, indent);
   }

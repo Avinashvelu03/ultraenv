@@ -114,9 +114,7 @@ export function hmacHex(key: Buffer, data: string): string {
  */
 export function timingSafeEqual(a: Buffer, b: Buffer): boolean {
   if (a.length !== b.length) {
-    throw new RangeError(
-      `timingSafeEqual: buffer lengths differ (${a.length} vs ${b.length})`,
-    );
+    throw new RangeError(`timingSafeEqual: buffer lengths differ (${a.length} vs ${b.length})`);
   }
   return cryptoTimingSafeEqual(a, b);
 }
@@ -180,12 +178,7 @@ export function deriveKey(
 /**
  * Manual HKDF implementation as fallback.
  */
-function manualHkdf(
-  ikm: Buffer,
-  salt: Buffer,
-  info: string,
-  length: number,
-): Buffer {
+function manualHkdf(ikm: Buffer, salt: Buffer, info: string, length: number): Buffer {
   // Extract
   const prk = createHmac('sha256', salt).update(ikm).digest();
 
@@ -202,11 +195,7 @@ function manualHkdf(
   let previous = Buffer.alloc(0);
 
   for (let i = 1; i <= n; i++) {
-    const hmacData = Buffer.concat([
-      previous,
-      infoBuffer,
-      Buffer.from([i]),
-    ]);
+    const hmacData = Buffer.concat([previous, infoBuffer, Buffer.from([i])]);
     previous = createHmac('sha256', prk).update(hmacData).digest();
     const offset = (i - 1) * hashLen;
     const copyLen = Math.min(hashLen, length - offset);
@@ -252,10 +241,7 @@ export function encrypt(key: Buffer, plaintext: Buffer): EncryptResult {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const cipher = createCipheriv(algo, key, iv) as any;
 
-  const ciphertext = Buffer.concat([
-    cipher.update(plaintext),
-    cipher.final(),
-  ]);
+  const ciphertext = Buffer.concat([cipher.update(plaintext), cipher.final()]);
 
   const authTag: Buffer = cipher.getAuthTag();
 
@@ -272,12 +258,7 @@ export function encrypt(key: Buffer, plaintext: Buffer): EncryptResult {
  * @returns Decrypted plaintext.
  * @throws Error if decryption or authentication fails.
  */
-export function decrypt(
-  key: Buffer,
-  iv: Buffer,
-  authTag: Buffer,
-  ciphertext: Buffer,
-): Buffer {
+export function decrypt(key: Buffer, iv: Buffer, authTag: Buffer, ciphertext: Buffer): Buffer {
   if (key.length !== 16 && key.length !== 24 && key.length !== 32) {
     throw new RangeError(
       `decrypt: key must be 16, 24, or 32 bytes (AES-128/192/256), got ${key.length}`,
@@ -291,10 +272,7 @@ export function decrypt(
   decipher.setAuthTag(authTag);
 
   try {
-    return Buffer.concat([
-      decipher.update(ciphertext),
-      decipher.final(),
-    ]);
+    return Buffer.concat([decipher.update(ciphertext), decipher.final()]);
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : String(error);
     throw new Error(

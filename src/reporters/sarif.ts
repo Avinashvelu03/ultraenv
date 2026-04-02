@@ -67,7 +67,7 @@ interface SarifRun {
     startTimeUtc: string;
     endTimeUtc: string;
   }>;
-};
+}
 
 /** Complete SARIF document */
 interface SarifDocument {
@@ -211,7 +211,8 @@ export function reportScanResult(
 
   // Build SARIF document
   const document: SarifDocument = {
-    $schema: 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
+    $schema:
+      'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
     version: '2.1.0',
     runs: [
       {
@@ -290,7 +291,8 @@ export function createSingleResultSarif(params: {
   };
 
   const document: SarifDocument = {
-    $schema: 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
+    $schema:
+      'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json',
     version: '2.1.0',
     runs: [
       {

@@ -4,7 +4,12 @@
 // =============================================================================
 
 import type { LoadOptions, LoadResult, LoadMetadata, ParsedEnvFile } from './types.js';
-import { DEFAULT_ENV_DIR, ENCODING, MAX_INTERPOLATION_DEPTH, MAX_VALUE_LENGTH } from './constants.js';
+import {
+  DEFAULT_ENV_DIR,
+  ENCODING,
+  MAX_INTERPOLATION_DEPTH,
+  MAX_VALUE_LENGTH,
+} from './constants.js';
 import { parseEnvFile } from './parser.js';
 import { expandVariables } from './interpolation.js';
 import { resolveCascade, mergeCascade, type CascadeOptions } from './cascade.js';
@@ -39,14 +44,14 @@ interface ResolvedLoadOptions {
  * Resolve load options with defaults.
  */
 function resolveLoadOptions(options?: LoadOptions): ResolvedLoadOptions {
-/* v8 ignore start */
+  /* v8 ignore start */
   const noop: ErrorHandler = () => {};
-/* v8 ignore stop */
+  /* v8 ignore stop */
 
   return {
-/* v8 ignore start */
+    /* v8 ignore start */
     envDir: options?.envDir ?? DEFAULT_ENV_DIR,
-/* v8 ignore stop */
+    /* v8 ignore stop */
     encoding: options?.encoding ?? ENCODING,
     expandVars: options?.expandVariables ?? true,
     overrideProcessEnv: options?.overrideProcessEnv ?? false,
@@ -56,9 +61,9 @@ function resolveLoadOptions(options?: LoadOptions): ResolvedLoadOptions {
     processEnv: options?.processEnv ?? process.env,
     onError: noop,
     cascade: {
-/* v8 ignore start */
+      /* v8 ignore start */
       envDir: options?.envDir ?? DEFAULT_ENV_DIR,
-/* v8 ignore stop */
+      /* v8 ignore stop */
       mergeStrategy: options?.mergeStrategy ?? 'last-wins',
     },
   };
@@ -159,7 +164,7 @@ function loadCoreSync(resolved: ResolvedLoadOptions): CoreLoadResult {
 
       const parsedFile = parseEnvFile(content, entry.absolutePath);
       parsed.push(parsedFile);
-/* v8 ignore start */
+      /* v8 ignore start */
     } catch (error: unknown) {
       resolved.onError(
         isUltraenvError(error)
@@ -171,7 +176,7 @@ function loadCoreSync(resolved: ResolvedLoadOptions): CoreLoadResult {
             }),
       );
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
   }
 
   // 3. Merge according to cascade strategy
@@ -199,10 +204,7 @@ function loadCoreSync(resolved: ResolvedLoadOptions): CoreLoadResult {
  * Apply loaded env vars to process.env if overrideProcessEnv is true.
  * Returns whether any overrides occurred.
  */
-function applyToProcessEnv(
-  env: Record<string, string>,
-  resolved: ResolvedLoadOptions,
-): boolean {
+function applyToProcessEnv(env: Record<string, string>, resolved: ResolvedLoadOptions): boolean {
   if (!resolved.overrideProcessEnv) return false;
 
   let hadOverrides = false;
@@ -222,11 +224,7 @@ function applyToProcessEnv(
 /**
  * Validate that no individual value in file content exceeds the max length.
  */
-function validateContentLengths(
-  content: string,
-  filePath: string,
-  maxValueLength: number,
-): void {
+function validateContentLengths(content: string, filePath: string, maxValueLength: number): void {
   const lines = content.split('\n');
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]!;
@@ -235,12 +233,12 @@ function validateContentLengths(
 
     // Skip commented-out lines
     const trimmed = line.slice(0, eqIndex).trim();
-/* v8 ignore start */
+    /* v8 ignore start */
     if (trimmed.startsWith('#')) continue;
-/* v8 ignore stop */
+    /* v8 ignore stop */
 
     const value = line.slice(eqIndex + 1).trimStart();
-/* v8 ignore start */
+    /* v8 ignore start */
     if (value.length > maxValueLength) {
       throw new FileSystemError(
         `Value for variable at line ${i + 1} exceeds maximum length of ${maxValueLength} bytes (${value.length} bytes)`,
@@ -251,7 +249,7 @@ function validateContentLengths(
         },
       );
     }
-/* v8 ignore stop */
+    /* v8 ignore stop */
   }
 }
 

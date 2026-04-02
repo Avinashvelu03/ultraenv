@@ -426,7 +426,7 @@ describe('expandVariables', () => {
       const result = expandVariables({ TEST: 'Lone $' }, {});
       expect(result.TEST).toBe('Lone $');
     });
-    
+
     it('handles completely unclosed braced with escapes', () => {
       const result = expandVariables({ TEST: '${VA\\R' }, {});
       expect(result.TEST).toBe('${VA\\R');

@@ -1,5 +1,8 @@
 import { describe, it, expect } from 'vitest';
-import { NumberSchemaBuilder, createNumberSchema } from '../../../../src/schema/validators/number.js';
+import {
+  NumberSchemaBuilder,
+  createNumberSchema,
+} from '../../../../src/schema/validators/number.js';
 
 describe('NumberSchemaBuilder', () => {
   // ===========================================================================

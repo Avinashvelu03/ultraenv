@@ -30,14 +30,17 @@ describe('integration: full-load pipeline', () => {
   // ---------------------------------------------------------------------------
   describe('load() basic', () => {
     it('loads a .env file and returns key-value pairs', () => {
-      tempDir.write('.env', [
-        'DATABASE_URL=postgres://user:pass@localhost:5432/mydb',
-        'PORT=3000',
-        'HOST=localhost',
-        'DEBUG=true',
-        'NODE_ENV=development',
-        'API_KEY=sk_test_abc123',
-      ].join('\n'));
+      tempDir.write(
+        '.env',
+        [
+          'DATABASE_URL=postgres://user:pass@localhost:5432/mydb',
+          'PORT=3000',
+          'HOST=localhost',
+          'DEBUG=true',
+          'NODE_ENV=development',
+          'API_KEY=sk_test_abc123',
+        ].join('\n'),
+      );
 
       const env = load({ envDir: tempDir.path });
 
@@ -56,10 +59,7 @@ describe('integration: full-load pipeline', () => {
 
     it('loads the fixture basic.env end-to-end', () => {
       // Copy the fixture into the temp directory
-      const fixturePath = path.resolve(
-        __dirname,
-        '../fixtures/env-files/basic.env',
-      );
+      const fixturePath = path.resolve(__dirname, '../fixtures/env-files/basic.env');
       const content = fs.readFileSync(fixturePath, 'utf-8');
       tempDir.write('.env', content);
 
@@ -180,11 +180,14 @@ describe('integration: full-load pipeline', () => {
   // ---------------------------------------------------------------------------
   describe('interpolation end-to-end', () => {
     it('expands variable references in loaded env', () => {
-      tempDir.write('.env', [
-        'HOST=localhost',
-        'PORT=5432',
-        'DATABASE_URL=postgres://user:pass@${HOST}:${PORT}/mydb',
-      ].join('\n'));
+      tempDir.write(
+        '.env',
+        [
+          'HOST=localhost',
+          'PORT=5432',
+          'DATABASE_URL=postgres://user:pass@${HOST}:${PORT}/mydb',
+        ].join('\n'),
+      );
 
       const env = load({ envDir: tempDir.path });
 
@@ -207,10 +210,7 @@ describe('integration: full-load pipeline', () => {
 
     it('loads the interpolation fixture and expands correctly', () => {
       // Copy the interpolation fixture into the temp directory
-      const fixturePath = path.resolve(
-        __dirname,
-        '../fixtures/env-files/interpolation.env',
-      );
+      const fixturePath = path.resolve(__dirname, '../fixtures/env-files/interpolation.env');
       const content = fs.readFileSync(fixturePath, 'utf-8');
       tempDir.write('.env', content);
 
@@ -241,23 +241,24 @@ describe('integration: full-load pipeline', () => {
   // ---------------------------------------------------------------------------
   describe('full pipeline with schema validation', () => {
     it('loads env file and validates with schema end-to-end', () => {
-      tempDir.write('.env', [
-        'PORT=3000',
-        'HOST=localhost',
-        'DEBUG=true',
-        'NODE_ENV=development',
-      ].join('\n'));
+      tempDir.write(
+        '.env',
+        ['PORT=3000', 'HOST=localhost', 'DEBUG=true', 'NODE_ENV=development'].join('\n'),
+      );
 
       // Load the env vars
       const rawEnv = load({ envDir: tempDir.path });
 
       // Validate with schema — full pipeline
-      const env = defineEnv({
-        PORT: t.number().port().default(8080),
-        HOST: t.string().default('0.0.0.0'),
-        DEBUG: t.boolean().default(false),
-        NODE_ENV: t.enum(['development', 'production', 'test'] as const),
-      }, rawEnv);
+      const env = defineEnv(
+        {
+          PORT: t.number().port().default(8080),
+          HOST: t.string().default('0.0.0.0'),
+          DEBUG: t.boolean().default(false),
+          NODE_ENV: t.enum(['development', 'production', 'test'] as const),
+        },
+        rawEnv,
+      );
 
       // PORT should be number, not string
       expect(typeof env.PORT).toBe('number');
@@ -280,12 +281,15 @@ describe('integration: full-load pipeline', () => {
 
       const rawEnv = load({ envDir: tempDir.path });
 
-      const env = defineEnv({
-        PORT: t.number().port().default(3000),
-        HOST: t.string().default('localhost'),
-        DEBUG: t.boolean().default(false),
-        NODE_ENV: t.enum(['development', 'production', 'test'] as const),
-      }, rawEnv);
+      const env = defineEnv(
+        {
+          PORT: t.number().port().default(3000),
+          HOST: t.string().default('localhost'),
+          DEBUG: t.boolean().default(false),
+          NODE_ENV: t.enum(['development', 'production', 'test'] as const),
+        },
+        rawEnv,
+      );
 
       expect(env.PORT).toBe(3000);
       expect(env.HOST).toBe('localhost');

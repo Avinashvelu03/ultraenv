@@ -281,8 +281,18 @@ export const CURRENCIES: readonly Currency[] = [
   { code: 'XAU', name: 'Gold', symbol: 'Au', numeric: '959' },
   { code: 'XBA', name: 'Bond Markets Unit European Composite Unit', symbol: 'XBA', numeric: '955' },
   { code: 'XBB', name: 'Bond Markets Unit European Monetary Unit', symbol: 'XBB', numeric: '956' },
-  { code: 'XBC', name: 'Bond Markets Unit European Unit of Account 9', symbol: 'XBC', numeric: '957' },
-  { code: 'XBD', name: 'Bond Markets Unit European Unit of Account 17', symbol: 'XBD', numeric: '958' },
+  {
+    code: 'XBC',
+    name: 'Bond Markets Unit European Unit of Account 9',
+    symbol: 'XBC',
+    numeric: '957',
+  },
+  {
+    code: 'XBD',
+    name: 'Bond Markets Unit European Unit of Account 17',
+    symbol: 'XBD',
+    numeric: '958',
+  },
   { code: 'XCD', name: 'East Caribbean Dollar', symbol: 'EC$', numeric: '951' },
   { code: 'XDR', name: 'Special Drawing Rights', symbol: 'XDR', numeric: '960' },
   { code: 'XOF', name: 'CFA Franc BCEAO', symbol: 'Fr', numeric: '952' },
@@ -292,7 +302,12 @@ export const CURRENCIES: readonly Currency[] = [
   { code: 'XSU', name: 'Sucre', symbol: 'Sucre', numeric: '994' },
   { code: 'XTS', name: 'Codes specifically reserved for testing', symbol: 'XTS', numeric: '963' },
   { code: 'XUA', name: 'ADB Unit of Account', symbol: 'XUA', numeric: '965' },
-  { code: 'XXX', name: 'The codes assigned for transactions where no currency is involved', symbol: 'XXX', numeric: '999' },
+  {
+    code: 'XXX',
+    name: 'The codes assigned for transactions where no currency is involved',
+    symbol: 'XXX',
+    numeric: '999',
+  },
 
   // ---------------------------------------------------------------------------
   // Y
@@ -348,7 +363,7 @@ export const CURRENCIES: readonly Currency[] = [
 ] as const;
 
 /** Pre-computed Set of currency codes for O(1) lookups */
-const CURRENCY_SET = new Set<string>(CURRENCIES.map(c => c.code));
+const CURRENCY_SET = new Set<string>(CURRENCIES.map((c) => c.code));
 
 /**
  * Check whether a given string is a valid ISO 4217 currency code.

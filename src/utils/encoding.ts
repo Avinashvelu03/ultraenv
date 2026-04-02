@@ -26,45 +26,45 @@ export function isUtf8(buffer: Buffer): boolean {
   while (i < len) {
     const byte = buffer[i]!; // Safe: i < len guarantees this is defined
 
-    if (byte <= 0x7F) {
+    if (byte <= 0x7f) {
       // ASCII — single byte
       i += 1;
       continue;
     }
 
-    if (byte >= 0xC2 && byte <= 0xDF) {
+    if (byte >= 0xc2 && byte <= 0xdf) {
       // 2-byte sequence
       if (i + 1 >= len) return false;
-      if ((buffer[i + 1]! & 0xC0) !== 0x80) return false;
+      if ((buffer[i + 1]! & 0xc0) !== 0x80) return false;
       i += 2;
       continue;
     }
 
-    if (byte >= 0xE0 && byte <= 0xEF) {
+    if (byte >= 0xe0 && byte <= 0xef) {
       // 3-byte sequence
       if (i + 2 >= len) return false;
-      if ((buffer[i + 1]! & 0xC0) !== 0x80) return false;
-      if ((buffer[i + 2]! & 0xC0) !== 0x80) return false;
+      if ((buffer[i + 1]! & 0xc0) !== 0x80) return false;
+      if ((buffer[i + 2]! & 0xc0) !== 0x80) return false;
 
       // Check for overlong encodings and surrogates
-      if (byte === 0xE0 && buffer[i + 1]! < 0xA0) return false;
-      if (byte === 0xED && buffer[i + 1]! > 0x9F) return false; // surrogate
+      if (byte === 0xe0 && buffer[i + 1]! < 0xa0) return false;
+      if (byte === 0xed && buffer[i + 1]! > 0x9f) return false; // surrogate
 
       i += 3;
       continue;
     }
 
-    if (byte >= 0xF0 && byte <= 0xF4) {
+    if (byte >= 0xf0 && byte <= 0xf4) {
       // 4-byte sequence
       if (i + 3 >= len) return false;
-      if ((buffer[i + 1]! & 0xC0) !== 0x80) return false;
-      if ((buffer[i + 2]! & 0xC0) !== 0x80) return false;
-      if ((buffer[i + 3]! & 0xC0) !== 0x80) return false;
+      if ((buffer[i + 1]! & 0xc0) !== 0x80) return false;
+      if ((buffer[i + 2]! & 0xc0) !== 0x80) return false;
+      if ((buffer[i + 3]! & 0xc0) !== 0x80) return false;
 
       // Check for overlong encoding
-      if (byte === 0xF0 && buffer[i + 1]! < 0x90) return false;
+      if (byte === 0xf0 && buffer[i + 1]! < 0x90) return false;
       // Check for code points above U+10FFFF
-      if (byte === 0xF4 && buffer[i + 1]! > 0x8F) return false;
+      if (byte === 0xf4 && buffer[i + 1]! > 0x8f) return false;
 
       i += 4;
       continue;
@@ -82,7 +82,7 @@ export function isUtf8(buffer: Buffer): boolean {
  */
 function isAscii(buffer: Buffer): boolean {
   for (let i = 0; i < buffer.length; i++) {
-    if (buffer[i]! > 0x7F) return false;
+    if (buffer[i]! > 0x7f) return false;
   }
   return true;
 }
@@ -92,7 +92,7 @@ function isAscii(buffer: Buffer): boolean {
  * or by heuristic analysis of byte patterns.
  */
 function isUtf16LE(buffer: Buffer): boolean {
-  if (buffer.length >= 2 && buffer[0] === 0xFF && buffer[1] === 0xFE) {
+  if (buffer.length >= 2 && buffer[0] === 0xff && buffer[1] === 0xfe) {
     return true;
   }
   // Heuristic: check if every other byte is 0x00 (common for ASCII in UTF-16 LE)
@@ -112,7 +112,7 @@ function isUtf16LE(buffer: Buffer): boolean {
  * Check if a Buffer looks like UTF-16 BE (big-endian).
  */
 function isUtf16BE(buffer: Buffer): boolean {
-  if (buffer.length >= 2 && buffer[0] === 0xFE && buffer[1] === 0xFF) {
+  if (buffer.length >= 2 && buffer[0] === 0xfe && buffer[1] === 0xff) {
     return true;
   }
   // Heuristic: check if every other byte starting at index 0 is 0x00
@@ -143,13 +143,13 @@ export function detectEncoding(buffer: Buffer): string {
   if (buffer.length === 0) return 'utf-8';
 
   // Check for BOM
-  if (buffer.length >= 3 && buffer[0] === 0xEF && buffer[1] === 0xBB && buffer[2] === 0xBF) {
+  if (buffer.length >= 3 && buffer[0] === 0xef && buffer[1] === 0xbb && buffer[2] === 0xbf) {
     return 'utf-8';
   }
-  if (buffer.length >= 2 && buffer[0] === 0xFF && buffer[1] === 0xFE) {
+  if (buffer.length >= 2 && buffer[0] === 0xff && buffer[1] === 0xfe) {
     return 'utf-16le';
   }
-  if (buffer.length >= 2 && buffer[0] === 0xFE && buffer[1] === 0xFF) {
+  if (buffer.length >= 2 && buffer[0] === 0xfe && buffer[1] === 0xff) {
     return 'utf-16be';
   }
 

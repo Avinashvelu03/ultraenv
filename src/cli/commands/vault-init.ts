@@ -63,7 +63,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     // Update the keys file with the actual key
     const envVarName = `ULTRAENV_KEY_${envName.toUpperCase()}`;
     const keysLines = keysContent.split('\n');
-    const updatedKeysLines = keysLines.map(line => {
+    const updatedKeysLines = keysLines.map((line) => {
       if (line.startsWith(`${envVarName}=`)) {
         return `${envVarName}="${masterKeyFormatted}"`;
       }

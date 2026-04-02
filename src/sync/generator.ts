@@ -55,15 +55,24 @@ function schemaTypeToString(schema: SchemaEntry): string {
   if ('type' in schemaRecord) {
     const schemaType = schemaRecord.type as string;
     switch (schemaType) {
-      case 'string': return 'string';
-      case 'number': return 'number';
-      case 'boolean': return 'boolean';
-      case 'enum': return 'enum';
-      case 'array': return 'array (comma-separated)';
-      case 'json': return 'json';
-      case 'date': return 'date (ISO 8601)';
-      case 'bigint': return 'bigint';
-      default: return 'string';
+      case 'string':
+        return 'string';
+      case 'number':
+        return 'number';
+      case 'boolean':
+        return 'boolean';
+      case 'enum':
+        return 'enum';
+      case 'array':
+        return 'array (comma-separated)';
+      case 'json':
+        return 'json';
+      case 'date':
+        return 'date (ISO 8601)';
+      case 'bigint':
+        return 'bigint';
+      default:
+        return 'string';
     }
   }
   return 'string';
@@ -140,9 +149,8 @@ export async function generateExampleFile(
   const includeDefaults = options?.includeDefaults ?? true;
 
   const content = await readFile(envPath);
-  const schema = options?.schemaPath !== undefined
-    ? await loadSchema(options.schemaPath)
-    : undefined;
+  const schema =
+    options?.schemaPath !== undefined ? await loadSchema(options.schemaPath) : undefined;
 
   const parsed = parseEnvFile(content, envPath);
   const generated = generateExampleContent(parsed.vars, schema, {
@@ -189,7 +197,8 @@ export function generateExampleContent(
     emittedKeys.add(envVar.key);
 
     const schemaEntry = schema !== undefined ? schema[envVar.key] : undefined;
-    const schemaRecord = schemaEntry !== undefined ? schemaEntry as unknown as Record<string, unknown> : undefined;
+    const schemaRecord =
+      schemaEntry !== undefined ? (schemaEntry as unknown as Record<string, unknown>) : undefined;
     const isRequired = schemaEntry === undefined || schemaEntry.optional !== true;
     const isSecret = isSecretVariable(envVar.key, envVar.value, schemaEntry);
 
@@ -232,14 +241,13 @@ export function generateExampleContent(
     // Default value
     if (includeDefaults) {
       if (schemaRecord?.default !== undefined) {
-        const defaultDisplay = isSecret
-          ? '[REDACTED]'
-          : String(schemaRecord.default);
+        const defaultDisplay = isSecret ? '[REDACTED]' : String(schemaRecord.default);
         commentLines.push(`# default: ${defaultDisplay}`);
-      } else if (schemaRecord?.hasDefault === true && typeof schemaRecord.rawDefaultValue === 'string') {
-        const defaultDisplay = isSecret
-          ? '[REDACTED]'
-          : schemaRecord.rawDefaultValue;
+      } else if (
+        schemaRecord?.hasDefault === true &&
+        typeof schemaRecord.rawDefaultValue === 'string'
+      ) {
+        const defaultDisplay = isSecret ? '[REDACTED]' : schemaRecord.rawDefaultValue;
         commentLines.push(`# default: ${defaultDisplay}`);
       }
     }
@@ -273,11 +281,7 @@ export function generateExampleContent(
  * Build the example value for a variable.
  * Secrets are replaced with a placeholder, other values get a generic example.
  */
-function buildExampleValue(
-  value: string,
-  isSecret: boolean,
-  schema?: SchemaEntry,
-): string {
+function buildExampleValue(value: string, isSecret: boolean, schema?: SchemaEntry): string {
   if (isSecret) {
     // For secrets, provide a generic placeholder
     return '<your-secret-here>';
@@ -342,9 +346,8 @@ export async function needsUpdate(
   }
 
   const content = await readFile(envPath);
-  const schema = options?.schemaPath !== undefined
-    ? await loadSchema(options.schemaPath)
-    : undefined;
+  const schema =
+    options?.schemaPath !== undefined ? await loadSchema(options.schemaPath) : undefined;
 
   const parsed = parseEnvFile(content, envPath);
   const generated = generateExampleContent(parsed.vars, schema, {

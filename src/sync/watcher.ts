@@ -207,16 +207,12 @@ export class SyncWatcher implements Watcher {
 
     try {
       // Check if update is actually needed
-      const needs = await needsUpdate(
-        this.options.envPath,
-        this.options.examplePath,
-        {
-          schemaPath: undefined,
-          includeDescriptions: this.options.includeDescriptions,
-          includeTypes: this.options.includeTypes,
-          includeDefaults: this.options.includeDefaults,
-        },
-      );
+      const needs = await needsUpdate(this.options.envPath, this.options.examplePath, {
+        schemaPath: undefined,
+        includeDescriptions: this.options.includeDescriptions,
+        includeTypes: this.options.includeTypes,
+        includeDefaults: this.options.includeDefaults,
+      });
 
       if (!needs) {
         result.success = true;
@@ -227,16 +223,12 @@ export class SyncWatcher implements Watcher {
       }
 
       // Perform the sync
-      await generateExampleFile(
-        this.options.envPath,
-        this.options.examplePath,
-        {
-          schemaPath: undefined,
-          includeDescriptions: this.options.includeDescriptions,
-          includeTypes: this.options.includeTypes,
-          includeDefaults: this.options.includeDefaults,
-        },
-      );
+      await generateExampleFile(this.options.envPath, this.options.examplePath, {
+        schemaPath: undefined,
+        includeDescriptions: this.options.includeDescriptions,
+        includeTypes: this.options.includeTypes,
+        includeDefaults: this.options.includeDefaults,
+      });
 
       result.success = true;
 

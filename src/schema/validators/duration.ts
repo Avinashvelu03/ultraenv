@@ -36,7 +36,10 @@ const DURATION_UNITS: Record<string, number> = {
 
 const DURATION_REGEX = /^(-)?(\d+(?:\.\d+)?)(ms|s|sec|m|min|h|hr|d|day|w|wk|y|yr)$/;
 
-function parseAndValidateDuration(raw: string, opts: DurationValidatorOptions): ParseResult<number> {
+function parseAndValidateDuration(
+  raw: string,
+  opts: DurationValidatorOptions,
+): ParseResult<number> {
   const trimmed = raw.trim();
   const allowNegative = opts.allowNegative ?? false;
 

@@ -208,13 +208,13 @@ export const dockerSchema: SchemaDefinition = {
   LETSENCRYPT_HOST: {
     type: 'string',
     optional: true,
-    description: 'Let\'s Encrypt host(s) for nginx-proxy companion',
+    description: "Let's Encrypt host(s) for nginx-proxy companion",
   },
   LETSENCRYPT_EMAIL: {
     type: 'string',
     optional: true,
     format: 'email',
-    description: 'Let\'s Encrypt notification email',
+    description: "Let's Encrypt notification email",
   },
 
   // ── Node.js App in Container ─────────────────────────────────────

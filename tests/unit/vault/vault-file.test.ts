@@ -192,9 +192,7 @@ describe('vault-file', () => {
       const reparsed = parseVaultFile(serialized);
 
       expect(reparsed.size).toBe(parsed.size);
-      expect(reparsed.get('development')?.encrypted).toBe(
-        parsed.get('development')?.encrypted,
-      );
+      expect(reparsed.get('development')?.encrypted).toBe(parsed.get('development')?.encrypted);
     });
   });
 

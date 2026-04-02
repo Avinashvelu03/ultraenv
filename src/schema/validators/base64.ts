@@ -54,7 +54,7 @@ function parseAndValidateBase64(raw: string, opts: Base64ValidatorOptions): Pars
   if (requirePadding) {
     const mod = trimmed.replace(/=/g, '').length % 4;
     const expectedPadding = mod === 0 ? 0 : 4 - mod;
-    const actualPadding = trimmed.length - (trimmed.replace(/=/g, '').length);
+    const actualPadding = trimmed.length - trimmed.replace(/=/g, '').length;
     if (actualPadding !== expectedPadding) {
       return {
         success: false,

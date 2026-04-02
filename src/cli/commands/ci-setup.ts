@@ -93,7 +93,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
       await ensureDir(workflowsDir);
       const workflowPath = join(workflowsDir, 'ultraenv.yml');
 
-      if (await exists(workflowPath) && !args.flags['--force']) {
+      if ((await exists(workflowPath)) && !args.flags['--force']) {
         writeLine(yellow(`  ${workflowPath} already exists. Use --force to overwrite.`));
         return 0;
       }
@@ -103,7 +103,7 @@ export async function run(args: ParsedArgs, ctx: CommandContext): Promise<number
     } else if (platform === 'gitlab') {
       const gitlabPath = join(baseDir, '.gitlab-ci.yml');
 
-      if (await exists(gitlabPath) && !args.flags['--force']) {
+      if ((await exists(gitlabPath)) && !args.flags['--force']) {
         writeLine(yellow(`  ${gitlabPath} already exists. Use --force to overwrite.`));
         return 0;
       }

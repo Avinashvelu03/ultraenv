@@ -130,7 +130,7 @@ export async function listEnvironments(cwd?: string): Promise<EnvironmentInfo[]>
   environments.sort((a, b) => {
     const nameOrder = (name: string): number => {
       if (name === 'base') return 0;
-      const idx = KNOWN_ENVIRONMENTS.indexOf(name as typeof KNOWN_ENVIRONMENTS[number]);
+      const idx = KNOWN_ENVIRONMENTS.indexOf(name as (typeof KNOWN_ENVIRONMENTS)[number]);
       return idx >= 0 ? idx + 1 : 100;
     };
     return nameOrder(a.name) - nameOrder(b.name);
@@ -150,7 +150,7 @@ export async function validateAllEnvironments(
     const absolutePath = join(baseDir, pattern);
     const envName = extractEnvName(pattern);
 
-    if (!await exists(absolutePath)) {
+    if (!(await exists(absolutePath))) {
       continue;
     }
 
@@ -170,9 +170,10 @@ export async function validateAllEnvironments(
       for (const [key, schemaEntry] of Object.entries(schema)) {
         const r = schemaEntry as unknown as Record<string, unknown>;
         const rawValue = vars[key];
-        const isRequired = schemaEntry.optional !== true
-          && schemaEntry.default === undefined
-          && r.hasDefault !== true;
+        const isRequired =
+          schemaEntry.optional !== true &&
+          schemaEntry.default === undefined &&
+          r.hasDefault !== true;
 
         // Check required fields
         if (isRequired && (rawValue === undefined || rawValue === '')) {
@@ -230,12 +231,14 @@ export async function validateAllEnvironments(
       const message = error instanceof Error ? error.message : String(error);
       results.set(envName ?? pattern, {
         valid: false,
-        errors: [{
-          field: '',
-          value: '',
-          message: `Failed to read/parse file: ${message}`,
-          hint: 'Check that the file is a valid .env file.',
-        }],
+        errors: [
+          {
+            field: '',
+            value: '',
+            message: `Failed to read/parse file: ${message}`,
+            hint: 'Check that the file is a valid .env file.',
+          },
+        ],
         warnings: [],
       });
     }
@@ -244,23 +247,17 @@ export async function validateAllEnvironments(
   return results;
 }
 
-export async function switchEnvironment(
-  envName: string,
-  cwd?: string,
-): Promise<void> {
+export async function switchEnvironment(envName: string, cwd?: string): Promise<void> {
   const baseDir = resolve(cwd ?? process.cwd());
 
   const envFile = join(baseDir, `.env.${envName}`);
 
-  if (!await exists(envFile)) {
-    throw new FileSystemError(
-      `Environment file ".env.${envName}" not found`,
-      {
-        path: envFile,
-        operation: 'read',
-        hint: `Create a ".env.${envName}" file first, or use "ultraenv env create ${envName}".`,
-      },
-    );
+  if (!(await exists(envFile))) {
+    throw new FileSystemError(`Environment file ".env.${envName}" not found`, {
+      path: envFile,
+      operation: 'read',
+      hint: `Create a ".env.${envName}" file first, or use "ultraenv env create ${envName}".`,
+    });
   }
 
   const content = await readFile(envFile);
@@ -278,7 +275,7 @@ export async function switchEnvironment(
   await writeFile(localPath, header + content);
 
   const basePath = join(baseDir, '.env');
-  if (!await exists(basePath)) {
+  if (!(await exists(basePath))) {
     const baseHeader = [
       '# ============================================================',
       '# Base environment variables',
@@ -294,7 +291,7 @@ export async function getActiveEnvironment(cwd?: string): Promise<string> {
   const baseDir = resolve(cwd ?? process.cwd());
   const localPath = join(baseDir, '.env.local');
 
-  if (!await exists(localPath)) {
+  if (!(await exists(localPath))) {
     return 'base';
   }
 

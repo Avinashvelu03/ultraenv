@@ -6,7 +6,12 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import type { UltraenvConfig, MergeStrategy, OutputFormat, EnvFileType } from './types.js';
-import { DEFAULT_ENV_DIR, ENCODING, MAX_INTERPOLATION_DEPTH, MAX_VALUE_LENGTH } from './constants.js';
+import {
+  DEFAULT_ENV_DIR,
+  ENCODING,
+  MAX_INTERPOLATION_DEPTH,
+  MAX_VALUE_LENGTH,
+} from './constants.js';
 import { ConfigError } from './errors.js';
 import { findUpSync } from '../utils/fs.js';
 
@@ -483,15 +488,18 @@ function parseYamlScalar(value: string): string | number | boolean | null {
   if (cleanValue === 'false' || cleanValue === 'False' || cleanValue === 'FALSE') return false;
 
   // Null
-  if (cleanValue === 'null' || cleanValue === 'Null' || cleanValue === 'NULL' || cleanValue === '~') return null;
+  if (cleanValue === 'null' || cleanValue === 'Null' || cleanValue === 'NULL' || cleanValue === '~')
+    return null;
 
   // Number
   if (/^-?\d+$/.test(cleanValue)) return parseInt(cleanValue, 10);
   if (/^-?\d+\.\d+$/.test(cleanValue)) return parseFloat(cleanValue);
 
   // Quoted string
-  if ((cleanValue.startsWith('"') && cleanValue.endsWith('"')) ||
-      (cleanValue.startsWith("'") && cleanValue.endsWith("'"))) {
+  if (
+    (cleanValue.startsWith('"') && cleanValue.endsWith('"')) ||
+    (cleanValue.startsWith("'") && cleanValue.endsWith("'"))
+  ) {
     return cleanValue.slice(1, -1);
   }
 
@@ -505,7 +513,7 @@ function parseYamlScalar(value: string): string | number | boolean | null {
 function parseYamlInlineArray(content: string): string[] {
   const trimmed = content.trim();
   if (trimmed === '') return [];
-  return trimmed.split(',').map(s => s.trim().replace(/^['"]|['"]$/g, ''));
+  return trimmed.split(',').map((s) => s.trim().replace(/^['"]|['"]$/g, ''));
 }
 
 /**

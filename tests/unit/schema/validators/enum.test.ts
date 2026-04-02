@@ -121,8 +121,7 @@ describe('EnumSchemaBuilder', () => {
     });
 
     it('caseInsensitive(false) disables case insensitivity', () => {
-      const schema = createEnumSchema(['development'] as const)
-        .caseInsensitive(false);
+      const schema = createEnumSchema(['development'] as const).caseInsensitive(false);
       expect(schema._parse('DEVELOPMENT').success).toBe(false);
     });
   });
