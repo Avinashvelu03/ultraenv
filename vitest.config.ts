@@ -12,8 +12,20 @@ export default defineConfig({
         functions: 100,
         lines: 100,
       },
-      include: ['src/core/**/*.ts', 'src/vault/**/*.ts'],
-      exclude: ['src/core/types.ts', 'src/core/constants.ts', 'src/data/**', 'src/core/watcher.ts', 'src/core/config.ts'],
+      include: ['src/**/*.ts'],
+      exclude: [
+        // Type-only / constants files — no executable branches
+        'src/core/types.ts',
+        'src/core/constants.ts',
+        // File system watcher — requires real FS runtime, tested in integration
+        'src/core/watcher.ts',
+        // CLI entry point — integration tested separately
+        'src/cli/**/*.ts',
+        // Static data assets — no logic to test
+        'src/data/**/*.ts',
+        // Re-export barrels
+        'src/**/index.ts',
+      ],
     },
     include: ['tests/**/*.test.ts'],
     mockReset: true,
