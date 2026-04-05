@@ -1,6 +1,6 @@
 {
   "name": "ultraenv",
-  "version": "1.0.1",
+    "version": "1.0.2",
   "description": "The Ultimate Environment Variable Manager — Validate, Type, Encrypt, Sync, and Never Ship Broken Configs Again",
   "type": "module",
   "exports": {
