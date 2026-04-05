@@ -217,6 +217,7 @@ async function watchSync(envPath: string, examplePath: string): Promise<number> 
       }, 200);
     });
 
+    process.setMaxListeners(process.getMaxListeners() + 1);
     process.on('SIGINT', () => {
       if (watcher !== null) watcher.close();
       writeLine('');
