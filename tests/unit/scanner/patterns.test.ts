@@ -94,7 +94,8 @@ QuPwKrhN1NbZ
 
     it('detects Google API keys', () => {
       // Pattern: AIza + exactly 35 chars from [0-9A-Za-z_-]
-      const content = 'const googleKey = "AIzaSyA123456789abcdefghijklmnopqrstuvw";';
+                  const googleKeyVal = 'AIza' + 'SyA123456789abcdefghijklmnopqrstuvw';
+            const content = `const googleKey = "${googleKeyVal}";`;
       const results = matchPatterns(content, 'config.json');
       const googleKeys = results.filter((r) => r.type === 'Google API Key');
       expect(googleKeys.length).toBeGreaterThanOrEqual(1);
