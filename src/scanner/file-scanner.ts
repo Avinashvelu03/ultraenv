@@ -136,7 +136,7 @@ function isInSkippedDirectory(filePath: string): boolean {
 }
 /** Escape all regex meta-characters in a string. */
 function escapeRegex(s: string): string {
-    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return s.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
   }
 
 /**
