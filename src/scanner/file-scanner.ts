@@ -134,6 +134,10 @@ function isInSkippedDirectory(filePath: string): boolean {
   const parts = filePath.replace(/\\/g, '/').split('/');
   return parts.some((part) => DEFAULT_SKIP_PATHS.has(part));
 }
+/** Escape all regex meta-characters in a string. */
+function escapeRegex(s: string): string {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
 
 /**
  * Check if a relative path matches any of the exclude patterns.
@@ -142,7 +146,7 @@ function isInSkippedDirectory(filePath: string): boolean {
 function matchesExcludePattern(relPath: string, excludes: readonly string[]): boolean {
   for (const pattern of excludes) {
     // Convert glob pattern to regex
-    const normalizedPattern = pattern.replace(/\\/g, '/').replace(/\./g, '\\.');
+        const normalizedPattern = escapeRegex(pattern.replace(/\\/g, '/'));
 
     if (normalizedPattern.includes('**')) {
       // Double glob — match any depth
@@ -175,7 +179,7 @@ function matchesIncludePattern(relPath: string, includes: readonly string[]): bo
   if (includes.length === 0) return true;
 
   for (const pattern of includes) {
-    const normalizedPattern = pattern.replace(/\\/g, '/').replace(/\./g, '\\.');
+        const normalizedPattern = escapeRegex(pattern.replace(/\\/g, '/'));
 
     if (normalizedPattern.includes('**')) {
       const regexStr = normalizedPattern
